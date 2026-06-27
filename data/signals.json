@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-06-27T20:52:48.179255+00:00",
+  "generated_at": "2026-06-27T21:28:52.794865+00:00",
   "market_date": "2026-06-27",
-  "btc_close": 60197.86,
+  "btc_close": 60337.04,
   "status": "Hold Cash",
   "active_halving_date": "2024-04-20",
   "cycle_day": 798,
   "day_540_date": "2025-10-12",
   "days_from_day_540": 258,
-  "sma_200_week": 62385.12,
+  "sma_200_week": 62385.22,
   "realized_price": 53115.29,
   "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-06-26.",
   "electrical_cost_per_btc": 71544.34,
@@ -107,7 +107,7 @@
     },
     {
       "date": "2026-06-27",
-      "btc_close": 60197.86,
+      "btc_close": 60337.04,
       "cycle_day": 798,
       "status": "Hold Cash",
       "notes": "258 days after day 540."
