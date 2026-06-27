@@ -1,0 +1,116 @@
+{
+  "generated_at": "2026-06-27T20:52:48.179255+00:00",
+  "market_date": "2026-06-27",
+  "btc_close": 60197.86,
+  "status": "Hold Cash",
+  "active_halving_date": "2024-04-20",
+  "cycle_day": 798,
+  "day_540_date": "2025-10-12",
+  "days_from_day_540": 258,
+  "sma_200_week": 62385.12,
+  "realized_price": 53115.29,
+  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-06-26.",
+  "electrical_cost_per_btc": 71544.34,
+  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-06-26; assumes 30 J/TH and $0.05/kWh.",
+  "rule_summary": "Hold BTC from halving day through day 540, inclusive. Hold Cash from day 541 until the next confirmed halving.",
+  "recent_history": [
+    {
+      "date": "2026-06-14",
+      "btc_close": 65710.4,
+      "cycle_day": 785,
+      "status": "Hold Cash",
+      "notes": "245 days after day 540."
+    },
+    {
+      "date": "2026-06-15",
+      "btc_close": 66289.5,
+      "cycle_day": 786,
+      "status": "Hold Cash",
+      "notes": "246 days after day 540."
+    },
+    {
+      "date": "2026-06-16",
+      "btc_close": 65600.64,
+      "cycle_day": 787,
+      "status": "Hold Cash",
+      "notes": "247 days after day 540."
+    },
+    {
+      "date": "2026-06-17",
+      "btc_close": 64418.45,
+      "cycle_day": 788,
+      "status": "Hold Cash",
+      "notes": "248 days after day 540."
+    },
+    {
+      "date": "2026-06-18",
+      "btc_close": 62896.47,
+      "cycle_day": 789,
+      "status": "Hold Cash",
+      "notes": "249 days after day 540."
+    },
+    {
+      "date": "2026-06-19",
+      "btc_close": 63540.84,
+      "cycle_day": 790,
+      "status": "Hold Cash",
+      "notes": "250 days after day 540."
+    },
+    {
+      "date": "2026-06-20",
+      "btc_close": 64239.68,
+      "cycle_day": 791,
+      "status": "Hold Cash",
+      "notes": "251 days after day 540."
+    },
+    {
+      "date": "2026-06-21",
+      "btc_close": 63237.54,
+      "cycle_day": 792,
+      "status": "Hold Cash",
+      "notes": "252 days after day 540."
+    },
+    {
+      "date": "2026-06-22",
+      "btc_close": 63952.11,
+      "cycle_day": 793,
+      "status": "Hold Cash",
+      "notes": "253 days after day 540."
+    },
+    {
+      "date": "2026-06-23",
+      "btc_close": 62668.02,
+      "cycle_day": 794,
+      "status": "Hold Cash",
+      "notes": "254 days after day 540."
+    },
+    {
+      "date": "2026-06-24",
+      "btc_close": 60995.13,
+      "cycle_day": 795,
+      "status": "Hold Cash",
+      "notes": "255 days after day 540."
+    },
+    {
+      "date": "2026-06-25",
+      "btc_close": 59721.68,
+      "cycle_day": 796,
+      "status": "Hold Cash",
+      "notes": "256 days after day 540."
+    },
+    {
+      "date": "2026-06-26",
+      "btc_close": 60016.43,
+      "cycle_day": 797,
+      "status": "Hold Cash",
+      "notes": "257 days after day 540."
+    },
+    {
+      "date": "2026-06-27",
+      "btc_close": 60197.86,
+      "cycle_day": 798,
+      "status": "Hold Cash",
+      "notes": "258 days after day 540."
+    }
+  ]
+}

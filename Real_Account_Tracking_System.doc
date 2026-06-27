@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BTC Cycle Real Account Tracking System</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111827;
+      line-height: 1.45;
+      margin: 36px;
+      max-width: 820px;
+    }
+    h1, h2, h3 {
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 26px;
+      border-bottom: 2px solid #cbd5e1;
+      padding-bottom: 10px;
+    }
+    h2 {
+      font-size: 19px;
+      margin-top: 26px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 5px;
+    }
+    h3 {
+      font-size: 15px;
+      margin-top: 18px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 12px 0 18px;
+      font-size: 12.5px;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 7px 8px;
+      vertical-align: top;
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: bold;
+    }
+    .note {
+      background: #f8fafc;
+      border-left: 4px solid #64748b;
+      padding: 10px 12px;
+      margin: 14px 0;
+    }
+    .rule {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      padding: 10px 12px;
+      margin: 14px 0;
+      font-weight: bold;
+    }
+    ul {
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>BTC Cycle Real Account Tracking System</h1>
+
+  <p><strong>Document purpose:</strong> This is the plain-language operating manual for tracking the Bitcoin four-year-cycle system studied in the BTC_cyc workbook. It is designed for real-account monitoring, daily review, and a future GitHub dashboard.</p>
+
+  <p><strong>Primary system:</strong> Bitcoin four-year-cycle timing using the halving date and cycle day count.</p>
+
+  <div class="rule">
+    Trading rule: hold BTC from the halving day through cycle day 540. Hold cash outside that window.
+  </div>
+
+  <h2>1. Strategy Summary</h2>
+
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Rule</th>
+    </tr>
+    <tr>
+      <td>Invested asset</td>
+      <td>BTC, represented by BTC-USD or a real Bitcoin holding.</td>
+    </tr>
+    <tr>
+      <td>Defensive asset</td>
+      <td>Cash or Treasury-like cash equivalent. The backtest treats this as cash with no interest.</td>
+    </tr>
+    <tr>
+      <td>Signal source</td>
+      <td>Bitcoin halving date and the number of days since that halving.</td>
+    </tr>
+    <tr>
+      <td>Buy / hold window</td>
+      <td>Cycle day 0 through cycle day 540, inclusive.</td>
+    </tr>
+    <tr>
+      <td>Sell / cash window</td>
+      <td>Cycle day 541 until the next halving day.</td>
+    </tr>
+    <tr>
+      <td>Current 2024-cycle anchor</td>
+      <td>Halving date: April 20, 2024. Day 540: October 12, 2025.</td>
+    </tr>
+    <tr>
+      <td>Current status as of June 27, 2026</td>
+      <td>Cycle day 798, which is outside the tested BTC holding window. The model status is Hold Cash.</td>
+    </tr>
+  </table>
+
+  <h2>2. Exact Operating Rules</h2>
+
+  <h3>Entry Rule</h3>
+  <p>Enter or hold BTC on the halving day and continue holding through cycle day 540. For the 2024 cycle, that holding window ran from April 20, 2024 through October 12, 2025.</p>
+
+  <h3>Exit Rule</h3>
+  <p>Exit BTC after cycle day 540 and move the strategy sleeve to cash. For the 2024 cycle, the first cash day after the tested holding window was October 13, 2025.</p>
+
+  <h3>Re-entry Rule</h3>
+  <p>Remain in cash until the next confirmed Bitcoin halving date. On the next halving date, the new cycle day becomes 0 and the system re-enters BTC.</p>
+
+  <h3>No Override Indicators</h3>
+  <p>The 200-week moving average was studied, but it is not the primary real-account trigger for this system. The best tested BTC-only rule in the workbook was the halving-cycle day 0-540 rule, not the 200-week-SMA rule.</p>
+
+  <h2>3. Current-Cycle Calendar</h2>
+
+  <table>
+    <tr>
+      <th>Milestone</th>
+      <th>Date</th>
+      <th>Meaning</th>
+    </tr>
+    <tr>
+      <td>2024 halving</td>
+      <td>April 20, 2024</td>
+      <td>Cycle day 0. Model enters or holds BTC.</td>
+    </tr>
+    <tr>
+      <td>Day 540</td>
+      <td>October 12, 2025</td>
+      <td>Last day of the tested BTC holding window.</td>
+    </tr>
+    <tr>
+      <td>First cash day</td>
+      <td>October 13, 2025</td>
+      <td>Model exits BTC and holds cash.</td>
+    </tr>
+    <tr>
+      <td>Estimated bottom window from prior study</td>
+      <td>Early to late October 2026</td>
+      <td>Useful for planning gradual accumulation, but this is not a formal signal in the tested rule.</td>
+    </tr>
+    <tr>
+      <td>Next halving</td>
+      <td>To be confirmed by network block height</td>
+      <td>The next formal re-entry point for the tested BTC cycle system.</td>
+    </tr>
+  </table>
+
+  <h2>4. Backtest Results Used For This Manual</h2>
+
+  <p>The core BTC-only comparison came from <strong>Bitcoin_strategy_comparison.csv</strong> and <strong>Bitcoin_4YearCycle_vs_200WeekSMA.xlsx</strong>.</p>
+
+  <table>
+    <tr>
+      <th>Strategy</th>
+      <th>Test Window</th>
+      <th>Final Value From $1,000</th>
+      <th>CAGR</th>
+      <th>Max Drawdown</th>
+      <th>Notes</th>
+    </tr>
+    <tr>
+      <td>Cycle window day 0-540</td>
+      <td>May 11, 2014 to June 10, 2026</td>
+      <td>$320,703.29</td>
+      <td>61.22%</td>
+      <td>-53.08%</td>
+      <td>Best tested BTC-only operating rule.</td>
+    </tr>
+    <tr>
+      <td>Buy and hold BTC</td>
+      <td>May 11, 2014 to June 10, 2026</td>
+      <td>$139,424.85</td>
+      <td>50.48%</td>
+      <td>-83.78%</td>
+      <td>Higher time in BTC, much deeper drawdown.</td>
+    </tr>
+    <tr>
+      <td>Hold only when BTC &gt; 200-week SMA</td>
+      <td>May 11, 2014 to June 10, 2026</td>
+      <td>$36,153.63</td>
+      <td>34.57%</td>
+      <td>-83.78%</td>
+      <td>Studied indicator, not selected as the main rule.</td>
+    </tr>
+  </table>
+
+  <h2>5. Account Tracking Checklist</h2>
+
+  <ul>
+    <li>Record the latest BTC price and date.</li>
+    <li>Confirm the most recent halving date used by the tracker.</li>
+    <li>Calculate the cycle day: latest date minus halving date, with halving day as day 0.</li>
+    <li>If cycle day is 0 through 540, account status is Hold BTC.</li>
+    <li>If cycle day is 541 or later, account status is Hold Cash.</li>
+    <li>Keep the formal signal separate from discretionary DCA planning.</li>
+    <li>When the next halving occurs, update the halving date and reset cycle day to 0.</li>
+  </ul>
+
+  <h2>6. Dashboard Fields To Track</h2>
+
+  <table>
+    <tr>
+      <th>Field</th>
+      <th>Purpose</th>
+    </tr>
+    <tr>
+      <td>Current status</td>
+      <td>Hold BTC or Hold Cash.</td>
+    </tr>
+    <tr>
+      <td>BTC close</td>
+      <td>Latest BTC-USD adjusted close or reference price.</td>
+    </tr>
+    <tr>
+      <td>Market date</td>
+      <td>Date of the latest price used.</td>
+    </tr>
+    <tr>
+      <td>Halving date</td>
+      <td>The active cycle anchor.</td>
+    </tr>
+    <tr>
+      <td>Cycle day</td>
+      <td>Days since the active halving date.</td>
+    </tr>
+    <tr>
+      <td>Days to / from day 540</td>
+      <td>Shows whether the model is before, inside, or after the formal BTC holding window.</td>
+    </tr>
+    <tr>
+      <td>200-week SMA</td>
+      <td>Context only, not the active trigger.</td>
+    </tr>
+    <tr>
+      <td>Realized price</td>
+      <td>On-chain cost-basis context. Compute from CoinMetrics as BTC price divided by MVRV when <strong>CapMVRVCur</strong> is available. This is not the active trigger.</td>
+    </tr>
+    <tr>
+      <td>Estimated electrical cost per BTC</td>
+      <td>Mining cost context. Compute from network hash rate, assumed miner efficiency, assumed electricity price, and daily BTC issuance. This is a model estimate, not a single official value.</td>
+    </tr>
+    <tr>
+      <td>Recent signal history</td>
+      <td>Recent daily rows showing date, price, cycle day, and status.</td>
+    </tr>
+  </table>
+
+  <h2>7. On-Chain And Mining-Cost Context</h2>
+
+  <p>These indicators can help describe whether BTC is near historically important cost-basis or miner-cost zones, but they do not override the primary cycle rule.</p>
+
+  <table>
+    <tr>
+      <th>Indicator</th>
+      <th>How To Calculate</th>
+      <th>Latest Local Example</th>
+      <th>Dashboard Label</th>
+    </tr>
+    <tr>
+      <td>Realized price</td>
+      <td>CoinMetrics ReferenceRateUSD divided by CapMVRVCur.</td>
+      <td>Using the latest complete local CoinMetrics row, May 23, 2026: ReferenceRateUSD $75,567.54 / MVRV 1.4146 = about $53,421.</td>
+      <td>On-chain cost basis, context only.</td>
+    </tr>
+    <tr>
+      <td>Estimated electrical cost per BTC</td>
+      <td>HashRate TH/s x miner efficiency J/TH x 86,400 / 3,600,000 = kWh/day. Then multiply by electricity price and divide by BTC issued that day.</td>
+      <td>Using May 23, 2026 local CoinMetrics hash rate, 30 J/TH, $0.05/kWh, and 512.5 BTC issued: about $78,230 per BTC.</td>
+      <td>Estimated mining electrical cost, context only.</td>
+    </tr>
+  </table>
+
+  <div class="note">
+    Electrical cost is assumption-sensitive. A lower power price or more efficient miner lowers the estimate; a higher power price or older equipment raises it. The dashboard should display the assumptions next to the number.
+  </div>
+
+  <h2>8. Important Guardrails</h2>
+
+  <ul>
+    <li>This manual is for tracking a rules-based study. It is not financial advice.</li>
+    <li>Do not treat the October 2026 bottom-window estimate as an automatic buy signal. It is a planning estimate, not the tested rule.</li>
+    <li>Do not treat realized price or estimated electrical cost as automatic buy signals. They are bottom-status context indicators only.</li>
+    <li>Do not replace the BTC cycle rule with QQQ, QLD, SPY, SSO, TQQQ, MACD, or moving-average rules in this account tracker.</li>
+    <li>For real money, verify the data source, tax impact, trading vehicle, custody risk, and cash vehicle before acting.</li>
+    <li>When updating the dashboard, use real BTC data and make the data date visible.</li>
+  </ul>
+
+  <h2>9. Source Files</h2>
+
+  <ul>
+    <li>C:\Users\Ella\Documents\BTC_cyc\Bitcoin_4YearCycle_vs_200WeekSMA.xlsx</li>
+    <li>C:\Users\Ella\Documents\BTC_cyc\Bitcoin_strategy_comparison.csv</li>
+    <li>C:\Users\Ella\Documents\BTC_cyc\btc_coinmetrics.csv</li>
+    <li>C:\Users\Ella\Documents\BTC_cyc\btc_yahoo_recent.json</li>
+  </ul>
+
+  <div class="note">
+    Manual created June 27, 2026. The tested data table in the local BTC-only comparison runs through June 10, 2026; dashboard refresh code should fetch current BTC data before publishing live status.
+  </div>
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BTC Cycle Signal Desk</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-2: #f9fafb;
+      --ink: #101828;
+      --muted: #667085;
+      --line: #d9e0ea;
+      --line-soft: #edf1f6;
+      --orange: #f7931a;
+      --green: #157347;
+      --amber: #b7791f;
+      --blue: #1f5eff;
+      --shadow: 0 16px 40px rgba(16, 24, 40, 0.08);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 22px 0 34px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #111827;
+      color: var(--orange);
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: inset 0 0 0 2px rgba(247, 147, 26, 0.32);
+      flex: 0 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 4vw, 34px);
+      line-height: 1.05;
+      font-weight: 760;
+    }
+
+    .subtitle {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 7px;
+      padding: 8px 11px;
+      font-size: 13px;
+      font-weight: 680;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    }
+
+    .button svg {
+      width: 15px;
+      height: 15px;
+      stroke-width: 2.2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.22fr) minmax(320px, 0.78fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .status-panel {
+      padding: 22px;
+      display: grid;
+      gap: 19px;
+      min-height: 330px;
+    }
+
+    .status-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .label {
+      margin: 0 0 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      text-transform: uppercase;
+    }
+
+    .status-value {
+      margin: 0;
+      font-size: clamp(40px, 8vw, 72px);
+      line-height: 0.95;
+      font-weight: 820;
+      color: var(--green);
+    }
+
+    .status-value.cash {
+      color: var(--amber);
+    }
+
+    .asof {
+      text-align: right;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      min-width: 170px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 14px;
+      background: var(--surface-2);
+      border-right: 1px solid var(--line);
+    }
+
+    .metric:nth-child(3n) {
+      border-right: 0;
+    }
+
+    .metric:nth-child(n + 4) {
+      border-top: 1px solid var(--line);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(18px, 2.6vw, 26px);
+      line-height: 1.08;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rule-strip {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 15px;
+      background: #fff8ef;
+      border: 1px solid #ffd9ad;
+      border-radius: var(--radius);
+      color: #663c00;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .rule-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-top: 6px;
+      background: var(--orange);
+      flex: 0 0 auto;
+    }
+
+    .context-panel {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 780;
+    }
+
+    .context-item {
+      padding: 15px;
+      border: 1px solid var(--line-soft);
+      background: var(--surface-2);
+      border-radius: 7px;
+    }
+
+    .context-item .name {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 4px 8px;
+      color: #475467;
+      font-size: 11px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .context-item strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1.1;
+    }
+
+    .context-item p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .section {
+      margin-top: 16px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px 0;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      padding: 12px 18px 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+    }
+
+    td {
+      border-bottom: 1px solid var(--line-soft);
+      padding: 11px 8px;
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-weight: 760;
+      font-size: 12px;
+      background: #eaf7ef;
+      color: var(--green);
+      white-space: nowrap;
+    }
+
+    .status-chip.cash {
+      background: #fff7e6;
+      color: var(--amber);
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .copy-panel {
+      padding: 18px;
+    }
+
+    .copy-panel p,
+    .copy-panel li {
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .copy-panel ul {
+      padding-left: 18px;
+      margin: 10px 0 0;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border: 1px solid #c7d7fe;
+      background: #eef4ff;
+      border-radius: var(--radius);
+      color: #243b72;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .loading {
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    @media (max-width: 900px) {
+      .topbar,
+      .status-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .top-actions,
+      .asof {
+        justify-content: flex-start;
+        text-align: left;
+      }
+
+      .grid,
+      .rule-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+        padding-top: 14px;
+      }
+
+      .status-panel,
+      .context-panel,
+      .copy-panel {
+        padding: 14px;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .metric,
+      .metric:nth-child(3n) {
+        border-right: 1px solid var(--line);
+      }
+
+      .metric:nth-child(2n) {
+        border-right: 0;
+      }
+
+      .metric:nth-child(n + 3) {
+        border-top: 1px solid var(--line);
+      }
+
+      .section-head,
+      .table-wrap {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      table {
+        min-width: 0;
+        font-size: 10.5px;
+      }
+
+      th,
+      td {
+        padding: 8px 4px;
+      }
+
+      .status-chip {
+        min-height: 22px;
+        padding: 3px 6px;
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">BTC</div>
+        <div>
+          <h1>BTC Cycle Signal Desk</h1>
+          <p class="subtitle">Bitcoin four-year-cycle rule tracking. Context indicators do not override the signal.</p>
+        </div>
+      </div>
+      <nav class="top-actions" aria-label="Dashboard links">
+        <a class="button" href="data/signals.json">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+          JSON
+        </a>
+        <a class="button" href="data/signals.csv">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          CSV
+        </a>
+      </nav>
+    </header>
+
+    <section class="grid" aria-label="Current signal">
+      <article class="panel status-panel">
+        <div class="status-head">
+          <div>
+            <p class="label">Current Status</p>
+            <p id="statusValue" class="status-value loading">Loading</p>
+          </div>
+          <div class="asof">
+            <div>Latest market date: <strong id="marketDate">--</strong></div>
+            <div>Last update: <strong id="generatedAt">--</strong></div>
+          </div>
+        </div>
+
+        <div class="metrics" aria-label="Signal metrics">
+          <div class="metric"><span>BTC close</span><strong id="btcClose">--</strong></div>
+          <div class="metric"><span>Active halving</span><strong id="halvingDate">--</strong></div>
+          <div class="metric"><span>Cycle day</span><strong id="cycleDay">--</strong></div>
+          <div class="metric"><span>Day 540 date</span><strong id="day540">--</strong></div>
+          <div class="metric"><span>Day 540 distance</span><strong id="day540Distance">--</strong></div>
+          <div class="metric"><span>Rule window</span><strong>0-540</strong></div>
+        </div>
+
+        <div class="rule-strip">
+          <span class="rule-dot" aria-hidden="true"></span>
+          <div id="ruleSummary">Hold BTC from halving day through day 540, inclusive. Hold Cash from day 541 until the next confirmed halving.</div>
+        </div>
+      </article>
+
+      <aside class="panel context-panel" aria-label="Context indicators">
+        <h2 class="panel-title">Context Indicators</h2>
+        <div class="context-item">
+          <div class="name">200-week SMA <span class="tag">context only</span></div>
+          <strong id="sma200">--</strong>
+          <p>Displayed for market context. It is not the trading trigger for this dashboard.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">Realized price <span class="tag">context only</span></div>
+          <strong id="realizedPrice">--</strong>
+          <p id="realizedSource">On-chain cost-basis context when CoinMetrics MVRV is available.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">Electrical cost / BTC <span class="tag">context only</span></div>
+          <strong id="electricalCost">--</strong>
+          <p id="electricalAssumptions">Estimated mining electrical cost with published assumptions.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel section">
+      <div class="section-head">
+        <h2 class="panel-title">Recent Signal History</h2>
+        <span class="tag">cycle-day rule</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>BTC close</th>
+              <th>Cycle day</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="historyRows">
+            <tr><td colspan="5" class="loading">Loading signal history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="rule-grid section">
+      <article class="panel copy-panel">
+        <h2 class="panel-title">Exact Rule</h2>
+        <ul>
+          <li>Signal source is Bitcoin cycle day, anchored to the most recent confirmed Bitcoin halving date.</li>
+          <li>Hold BTC from halving day through day 540, inclusive.</li>
+          <li>Hold Cash from day 541 until the next confirmed halving.</li>
+          <li>The 200-week SMA, realized price, and estimated electrical cost are context only.</li>
+        </ul>
+      </article>
+      <article class="panel copy-panel">
+        <h2 class="panel-title">Guardrails</h2>
+        <ul>
+          <li>No QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA, or DCA rules are part of this BTC signal.</li>
+          <li>Bottom-zone context can help describe the cycle, but it is not an automatic buy signal.</li>
+          <li>This is a rules-based tracking dashboard and is not financial advice.</li>
+        </ul>
+      </article>
+    </section>
+
+    <div class="footer-note">
+      Source rule: BTC Cycle Real Account Tracking System. Current 2024-cycle anchor is April 20, 2024; day 540 is October 12, 2025.
+    </div>
+  </main>
+
+  <script>
+    const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+    const decimalCurrency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
+
+    function money(value, decimals = false) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
+      return decimals ? decimalCurrency.format(Number(value)) : currency.format(Number(value));
+    }
+
+    function formatDate(value) {
+      if (!value) return "--";
+      const [year, month, day] = value.slice(0, 10).split("-").map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day));
+      return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+    }
+
+    function formatTimestamp(value) {
+      if (!value) return "--";
+      return new Date(value).toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        timeZoneName: "short"
+      });
+    }
+
+    function day540Text(daysFromDay540) {
+      if (daysFromDay540 === null || daysFromDay540 === undefined) return "--";
+      const days = Number(daysFromDay540);
+      if (days === 0) return "Day 540";
+      if (days > 0) return `${days} days since`;
+      return `${Math.abs(days)} days until`;
+    }
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    function statusClass(status) {
+      return String(status).toLowerCase().includes("cash") ? "cash" : "";
+    }
+
+    async function loadSignals() {
+      const response = await fetch(`data/signals.json?ts=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Signal data returned ${response.status}`);
+      return response.json();
+    }
+
+    loadSignals().then((data) => {
+      const statusValue = document.getElementById("statusValue");
+      statusValue.textContent = data.status || "--";
+      statusValue.className = `status-value ${statusClass(data.status)}`;
+
+      setText("marketDate", formatDate(data.market_date));
+      setText("generatedAt", formatTimestamp(data.generated_at));
+      setText("btcClose", money(data.btc_close, true));
+      setText("halvingDate", formatDate(data.active_halving_date));
+      setText("cycleDay", data.cycle_day ?? "--");
+      setText("day540", formatDate(data.day_540_date));
+      setText("day540Distance", day540Text(data.days_from_day_540));
+      setText("sma200", money(data.sma_200_week));
+      setText("realizedPrice", money(data.realized_price));
+      setText("realizedSource", data.realized_price_source || "On-chain cost-basis context, not a signal trigger.");
+      setText("electricalCost", money(data.electrical_cost_per_btc));
+      setText("electricalAssumptions", data.electrical_cost_assumptions || "Estimated mining electrical cost, context only.");
+      setText("ruleSummary", data.rule_summary || "Hold BTC from halving day through day 540, inclusive. Hold Cash from day 541 until the next confirmed halving.");
+
+      const history = Array.isArray(data.recent_history) ? data.recent_history : [];
+      document.getElementById("historyRows").innerHTML = history.map((row) => `
+        <tr>
+          <td>${formatDate(row.date)}</td>
+          <td>${money(row.btc_close, true)}</td>
+          <td>${row.cycle_day ?? "--"}</td>
+          <td><span class="status-chip ${statusClass(row.status)}">${row.status || "--"}</span></td>
+          <td>${row.notes || ""}</td>
+        </tr>
+      `).join("") || `<tr><td colspan="5">No signal history available.</td></tr>`;
+    }).catch((error) => {
+      document.getElementById("statusValue").textContent = "Data unavailable";
+      document.getElementById("statusValue").className = "status-value cash";
+      document.getElementById("historyRows").innerHTML = `<tr><td colspan="5">${error.message}</td></tr>`;
+    });
+  </script>
+</body>
+</html>
