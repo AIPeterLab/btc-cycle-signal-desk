@@ -244,7 +244,7 @@ def write_outputs(payload: dict[str, Any]) -> None:
 
     fieldnames = ["date", "btc_close", "cycle_day", "status", "notes"]
     with CSV_PATH.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(payload["recent_history"])
 

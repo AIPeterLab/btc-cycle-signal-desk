@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BTC Cycle Signal Desk</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23111827'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial' font-size='20' font-weight='700' fill='%23f7931a'%3EBTC%3C/text%3E%3C/svg%3E">
   <style>
     :root {
       color-scheme: light;
@@ -234,6 +235,79 @@
       flex: 0 0 auto;
     }
 
+    .decision-path {
+      padding: 18px;
+    }
+
+    .decision-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .decision-step {
+      position: relative;
+      min-width: 0;
+      padding: 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--line-soft);
+      border-radius: 7px;
+    }
+
+    .decision-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 28px;
+      right: -11px;
+      width: 12px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .step-number {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff3df;
+      color: #8a4c00;
+      font-size: 12px;
+      font-weight: 820;
+      margin-bottom: 10px;
+    }
+
+    .decision-step h3 {
+      margin: 0 0 7px;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .decision-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .decision-result {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 10px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #eaf7ef;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .decision-result.cash {
+      background: #fff7e6;
+      color: var(--amber);
+    }
+
     .context-panel {
       padding: 18px;
       display: grid;
@@ -406,8 +480,18 @@
       }
 
       .grid,
-      .rule-grid {
+      .rule-grid,
+      .decision-steps {
         grid-template-columns: 1fr;
+      }
+
+      .decision-step:not(:last-child)::after {
+        top: auto;
+        right: auto;
+        left: 25px;
+        bottom: -11px;
+        width: 1px;
+        height: 12px;
       }
     }
 
@@ -419,6 +503,7 @@
 
       .status-panel,
       .context-panel,
+      .decision-path,
       .copy-panel {
         padding: 14px;
       }
@@ -534,6 +619,41 @@
       </aside>
     </section>
 
+    <section class="panel section decision-path" aria-label="Decision path">
+      <div class="section-head" style="padding: 0;">
+        <h2 class="panel-title">Decision Path</h2>
+        <span class="tag">why status is selected</span>
+      </div>
+      <div class="decision-steps">
+        <div class="decision-step">
+          <span class="step-number">1</span>
+          <h3>Anchor The Cycle</h3>
+          <p>Use active halving date <strong id="decisionHalving">--</strong>.</p>
+        </div>
+        <div class="decision-step">
+          <span class="step-number">2</span>
+          <h3>Count Cycle Days</h3>
+          <p>Latest market date is <strong id="decisionMarketDate">--</strong>, giving cycle day <strong id="decisionCycleDay">--</strong>.</p>
+        </div>
+        <div class="decision-step">
+          <span class="step-number">3</span>
+          <h3>Apply Rule Window</h3>
+          <p id="decisionRule">Days 0-540 hold BTC. Day 541 and later hold Cash.</p>
+        </div>
+        <div class="decision-step">
+          <span class="step-number">4</span>
+          <h3>Check Context Only</h3>
+          <p>200-week SMA, realized price, and electrical cost are informational only.</p>
+        </div>
+        <div class="decision-step">
+          <span class="step-number">5</span>
+          <h3>Final Decision</h3>
+          <p>The cycle-day rule selects:</p>
+          <span id="decisionFinal" class="decision-result">--</span>
+        </div>
+      </div>
+    </section>
+
     <section class="panel section">
       <div class="section-head">
         <h2 class="panel-title">Recent Signal History</h2>
@@ -644,6 +764,15 @@
       setText("cycleDay", data.cycle_day ?? "--");
       setText("day540", formatDate(data.day_540_date));
       setText("day540Distance", day540Text(data.days_from_day_540));
+      setText("decisionHalving", formatDate(data.active_halving_date));
+      setText("decisionMarketDate", formatDate(data.market_date));
+      setText("decisionCycleDay", data.cycle_day ?? "--");
+      setText("decisionRule", Number(data.cycle_day) <= 540
+        ? "Cycle day is inside the day 0-540 BTC holding window."
+        : "Cycle day is after day 540, so the formal rule is Cash.");
+      const decisionFinal = document.getElementById("decisionFinal");
+      decisionFinal.textContent = data.status || "--";
+      decisionFinal.className = `decision-result ${statusClass(data.status)}`;
       setText("sma200", money(data.sma_200_week));
       setText("realizedPrice", money(data.realized_price));
       setText("realizedSource", data.realized_price_source || "On-chain cost-basis context, not a signal trigger.");
