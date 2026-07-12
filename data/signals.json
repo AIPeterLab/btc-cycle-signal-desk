@@ -1,33 +1,19 @@
 {
-  "generated_at": "2026-07-11T06:32:33.009768+00:00",
-  "market_date": "2026-07-11",
-  "btc_close": 64194.35,
+  "generated_at": "2026-07-12T07:37:13.370574+00:00",
+  "market_date": "2026-07-12",
+  "btc_close": 63827.41,
   "status": "Hold Cash",
   "active_halving_date": "2024-04-20",
-  "cycle_day": 812,
+  "cycle_day": 813,
   "day_540_date": "2025-10-12",
-  "days_from_day_540": 272,
-  "sma_200_week": 62776.02,
-  "realized_price": 52233.85,
-  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-07-10.",
-  "electrical_cost_per_btc": 76662.22,
-  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-07-10; assumes 30 J/TH and $0.05/kWh.",
+  "days_from_day_540": 273,
+  "sma_200_week": 62836.1,
+  "realized_price": 53188.47,
+  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-07-11.",
+  "electrical_cost_per_btc": 75668.6,
+  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-07-11; assumes 30 J/TH and $0.05/kWh.",
   "rule_summary": "Hold BTC from halving day through day 540, inclusive. Hold Cash from day 541 until the next confirmed halving.",
   "recent_history": [
-    {
-      "date": "2026-06-27",
-      "btc_close": 59940.1,
-      "cycle_day": 798,
-      "status": "Hold Cash",
-      "notes": "258 days after day 540."
-    },
-    {
-      "date": "2026-06-28",
-      "btc_close": 59532.34,
-      "cycle_day": 799,
-      "status": "Hold Cash",
-      "notes": "259 days after day 540."
-    },
     {
       "date": "2026-06-29",
       "btc_close": 60138.38,
@@ -106,11 +92,25 @@
       "notes": "270 days after day 540."
     },
     {
+      "date": "2026-07-10",
+      "btc_close": 64127.14,
+      "cycle_day": 811,
+      "status": "Hold Cash",
+      "notes": "271 days after day 540."
+    },
+    {
       "date": "2026-07-11",
-      "btc_close": 64194.35,
+      "btc_close": 63802.03,
       "cycle_day": 812,
       "status": "Hold Cash",
       "notes": "272 days after day 540."
+    },
+    {
+      "date": "2026-07-12",
+      "btc_close": 63827.41,
+      "cycle_day": 813,
+      "status": "Hold Cash",
+      "notes": "273 days after day 540."
     }
   ]
 }
