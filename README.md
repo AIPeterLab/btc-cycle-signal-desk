@@ -1,6 +1,6 @@
 # BTC Cycle Signal Desk
 
-Public GitHub Pages dashboard for the Bitcoin four-year-cycle tracking system.
+Public dashboard for the Bitcoin four-year-cycle tracking system.
 
 ## Signal Rule
 
@@ -30,6 +30,24 @@ python scripts/update_signals.py
 ```
 
 The GitHub Actions workflow runs daily at `22:15 UTC`, which is `18:15 America/New_York` during daylight saving time, and can also be run manually with `workflow_dispatch`.
+
+## Cloudflare Pages
+
+Recommended production host: Cloudflare Pages at `https://btc.aipeterlab.com`.
+
+Use Git integration so the existing GitHub refresh workflow stays unchanged:
+
+- Cloudflare project name: `btc-signal-desk`
+- GitHub repository: `AIPeterLab/btc-cycle-signal-desk`
+- Production branch: `main`
+- Framework preset: `None`
+- Build command: leave blank
+- Build output directory: `/`
+- Root directory: leave blank / repository root
+- Environment variables: none
+- Custom domain: `btc.aipeterlab.com`
+
+The dashboard uses relative paths for `data/signals.json` and `data/signals.csv`, so it works from the Cloudflare root domain without code changes.
 
 ## Disclaimer
 
