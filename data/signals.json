@@ -1,26 +1,19 @@
 {
-  "generated_at": "2026-07-26T23:13:41.313146+00:00",
-  "market_date": "2026-07-26",
-  "btc_close": 65360.36,
+  "generated_at": "2026-07-27T22:15:30.493830+00:00",
+  "market_date": "2026-07-27",
+  "btc_close": 64672.06,
   "status": "Hold Cash",
   "active_halving_date": "2024-04-20",
-  "cycle_day": 827,
+  "cycle_day": 828,
   "day_540_date": "2025-10-12",
-  "days_from_day_540": 287,
-  "sma_200_week": 63286.31,
-  "realized_price": 52695.87,
-  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-07-25.",
-  "electrical_cost_per_btc": 72798.48,
-  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-07-25; assumes 30 J/TH and $0.05/kWh.",
+  "days_from_day_540": 288,
+  "sma_200_week": 63318.76,
+  "realized_price": 52081.05,
+  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-07-26.",
+  "electrical_cost_per_btc": 72288.03,
+  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-07-26; assumes 30 J/TH and $0.05/kWh.",
   "rule_summary": "Hold BTC from halving day through day 540, inclusive. Hold Cash from day 541 until the next confirmed halving.",
   "recent_history": [
-    {
-      "date": "2026-07-13",
-      "btc_close": 62239.12,
-      "cycle_day": 814,
-      "status": "Hold Cash",
-      "notes": "274 days after day 540."
-    },
     {
       "date": "2026-07-14",
       "btc_close": 64956.11,
@@ -107,10 +100,17 @@
     },
     {
       "date": "2026-07-26",
-      "btc_close": 65360.36,
+      "btc_close": 65340.3,
       "cycle_day": 827,
       "status": "Hold Cash",
       "notes": "287 days after day 540."
+    },
+    {
+      "date": "2026-07-27",
+      "btc_close": 64672.06,
+      "cycle_day": 828,
+      "status": "Hold Cash",
+      "notes": "288 days after day 540."
     }
   ]
 }
