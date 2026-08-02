@@ -68,10 +68,10 @@
 
   <p><strong>Document purpose:</strong> This is the plain-language operating manual for tracking the Bitcoin four-year-cycle system studied in the BTC_cyc workbook. It is designed for real-account monitoring, daily review, and a future GitHub dashboard.</p>
 
-  <p><strong>Primary system:</strong> Bitcoin four-year-cycle timing using the halving date and cycle day count.</p>
+  <p><strong>Primary system:</strong> Bitcoin four-year-cycle timing using the halving date as the known calendar anchor, with an earlier entry intended to approximate the bottom-to-top cycle clock.</p>
 
   <div class="rule">
-    Trading rule: hold BTC from the halving day through cycle day 540. Hold cash outside that window.
+    Trading rule: buy BTC 500 days before the Bitcoin halving date and hold through 540 days after the halving date. Hold cash outside that window.
   </div>
 
   <h2>1. Strategy Summary</h2>
@@ -91,39 +91,88 @@
     </tr>
     <tr>
       <td>Signal source</td>
-      <td>Bitcoin halving date and the number of days since that halving.</td>
+      <td>Bitcoin halving date, plus fixed pre-halving and post-halving day counts.</td>
     </tr>
     <tr>
       <td>Buy / hold window</td>
-      <td>Cycle day 0 through cycle day 540, inclusive.</td>
+      <td>From 500 days before halving through 540 days after halving, inclusive.</td>
     </tr>
     <tr>
       <td>Sell / cash window</td>
-      <td>Cycle day 541 until the next halving day.</td>
+      <td>Cash before the pre-halving buy date and after day 540 following the halving.</td>
     </tr>
     <tr>
       <td>Current 2024-cycle anchor</td>
-      <td>Halving date: April 20, 2024. Day 540: October 12, 2025.</td>
+      <td>Halving date: April 20, 2024. Buy date: December 7, 2022. Day 540 sell date: October 12, 2025.</td>
     </tr>
     <tr>
-      <td>Current status as of June 27, 2026</td>
-      <td>Cycle day 798, which is outside the tested BTC holding window. The model status is Hold Cash.</td>
+      <td>Current status as of August 1, 2026</td>
+      <td>Outside the 2024-cycle holding window. The model status is Hold Cash.</td>
     </tr>
   </table>
 
   <h2>2. Exact Operating Rules</h2>
 
   <h3>Entry Rule</h3>
-  <p>Enter or hold BTC on the halving day and continue holding through cycle day 540. For the 2024 cycle, that holding window ran from April 20, 2024 through October 12, 2025.</p>
+  <p>Enter BTC 500 calendar days before the confirmed Bitcoin halving date. For the 2024 cycle, the halving date was April 20, 2024, so the model entry date was December 7, 2022.</p>
 
   <h3>Exit Rule</h3>
-  <p>Exit BTC after cycle day 540 and move the strategy sleeve to cash. For the 2024 cycle, the first cash day after the tested holding window was October 13, 2025.</p>
+  <p>Exit BTC after day 540 following the halving date and move the strategy sleeve to cash. For the 2024 cycle, day 540 was October 12, 2025, so the first cash day was October 13, 2025.</p>
 
   <h3>Re-entry Rule</h3>
-  <p>Remain in cash until the next confirmed Bitcoin halving date. On the next halving date, the new cycle day becomes 0 and the system re-enters BTC.</p>
+  <p>Remain in cash after the exit date until the next cycle's pre-halving buy date, which is 500 days before the next confirmed Bitcoin halving date. When the next halving date estimate changes materially, recalculate the buy and sell dates.</p>
+
+  <h3>Cycle Clock Interpretation</h3>
+  <p>This revised rule is intended to approximate the bottom-to-top day-count framework without needing to identify the exact bottom in real time. Historically, the halving has landed roughly 500-plus days after the prior bear-market bottom, so buying 500 days before halving places the entry near the early bottom-to-top window, while selling 540 days after halving lands near the historical top zone around day 1,050 to day 1,080 after the prior bottom.</p>
+
+  <h3>Bottom-To-Top Day-Count Mapping</h3>
+  <p>Using the bottom as day 1, the revised rule maps closely to the observed bottom-to-top cycle clock. The model does not need to know the exact bottom date in real time; the bottom dates below are used to explain why the halving-based rule approximates that framework.</p>
+
+  <table>
+    <tr>
+      <th>Cycle</th>
+      <th>Observed / Assumed Bottom</th>
+      <th>Halving Date</th>
+      <th>Buy 500 Days Before Halving</th>
+      <th>Buy Day On Bottom Clock</th>
+      <th>Sell 540 Days After Halving</th>
+      <th>Sell Day On Bottom Clock</th>
+      <th>Top Zone</th>
+    </tr>
+    <tr>
+      <td>2015 to 2017</td>
+      <td>January 14, 2015</td>
+      <td>July 9, 2016</td>
+      <td>February 25, 2015</td>
+      <td>About day 43</td>
+      <td>December 31, 2017</td>
+      <td>About day 1,083</td>
+      <td>Around day 1,067</td>
+    </tr>
+    <tr>
+      <td>2018 to 2021</td>
+      <td>December 15, 2018</td>
+      <td>May 11, 2020</td>
+      <td>December 28, 2018</td>
+      <td>About day 14</td>
+      <td>November 2, 2021</td>
+      <td>About day 1,054</td>
+      <td>Around day 1,059</td>
+    </tr>
+    <tr>
+      <td>2022 to 2025</td>
+      <td>November 21, 2022</td>
+      <td>April 20, 2024</td>
+      <td>December 7, 2022</td>
+      <td>About day 17</td>
+      <td>October 12, 2025</td>
+      <td>About day 1,057</td>
+      <td>Around day 1,062</td>
+    </tr>
+  </table>
 
   <h3>No Override Indicators</h3>
-  <p>The 200-week moving average was studied, but it is not the primary real-account trigger for this system. The best tested BTC-only rule in the workbook was the halving-cycle day 0-540 rule, not the 200-week-SMA rule.</p>
+  <p>The 200-week moving average was studied, but it is not the primary real-account trigger for this system. The earlier workbook showed that the halving-cycle day 0-540 rule beat the 200-week-SMA rule in that test, but the current operating rule has now been updated to the wider 500-days-before-halving through 540-days-after-halving window.</p>
 
   <h2>3. Current-Cycle Calendar</h2>
 
@@ -136,7 +185,12 @@
     <tr>
       <td>2024 halving</td>
       <td>April 20, 2024</td>
-      <td>Cycle day 0. Model enters or holds BTC.</td>
+      <td>Halving anchor. The model was already holding BTC because entry was 500 days earlier.</td>
+    </tr>
+    <tr>
+      <td>2024-cycle buy date</td>
+      <td>December 7, 2022</td>
+      <td>500 days before the April 20, 2024 halving. Model enters BTC.</td>
     </tr>
     <tr>
       <td>Day 540</td>
@@ -160,9 +214,13 @@
     </tr>
   </table>
 
-  <h2>4. Backtest Results Used For This Manual</h2>
+  <h2>4. Backtest Results And Rule Status</h2>
 
-  <p>The core BTC-only comparison came from <strong>Bitcoin_strategy_comparison.csv</strong> and <strong>Bitcoin_4YearCycle_vs_200WeekSMA.xlsx</strong>.</p>
+  <p>The earlier BTC-only comparison came from <strong>Bitcoin_strategy_comparison.csv</strong> and <strong>Bitcoin_4YearCycle_vs_200WeekSMA.xlsx</strong>. Those historical results tested the prior halving-to-day-540 rule. The revised 500-days-before-halving entry rule should be treated as the current operating rule, with a fresh backtest still needed for exact performance statistics.</p>
+
+  <div class="note">
+    Rule update rationale: the bottom-to-top model captured more of the historical bull move because it bought much earlier than the halving date. The revised rule keeps the halving date as the known anchor, but shifts entry 500 days earlier so the holding window better approximates the bottom-to-top cycle without requiring exact real-time bottom identification.
+  </div>
 
   <table>
     <tr>
@@ -179,7 +237,7 @@
       <td>$320,703.29</td>
       <td>61.22%</td>
       <td>-53.08%</td>
-      <td>Best tested BTC-only operating rule.</td>
+      <td>Prior tested BTC-only rule. Superseded as the current operating rule by the 500-days-before-halving entry rule.</td>
     </tr>
     <tr>
       <td>Buy and hold BTC</td>
@@ -203,12 +261,13 @@
 
   <ul>
     <li>Record the latest BTC price and date.</li>
-    <li>Confirm the most recent halving date used by the tracker.</li>
-    <li>Calculate the cycle day: latest date minus halving date, with halving day as day 0.</li>
-    <li>If cycle day is 0 through 540, account status is Hold BTC.</li>
-    <li>If cycle day is 541 or later, account status is Hold Cash.</li>
+    <li>Confirm the active or projected halving date used by the tracker.</li>
+    <li>Calculate the buy date as halving date minus 500 calendar days.</li>
+    <li>Calculate the sell date as halving date plus 540 calendar days.</li>
+    <li>If today is from the buy date through the sell date, account status is Hold BTC.</li>
+    <li>If today is before the buy date or after the sell date, account status is Hold Cash.</li>
     <li>Keep the formal signal separate from discretionary DCA planning.</li>
-    <li>When the next halving occurs, update the halving date and reset cycle day to 0.</li>
+    <li>When the next halving estimate changes, update the buy date and sell date.</li>
   </ul>
 
   <h2>6. Dashboard Fields To Track</h2>
@@ -235,12 +294,20 @@
       <td>The active cycle anchor.</td>
     </tr>
     <tr>
+      <td>Buy date</td>
+      <td>Halving date minus 500 days.</td>
+    </tr>
+    <tr>
+      <td>Sell date</td>
+      <td>Halving date plus 540 days.</td>
+    </tr>
+    <tr>
       <td>Cycle day</td>
-      <td>Days since the active halving date.</td>
+      <td>Days since the active halving date, shown for context.</td>
     </tr>
     <tr>
       <td>Days to / from day 540</td>
-      <td>Shows whether the model is before, inside, or after the formal BTC holding window.</td>
+      <td>Shows whether the model is before, inside, or after the post-halving exit date.</td>
     </tr>
     <tr>
       <td>200-week SMA</td>
@@ -293,7 +360,7 @@
 
   <ul>
     <li>This manual is for tracking a rules-based study. It is not financial advice.</li>
-    <li>Do not treat the October 2026 bottom-window estimate as an automatic buy signal. It is a planning estimate, not the tested rule.</li>
+    <li>Do not treat the October 2026 bottom-window estimate as an automatic buy signal by itself. The formal buy rule is 500 days before the next halving date.</li>
     <li>Do not treat realized price or estimated electrical cost as automatic buy signals. They are bottom-status context indicators only.</li>
     <li>Do not replace the BTC cycle rule with QQQ, QLD, SPY, SSO, TQQQ, MACD, or moving-average rules in this account tracker.</li>
     <li>For real money, verify the data source, tax impact, trading vehicle, custody risk, and cash vehicle before acting.</li>
@@ -310,7 +377,7 @@
   </ul>
 
   <div class="note">
-    Manual created June 27, 2026. The tested data table in the local BTC-only comparison runs through June 10, 2026; dashboard refresh code should fetch current BTC data before publishing live status.
+    Manual created June 27, 2026 and strategy rule updated August 1, 2026. The tested data table in the local BTC-only comparison runs through June 10, 2026; dashboard refresh code should fetch current BTC data before publishing live status. The revised 500-days-before-halving entry rule still needs its own fresh backtest before exact performance statistics are quoted.
   </div>
 </body>
 </html>

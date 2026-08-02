@@ -4,11 +4,11 @@ Public dashboard for the Bitcoin four-year-cycle tracking system.
 
 ## Signal Rule
 
-- Signal source is Bitcoin cycle day, anchored to the most recent confirmed Bitcoin halving date.
-- Hold BTC from halving day through day 540, inclusive.
-- Hold Cash from day 541 until the next confirmed halving.
-- For the current studied cycle, the active halving date is 2024-04-20 and day 540 is 2025-10-12.
-- The 200-week SMA, realized price, and estimated electrical cost per BTC are context only. They do not override the cycle-day signal.
+- Signal source is the Bitcoin halving date, with fixed pre-halving and post-halving day counts.
+- Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive.
+- Hold Cash before the pre-halving buy date and after the day-540 sell date.
+- For the current studied cycle, the active halving date is 2024-04-20, the buy date is 2022-12-07, and the day-540 sell date is 2025-10-12.
+- The 200-week SMA, realized price, and estimated electrical cost per BTC are context only. They do not override the buy-window signal.
 
 This dashboard does not use QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA, or 5-day DCA rules.
 

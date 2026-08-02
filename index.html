@@ -556,7 +556,7 @@
         <div class="brand-mark" aria-hidden="true">BTC</div>
         <div>
           <h1>BTC Cycle Signal Desk</h1>
-          <p class="subtitle">Bitcoin four-year-cycle rule tracking. Context indicators do not override the signal.</p>
+          <p class="subtitle">Bitcoin four-year-cycle buy-window tracking. Context indicators do not override the signal.</p>
         </div>
       </div>
       <nav class="top-actions" aria-label="Dashboard links">
@@ -583,15 +583,17 @@
         <div class="metrics" aria-label="Signal metrics">
           <div class="metric"><span>BTC close</span><strong id="btcClose">--</strong></div>
           <div class="metric"><span>Active halving</span><strong id="halvingDate">--</strong></div>
+          <div class="metric"><span>Buy date</span><strong id="buyDate">--</strong></div>
+          <div class="metric"><span>Sell date / day 540</span><strong id="sellDate">--</strong></div>
           <div class="metric"><span>Cycle day</span><strong id="cycleDay">--</strong></div>
-          <div class="metric"><span>Day 540 date</span><strong id="day540">--</strong></div>
+          <div class="metric"><span>Buy-window distance</span><strong id="buyDateDistance">--</strong></div>
           <div class="metric"><span>Day 540 distance</span><strong id="day540Distance">--</strong></div>
-          <div class="metric"><span>Rule window</span><strong>0-540</strong></div>
+          <div class="metric"><span>Rule window</span><strong>-500 to +540</strong></div>
         </div>
 
         <div class="rule-strip">
           <span class="rule-dot" aria-hidden="true"></span>
-          <div id="ruleSummary">Hold BTC from halving day through day 540, inclusive. Hold Cash from day 541 until the next confirmed halving.</div>
+          <div id="ruleSummary">Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.</div>
         </div>
       </article>
 
@@ -628,23 +630,23 @@
         </div>
         <div class="decision-step">
           <span class="step-number">2</span>
-          <h3>Count Cycle Days</h3>
-          <p>Latest market date is <strong id="decisionMarketDate">--</strong>, giving cycle day <strong id="decisionCycleDay">--</strong>.</p>
+          <h3>Set Buy Date</h3>
+          <p>Buy window starts 500 days before the halving: <strong id="decisionBuyDate">--</strong>.</p>
         </div>
         <div class="decision-step">
           <span class="step-number">3</span>
-          <h3>Apply Rule Window</h3>
-          <p id="decisionRule">Days 0-540 hold BTC. Day 541 and later hold Cash.</p>
+          <h3>Set Sell Date</h3>
+          <p>Sell date is day 540 after the halving: <strong id="decisionSellDate">--</strong>.</p>
         </div>
         <div class="decision-step">
           <span class="step-number">4</span>
-          <h3>Check Context Only</h3>
-          <p>200-week SMA, realized price, and electrical cost are informational only.</p>
+          <h3>Check Market Date</h3>
+          <p id="decisionRule">Hold BTC only when the latest market date is inside the inclusive buy/sell window.</p>
         </div>
         <div class="decision-step">
           <span class="step-number">5</span>
           <h3>Final Decision</h3>
-          <p>The cycle-day rule selects:</p>
+          <p>The buy-window rule selects:</p>
           <span id="decisionFinal" class="decision-result">--</span>
         </div>
       </div>
@@ -653,7 +655,7 @@
     <section class="panel section">
       <div class="section-head">
         <h2 class="panel-title">Recent Signal History</h2>
-        <span class="tag">cycle-day rule</span>
+        <span class="tag">buy-window rule</span>
       </div>
       <div class="table-wrap">
         <table>
@@ -662,12 +664,14 @@
               <th>Date</th>
               <th>BTC close</th>
               <th>Cycle day</th>
+              <th>Buy date</th>
+              <th>Sell date</th>
               <th>Status</th>
               <th>Notes</th>
             </tr>
           </thead>
           <tbody id="historyRows">
-            <tr><td colspan="5" class="loading">Loading signal history...</td></tr>
+            <tr><td colspan="7" class="loading">Loading signal history...</td></tr>
           </tbody>
         </table>
       </div>
@@ -677,9 +681,9 @@
       <article class="panel copy-panel">
         <h2 class="panel-title">Exact Rule</h2>
         <ul>
-          <li>Signal source is Bitcoin cycle day, anchored to the most recent confirmed Bitcoin halving date.</li>
-          <li>Hold BTC from halving day through day 540, inclusive.</li>
-          <li>Hold Cash from day 541 until the next confirmed halving.</li>
+          <li>Signal source is the Bitcoin halving date, with fixed pre-halving and post-halving day counts.</li>
+          <li>Buy / hold BTC from 500 days before the halving date through day 540 after the halving date, inclusive.</li>
+          <li>Hold Cash before the pre-halving buy date and after the day-540 sell date.</li>
           <li>The 200-week SMA, realized price, and estimated electrical cost are context only.</li>
         </ul>
       </article>
@@ -694,7 +698,7 @@
     </section>
 
     <div class="footer-note">
-      Source rule: BTC Cycle Real Account Tracking System. Current 2024-cycle anchor is April 20, 2024; day 540 is October 12, 2025.
+      Source rule: BTC Cycle Real Account Tracking System. Current 2024-cycle anchor is April 20, 2024; buy date is December 7, 2022; day-540 sell date is October 12, 2025.
     </div>
   </main>
 
@@ -734,6 +738,14 @@
       return `${Math.abs(days)} days until`;
     }
 
+    function buyWindowText(daysFromBuyDate) {
+      if (daysFromBuyDate === null || daysFromBuyDate === undefined) return "--";
+      const days = Number(daysFromBuyDate);
+      if (days === 0) return "Buy date";
+      if (days > 0) return `${days} days since`;
+      return `${Math.abs(days)} days until`;
+    }
+
     function setText(id, value) {
       document.getElementById(id).textContent = value;
     }
@@ -757,15 +769,17 @@
       setText("generatedAt", formatTimestamp(data.generated_at));
       setText("btcClose", money(data.btc_close, true));
       setText("halvingDate", formatDate(data.active_halving_date));
+      setText("buyDate", formatDate(data.buy_date));
+      setText("sellDate", formatDate(data.sell_date || data.day_540_date));
       setText("cycleDay", data.cycle_day ?? "--");
-      setText("day540", formatDate(data.day_540_date));
+      setText("buyDateDistance", buyWindowText(data.days_from_buy_date));
       setText("day540Distance", day540Text(data.days_from_day_540));
       setText("decisionHalving", formatDate(data.active_halving_date));
-      setText("decisionMarketDate", formatDate(data.market_date));
-      setText("decisionCycleDay", data.cycle_day ?? "--");
-      setText("decisionRule", Number(data.cycle_day) <= 540
-        ? "Cycle day is inside the day 0-540 BTC holding window."
-        : "Cycle day is after day 540, so the formal rule is Cash.");
+      setText("decisionBuyDate", formatDate(data.buy_date));
+      setText("decisionSellDate", formatDate(data.sell_date || data.day_540_date));
+      setText("decisionRule", data.status === "Hold BTC"
+        ? `Latest market date ${formatDate(data.market_date)} is inside the BTC holding window.`
+        : `Latest market date ${formatDate(data.market_date)} is outside the BTC holding window.`);
       const decisionFinal = document.getElementById("decisionFinal");
       decisionFinal.textContent = data.status || "--";
       decisionFinal.className = `decision-result ${statusClass(data.status)}`;
@@ -774,7 +788,7 @@
       setText("realizedSource", data.realized_price_source || "On-chain cost-basis context, not a signal trigger.");
       setText("electricalCost", money(data.electrical_cost_per_btc));
       setText("electricalAssumptions", data.electrical_cost_assumptions || "Estimated mining electrical cost, context only.");
-      setText("ruleSummary", data.rule_summary || "Hold BTC from halving day through day 540, inclusive. Hold Cash from day 541 until the next confirmed halving.");
+      setText("ruleSummary", data.rule_summary || "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.");
 
       const history = Array.isArray(data.recent_history) ? data.recent_history : [];
       document.getElementById("historyRows").innerHTML = history.map((row) => `
@@ -782,14 +796,16 @@
           <td>${formatDate(row.date)}</td>
           <td>${money(row.btc_close, true)}</td>
           <td>${row.cycle_day ?? "--"}</td>
+          <td>${formatDate(row.buy_date)}</td>
+          <td>${formatDate(row.sell_date)}</td>
           <td><span class="status-chip ${statusClass(row.status)}">${row.status || "--"}</span></td>
           <td>${row.notes || ""}</td>
         </tr>
-      `).join("") || `<tr><td colspan="5">No signal history available.</td></tr>`;
+      `).join("") || `<tr><td colspan="7">No signal history available.</td></tr>`;
     }).catch((error) => {
       document.getElementById("statusValue").textContent = "Data unavailable";
       document.getElementById("statusValue").className = "status-value cash";
-      document.getElementById("historyRows").innerHTML = `<tr><td colspan="5">${error.message}</td></tr>`;
+      document.getElementById("historyRows").innerHTML = `<tr><td colspan="7">${error.message}</td></tr>`;
     });
   </script>
 </body>

@@ -2,8 +2,9 @@
 """Refresh BTC Cycle Signal Desk data files.
 
 The trading signal is intentionally simple:
-hold BTC from halving day through cycle day 540, inclusive; hold Cash after
-day 540 until the next confirmed halving. Context indicators never override it.
+buy / hold BTC from 500 days before the Bitcoin halving date through cycle
+day 540 after the halving, inclusive; hold Cash outside that window. Context
+indicators never override it.
 """
 
 from __future__ import annotations
@@ -34,9 +35,12 @@ HALVINGS = [
     date(2024, 4, 20),
 ]
 
+BUY_OFFSET_DAYS = 500
+SELL_OFFSET_DAYS = 540
+
 RULE_SUMMARY = (
-    "Hold BTC from halving day through day 540, inclusive. "
-    "Hold Cash from day 541 until the next confirmed halving."
+    "Buy / hold BTC from 500 days before the Bitcoin halving date through "
+    "day 540 after the halving date, inclusive. Hold Cash outside that window."
 )
 
 MINER_EFFICIENCY_J_PER_TH = float(os.environ.get("MINER_EFFICIENCY_J_PER_TH", "30"))
@@ -131,6 +135,12 @@ def latest_complete_coinmetrics(rows: list[dict[str, Any]]) -> dict[str, Any] | 
 
 
 def active_halving_for(day: date) -> date:
+    for halving in HALVINGS:
+        buy_date = halving - timedelta(days=BUY_OFFSET_DAYS)
+        sell_date = halving + timedelta(days=SELL_OFFSET_DAYS)
+        if buy_date <= day <= sell_date:
+            return halving
+
     active = HALVINGS[0]
     for halving in HALVINGS:
         if day >= halving:
@@ -140,13 +150,15 @@ def active_halving_for(day: date) -> date:
     return active
 
 
-def signal_for(day: date) -> tuple[str, int, date, int]:
+def signal_for(day: date) -> tuple[str, int, date, date, int, int]:
     halving = active_halving_for(day)
     cycle_day = (day - halving).days
-    day_540 = halving + timedelta(days=540)
-    status = "Hold BTC" if 0 <= cycle_day <= 540 else "Hold Cash"
+    buy_date = halving - timedelta(days=BUY_OFFSET_DAYS)
+    day_540 = halving + timedelta(days=SELL_OFFSET_DAYS)
+    status = "Hold BTC" if buy_date <= day <= day_540 else "Hold Cash"
+    days_from_buy = (day - buy_date).days
     days_from_day_540 = (day - day_540).days
-    return status, cycle_day, day_540, days_from_day_540
+    return status, cycle_day, buy_date, day_540, days_from_buy, days_from_day_540
 
 
 def rolling_sma(values: list[float], window: int) -> float | None:
@@ -159,7 +171,7 @@ def build_payload() -> dict[str, Any]:
     yahoo_rows = yahoo_btc_daily()
     latest = yahoo_rows[-1]
     market_date = date.fromisoformat(latest["date"])
-    status, cycle_day, day_540, days_from_day_540 = signal_for(market_date)
+    status, cycle_day, buy_date, day_540, days_from_buy, days_from_day_540 = signal_for(market_date)
     active_halving = active_halving_for(market_date)
     closes = [float(row["close"]) for row in yahoo_rows]
     sma_200_week = rolling_sma(closes, 200 * 7)
@@ -202,18 +214,22 @@ def build_payload() -> dict[str, Any]:
     recent_history = []
     for row in yahoo_rows[-14:]:
         row_date = date.fromisoformat(row["date"])
-        row_status, row_cycle_day, row_day_540, row_days_from_day_540 = signal_for(row_date)
-        if row_days_from_day_540 == 0:
+        row_status, row_cycle_day, row_buy_date, row_day_540, row_days_from_buy, row_days_from_day_540 = signal_for(row_date)
+        if row_date < row_buy_date:
+            notes = f"{abs(row_days_from_buy)} days before the BTC buy window."
+        elif row_days_from_day_540 == 0:
             notes = "Last day of the tested BTC holding window."
-        elif row_days_from_day_540 > 0:
+        elif row_date > row_day_540:
             notes = f"{row_days_from_day_540} days after day 540."
         else:
-            notes = f"{abs(row_days_from_day_540)} days before day 540."
+            notes = f"Inside BTC holding window; {abs(row_days_from_day_540)} days until day 540."
         recent_history.append(
             {
                 "date": row_date.isoformat(),
                 "btc_close": round(float(row["close"]), 2),
                 "cycle_day": row_cycle_day,
+                "buy_date": row_buy_date.isoformat(),
+                "sell_date": row_day_540.isoformat(),
                 "status": row_status,
                 "notes": notes,
             }
@@ -225,8 +241,11 @@ def build_payload() -> dict[str, Any]:
         "btc_close": round(float(latest["close"]), 2),
         "status": status,
         "active_halving_date": active_halving.isoformat(),
+        "buy_date": buy_date.isoformat(),
+        "sell_date": day_540.isoformat(),
         "cycle_day": cycle_day,
         "day_540_date": day_540.isoformat(),
+        "days_from_buy_date": days_from_buy,
         "days_from_day_540": days_from_day_540,
         "sma_200_week": round(sma_200_week, 2) if sma_200_week is not None else None,
         "realized_price": round(realized_price, 2) if realized_price is not None else None,
@@ -242,7 +261,7 @@ def write_outputs(payload: dict[str, Any]) -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     JSON_PATH.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
-    fieldnames = ["date", "btc_close", "cycle_day", "status", "notes"]
+    fieldnames = ["date", "btc_close", "cycle_day", "buy_date", "sell_date", "status", "notes"]
     with CSV_PATH.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()

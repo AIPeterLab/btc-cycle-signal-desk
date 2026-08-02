@@ -1,15 +1,15 @@
-date,btc_close,cycle_day,status,notes
-2026-07-19,64690.8,820,Hold Cash,280 days after day 540.
-2026-07-20,65230.03,821,Hold Cash,281 days after day 540.
-2026-07-21,66505.12,822,Hold Cash,282 days after day 540.
-2026-07-22,66100.8,823,Hold Cash,283 days after day 540.
-2026-07-23,65044.81,824,Hold Cash,284 days after day 540.
-2026-07-24,64098.5,825,Hold Cash,285 days after day 540.
-2026-07-25,64311.81,826,Hold Cash,286 days after day 540.
-2026-07-26,65340.3,827,Hold Cash,287 days after day 540.
-2026-07-27,63724.9,828,Hold Cash,288 days after day 540.
-2026-07-28,63871.36,829,Hold Cash,289 days after day 540.
-2026-07-29,63908.17,830,Hold Cash,290 days after day 540.
-2026-07-30,64725.31,831,Hold Cash,291 days after day 540.
-2026-07-31,62813.75,832,Hold Cash,292 days after day 540.
-2026-08-01,62757.19,833,Hold Cash,293 days after day 540.
+date,btc_close,cycle_day,buy_date,sell_date,status,notes
+2026-07-19,64690.8,820,2022-12-07,2025-10-12,Hold Cash,280 days after day 540.
+2026-07-20,65230.03,821,2022-12-07,2025-10-12,Hold Cash,281 days after day 540.
+2026-07-21,66505.12,822,2022-12-07,2025-10-12,Hold Cash,282 days after day 540.
+2026-07-22,66100.8,823,2022-12-07,2025-10-12,Hold Cash,283 days after day 540.
+2026-07-23,65044.81,824,2022-12-07,2025-10-12,Hold Cash,284 days after day 540.
+2026-07-24,64098.5,825,2022-12-07,2025-10-12,Hold Cash,285 days after day 540.
+2026-07-25,64311.81,826,2022-12-07,2025-10-12,Hold Cash,286 days after day 540.
+2026-07-26,65340.3,827,2022-12-07,2025-10-12,Hold Cash,287 days after day 540.
+2026-07-27,63724.9,828,2022-12-07,2025-10-12,Hold Cash,288 days after day 540.
+2026-07-28,63871.36,829,2022-12-07,2025-10-12,Hold Cash,289 days after day 540.
+2026-07-29,63908.17,830,2022-12-07,2025-10-12,Hold Cash,290 days after day 540.
+2026-07-30,64725.31,831,2022-12-07,2025-10-12,Hold Cash,291 days after day 540.
+2026-07-31,62813.75,832,2022-12-07,2025-10-12,Hold Cash,292 days after day 540.
+2026-08-02,63369.04,834,2022-12-07,2025-10-12,Hold Cash,294 days after day 540.
