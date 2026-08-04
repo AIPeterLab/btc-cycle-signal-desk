@@ -68,6 +68,8 @@
 
   <p><strong>Document purpose:</strong> This is the plain-language operating manual for tracking the Bitcoin four-year-cycle system studied in the BTC_cyc workbook. It is designed for real-account monitoring, daily review, and a future GitHub dashboard.</p>
 
+  <p><strong>Strategy name:</strong> BTC Halving Window Strategy.</p>
+
   <p><strong>Primary system:</strong> Bitcoin four-year-cycle timing using the halving date as the known calendar anchor, with an earlier entry intended to approximate the bottom-to-top cycle clock.</p>
 
   <div class="rule">
@@ -80,6 +82,10 @@
     <tr>
       <th>Item</th>
       <th>Rule</th>
+    </tr>
+    <tr>
+      <td>Strategy name</td>
+      <td>BTC Halving Window Strategy.</td>
     </tr>
     <tr>
       <td>Invested asset</td>
