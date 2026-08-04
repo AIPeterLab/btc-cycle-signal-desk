@@ -721,6 +721,7 @@
     function formatTimestamp(value) {
       if (!value) return "--";
       return new Date(value).toLocaleString("en-US", {
+        timeZone: "America/New_York",
         month: "short",
         day: "numeric",
         year: "numeric",

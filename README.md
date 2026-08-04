@@ -29,13 +29,13 @@ Run the updater locally:
 python scripts/update_signals.py
 ```
 
-The GitHub Actions workflow runs daily at `22:15 UTC`, which is `18:15 America/New_York` during daylight saving time, and can also be run manually with `workflow_dispatch`.
+The daily schedule is centralized in the AIPeterLab Cloudflare Worker. The Worker dispatches this repo's GitHub Actions workflow at the New York refresh window, and the workflow can also be run manually with `workflow_dispatch`.
 
 ## Cloudflare Pages
 
 Recommended production host: Cloudflare Pages at `https://btc.aipeterlab.com`.
 
-Use Git integration so the existing GitHub refresh workflow stays unchanged:
+Use Git integration so Cloudflare Pages redeploys after the dispatched GitHub refresh workflow commits new data:
 
 - Cloudflare project name: `btc-signal-desk`
 - GitHub repository: `AIPeterLab/btc-cycle-signal-desk`

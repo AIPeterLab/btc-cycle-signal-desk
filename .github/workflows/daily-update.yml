@@ -2,8 +2,6 @@ name: Daily BTC Cycle Signal Update
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "15 22 * * *"
 
 permissions:
   contents: write
