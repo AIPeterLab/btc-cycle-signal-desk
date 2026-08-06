@@ -18,7 +18,8 @@ This dashboard does not use QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA, or 5-day DCA ru
 - `data/signals.json` - current status, context values, and recent history.
 - `data/signals.csv` - recent signal history.
 - `scripts/update_signals.py` - no-key updater using public BTC-USD and CoinMetrics data.
-- `.github/workflows/daily-update.yml` - scheduled GitHub Actions refresh.
+- `.github/workflows/daily-update.yml` - dispatch-only GitHub Actions refresh.
+- `_headers` - Cloudflare Pages cache rules matching the QLD/SSO signal desks.
 - `Real_Account_Tracking_System.doc` - plain-language operating manual from the source project.
 
 ## Refresh
@@ -29,7 +30,7 @@ Run the updater locally:
 python scripts/update_signals.py
 ```
 
-The daily schedule is centralized in the AIPeterLab Cloudflare Worker. The Worker dispatches this repo's GitHub Actions workflow at the New York refresh window, and the workflow can also be run manually with `workflow_dispatch`.
+The daily schedule is centralized in the AIPeterLab Cloudflare Worker. The Worker dispatches this repo's GitHub Actions workflow at the New York refresh window, and the workflow can also be run manually with `workflow_dispatch`. Keep this repository workflow dispatch-only; do not add a GitHub `schedule:` block.
 
 ## Cloudflare Pages
 
