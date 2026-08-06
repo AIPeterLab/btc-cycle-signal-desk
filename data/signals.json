@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-06T02:00:07.485548+00:00",
+  "generated_at": "2026-08-06T22:00:53.253342+00:00",
   "market_date": "2026-08-06",
-  "btc_close": 64520.62,
+  "btc_close": 64346.21,
   "status": "Hold Cash",
   "active_halving_date": "2024-04-20",
   "buy_date": "2022-12-07",
@@ -10,22 +10,13 @@
   "day_540_date": "2025-10-12",
   "days_from_buy_date": 1338,
   "days_from_day_540": 298,
-  "sma_200_week": 63602.07,
-  "realized_price": 52178.34,
-  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-08-04.",
+  "sma_200_week": 63633.84,
+  "realized_price": 52372.18,
+  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-08-05.",
   "electrical_cost_per_btc": 72288.03,
-  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-08-04; assumes 30 J/TH and $0.05/kWh.",
+  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-08-05; assumes 30 J/TH and $0.05/kWh.",
   "rule_summary": "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.",
   "recent_history": [
-    {
-      "date": "2026-07-23",
-      "btc_close": 65044.81,
-      "cycle_day": 824,
-      "buy_date": "2022-12-07",
-      "sell_date": "2025-10-12",
-      "status": "Hold Cash",
-      "notes": "284 days after day 540."
-    },
     {
       "date": "2026-07-24",
       "btc_close": 64098.5,
@@ -135,8 +126,17 @@
       "notes": "296 days after day 540."
     },
     {
+      "date": "2026-08-05",
+      "btc_close": 64597.5,
+      "cycle_day": 837,
+      "buy_date": "2022-12-07",
+      "sell_date": "2025-10-12",
+      "status": "Hold Cash",
+      "notes": "297 days after day 540."
+    },
+    {
       "date": "2026-08-06",
-      "btc_close": 64520.62,
+      "btc_close": 64346.21,
       "cycle_day": 838,
       "buy_date": "2022-12-07",
       "sell_date": "2025-10-12",
