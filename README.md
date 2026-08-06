@@ -38,7 +38,7 @@ Recommended production host: Cloudflare Pages at `https://btc.aipeterlab.com`.
 
 Use Git integration so Cloudflare Pages redeploys after the dispatched GitHub refresh workflow commits new data:
 
-- Cloudflare project name: `btc-signal-desk`
+- Cloudflare Git project name: `btc-signal-desk-git`
 - GitHub repository: `AIPeterLab/btc-cycle-signal-desk`
 - Production branch: `main`
 - Framework preset: `None`

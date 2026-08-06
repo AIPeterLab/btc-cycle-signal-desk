@@ -4,11 +4,12 @@ This repo is ready for a Git-connected Cloudflare Pages deployment. Do not chang
 
 ## Project
 
-- Cloudflare Pages project name: `btc-signal-desk`
+- Cloudflare Pages Git project name: `btc-signal-desk-git`
+- Existing direct-upload project: `btc-signal-desk`
 - Git provider: GitHub
 - Repository: `AIPeterLab/btc-cycle-signal-desk`
 - Production branch: `main`
-- Project subdomain after creation: `btc-signal-desk.pages.dev`
+- Project subdomain after creation: `btc-signal-desk-git.pages.dev`
 - Production custom domain: `btc.aipeterlab.com`
 
 ## Build Settings
@@ -27,7 +28,7 @@ After the first Pages deployment succeeds:
 
 1. Open Cloudflare dashboard.
 2. Go to Workers & Pages.
-3. Open `btc-signal-desk`.
+3. Open `btc-signal-desk-git`.
 4. Go to Custom domains.
 5. Select Set up a domain.
 6. Enter `btc.aipeterlab.com`.
@@ -38,12 +39,14 @@ Expected DNS record:
 ```text
 Type: CNAME
 Name: btc
-Target: btc-signal-desk.pages.dev
+Target: btc-signal-desk-git.pages.dev
 Proxy status: Proxied
 TTL: Auto
 ```
 
 If Cloudflare manages the `aipeterlab.com` zone in the same account, it should add this CNAME automatically during the custom-domain setup. If it asks you to add the record manually, add the CNAME above and then return to the Pages custom-domain screen to finish validation.
+
+Do not move `btc.aipeterlab.com` away from the existing `btc-signal-desk` direct-upload project until `https://btc-signal-desk-git.pages.dev/data/signals.json` matches GitHub raw data.
 
 ## Refresh Workflow
 
