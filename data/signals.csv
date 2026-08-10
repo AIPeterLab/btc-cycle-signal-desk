@@ -1,5 +1,4 @@
 date,btc_close,cycle_day,buy_date,sell_date,status,notes
-2026-07-27,63724.9,828,2022-12-07,2025-10-12,Hold Cash,288 days after day 540.
 2026-07-28,63871.36,829,2022-12-07,2025-10-12,Hold Cash,289 days after day 540.
 2026-07-29,63908.17,830,2022-12-07,2025-10-12,Hold Cash,290 days after day 540.
 2026-07-30,64725.31,831,2022-12-07,2025-10-12,Hold Cash,291 days after day 540.
@@ -12,4 +11,5 @@ date,btc_close,cycle_day,buy_date,sell_date,status,notes
 2026-08-06,64262.11,838,2022-12-07,2025-10-12,Hold Cash,298 days after day 540.
 2026-08-07,64880.19,839,2022-12-07,2025-10-12,Hold Cash,299 days after day 540.
 2026-08-08,64904.69,840,2022-12-07,2025-10-12,Hold Cash,300 days after day 540.
-2026-08-09,65095.28,841,2022-12-07,2025-10-12,Hold Cash,301 days after day 540.
+2026-08-09,64844.89,841,2022-12-07,2025-10-12,Hold Cash,301 days after day 540.
+2026-08-10,63949.49,842,2022-12-07,2025-10-12,Hold Cash,302 days after day 540.

@@ -37,6 +37,7 @@ HALVINGS = [
 
 BUY_OFFSET_DAYS = 500
 SELL_OFFSET_DAYS = 540
+HALVING_CYCLE_YEARS = 4
 
 RULE_SUMMARY = (
     "Buy / hold BTC from 500 days before the Bitcoin halving date through "
@@ -150,6 +151,20 @@ def active_halving_for(day: date) -> date:
     return active
 
 
+def add_cycle_years(day: date, years: int = HALVING_CYCLE_YEARS) -> date:
+    try:
+        return day.replace(year=day.year + years)
+    except ValueError:
+        return day.replace(month=2, day=28, year=day.year + years)
+
+
+def next_halving_for(day: date) -> date:
+    halving = HALVINGS[-1]
+    while halving - timedelta(days=BUY_OFFSET_DAYS) <= day:
+        halving = add_cycle_years(halving)
+    return halving
+
+
 def signal_for(day: date) -> tuple[str, int, date, date, int, int]:
     halving = active_halving_for(day)
     cycle_day = (day - halving).days
@@ -167,14 +182,29 @@ def rolling_sma(values: list[float], window: int) -> float | None:
     return statistics.fmean(values[-window:])
 
 
+def exponential_moving_average(values: list[float], window: int) -> float | None:
+    if len(values) < window:
+        return None
+    smoothing = 2 / (window + 1)
+    ema = statistics.fmean(values[:window])
+    for value in values[window:]:
+        ema = (value * smoothing) + (ema * (1 - smoothing))
+    return ema
+
+
 def build_payload() -> dict[str, Any]:
     yahoo_rows = yahoo_btc_daily()
     latest = yahoo_rows[-1]
     market_date = date.fromisoformat(latest["date"])
     status, cycle_day, buy_date, day_540, days_from_buy, days_from_day_540 = signal_for(market_date)
     active_halving = active_halving_for(market_date)
+    next_halving = next_halving_for(market_date)
+    next_buy_date = next_halving - timedelta(days=BUY_OFFSET_DAYS)
+    days_until_next_buy = (next_buy_date - market_date).days
     closes = [float(row["close"]) for row in yahoo_rows]
     sma_200_week = rolling_sma(closes, 200 * 7)
+    ema_50 = exponential_moving_average(closes, 50)
+    ema_200 = exponential_moving_average(closes, 200)
 
     realized_price = None
     realized_source = "CoinMetrics MVRV unavailable; on-chain cost-basis context not computed."
@@ -241,13 +271,20 @@ def build_payload() -> dict[str, Any]:
         "btc_close": round(float(latest["close"]), 2),
         "status": status,
         "active_halving_date": active_halving.isoformat(),
+        "next_halving_date": next_halving.isoformat(),
+        "last_buy_date": buy_date.isoformat(),
+        "last_sell_date": day_540.isoformat(),
+        "next_buy_date": next_buy_date.isoformat(),
         "buy_date": buy_date.isoformat(),
         "sell_date": day_540.isoformat(),
         "cycle_day": cycle_day,
         "day_540_date": day_540.isoformat(),
         "days_from_buy_date": days_from_buy,
         "days_from_day_540": days_from_day_540,
+        "days_until_next_buy_date": days_until_next_buy,
         "sma_200_week": round(sma_200_week, 2) if sma_200_week is not None else None,
+        "ema_50": round(ema_50, 2) if ema_50 is not None else None,
+        "ema_200": round(ema_200, 2) if ema_200 is not None else None,
         "realized_price": round(realized_price, 2) if realized_price is not None else None,
         "realized_price_source": realized_source,
         "electrical_cost_per_btc": round(electrical_cost, 2) if electrical_cost is not None else None,

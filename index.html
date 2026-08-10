@@ -583,10 +583,10 @@
         <div class="metrics" aria-label="Signal metrics">
           <div class="metric"><span>BTC close</span><strong id="btcClose">--</strong></div>
           <div class="metric"><span>Active halving</span><strong id="halvingDate">--</strong></div>
-          <div class="metric"><span>Buy date</span><strong id="buyDate">--</strong></div>
-          <div class="metric"><span>Sell date / day 540</span><strong id="sellDate">--</strong></div>
-          <div class="metric"><span>Cycle day</span><strong id="cycleDay">--</strong></div>
-          <div class="metric"><span>Buy-window distance</span><strong id="buyDateDistance">--</strong></div>
+          <div class="metric"><span>Last buy date</span><strong id="buyDate">--</strong></div>
+          <div class="metric"><span>Last sell date</span><strong id="sellDate">--</strong></div>
+          <div class="metric"><span>Next buy date</span><strong id="nextBuyDate">--</strong></div>
+          <div class="metric"><span>Next buy countdown</span><strong id="nextBuyCountdown">--</strong></div>
           <div class="metric"><span>Day 540 distance</span><strong id="day540Distance">--</strong></div>
           <div class="metric"><span>Rule window</span><strong>-500 to +540</strong></div>
         </div>
@@ -602,6 +602,16 @@
         <div class="context-item">
           <div class="name">200-week SMA <span class="tag">context only</span></div>
           <strong id="sma200">--</strong>
+          <p>Displayed for market context. It is not the trading trigger for this dashboard.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">BTC EMA50 <span class="tag">context only</span></div>
+          <strong id="ema50">--</strong>
+          <p>Displayed for market context. It is not the trading trigger for this dashboard.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">BTC EMA200 <span class="tag">context only</span></div>
+          <strong id="ema200">--</strong>
           <p>Displayed for market context. It is not the trading trigger for this dashboard.</p>
         </div>
         <div class="context-item">
@@ -630,13 +640,13 @@
         </div>
         <div class="decision-step">
           <span class="step-number">2</span>
-          <h3>Set Buy Date</h3>
-          <p>Buy window starts 500 days before the halving: <strong id="decisionBuyDate">--</strong>.</p>
+          <h3>Set Last Buy Date</h3>
+          <p>Last buy window started 500 days before the halving: <strong id="decisionBuyDate">--</strong>.</p>
         </div>
         <div class="decision-step">
           <span class="step-number">3</span>
-          <h3>Set Sell Date</h3>
-          <p>Sell date is day 540 after the halving: <strong id="decisionSellDate">--</strong>.</p>
+          <h3>Set Last Sell Date</h3>
+          <p>Last sell date was day 540 after the halving: <strong id="decisionSellDate">--</strong>.</p>
         </div>
         <div class="decision-step">
           <span class="step-number">4</span>
@@ -664,8 +674,8 @@
               <th>Date</th>
               <th>BTC close</th>
               <th>Cycle day</th>
-              <th>Buy date</th>
-              <th>Sell date</th>
+              <th>Last buy date</th>
+              <th>Last sell date</th>
               <th>Status</th>
               <th>Notes</th>
             </tr>
@@ -684,13 +694,13 @@
           <li>Signal source is the Bitcoin halving date, with fixed pre-halving and post-halving day counts.</li>
           <li>Buy / hold BTC from 500 days before the halving date through day 540 after the halving date, inclusive.</li>
           <li>Hold Cash before the pre-halving buy date and after the day-540 sell date.</li>
-          <li>The 200-week SMA, realized price, and estimated electrical cost are context only.</li>
+          <li>The 200-week SMA, EMA50, EMA200, realized price, and estimated electrical cost are context only.</li>
         </ul>
       </article>
       <article class="panel copy-panel">
         <h2 class="panel-title">Guardrails</h2>
         <ul>
-          <li>No QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA, or DCA rules are part of this BTC signal.</li>
+          <li>No QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or DCA rules are part of this BTC signal.</li>
           <li>Bottom-zone context can help describe the cycle, but it is not an automatic buy signal.</li>
           <li>This is a rules-based tracking dashboard and is not financial advice.</li>
         </ul>
@@ -698,7 +708,7 @@
     </section>
 
     <div class="footer-note">
-      Source rule: BTC Cycle Real Account Tracking System. Current 2024-cycle anchor is April 20, 2024; buy date is December 7, 2022; day-540 sell date is October 12, 2025.
+      Source rule: BTC Cycle Real Account Tracking System. Current 2024-cycle anchor is April 20, 2024; last buy date is December 7, 2022; last sell date is October 12, 2025.
     </div>
   </main>
 
@@ -739,12 +749,12 @@
       return `${Math.abs(days)} days until`;
     }
 
-    function buyWindowText(daysFromBuyDate) {
-      if (daysFromBuyDate === null || daysFromBuyDate === undefined) return "--";
-      const days = Number(daysFromBuyDate);
-      if (days === 0) return "Buy date";
-      if (days > 0) return `${days} days since`;
-      return `${Math.abs(days)} days until`;
+    function nextBuyText(daysUntilNextBuyDate) {
+      if (daysUntilNextBuyDate === null || daysUntilNextBuyDate === undefined) return "--";
+      const days = Number(daysUntilNextBuyDate);
+      if (days === 0) return "Today";
+      if (days > 0) return `${days} days until`;
+      return `${Math.abs(days)} days since`;
     }
 
     function setText(id, value) {
@@ -770,14 +780,14 @@
       setText("generatedAt", formatTimestamp(data.generated_at));
       setText("btcClose", money(data.btc_close, true));
       setText("halvingDate", formatDate(data.active_halving_date));
-      setText("buyDate", formatDate(data.buy_date));
-      setText("sellDate", formatDate(data.sell_date || data.day_540_date));
-      setText("cycleDay", data.cycle_day ?? "--");
-      setText("buyDateDistance", buyWindowText(data.days_from_buy_date));
+      setText("buyDate", formatDate(data.last_buy_date || data.buy_date));
+      setText("sellDate", formatDate(data.last_sell_date || data.sell_date || data.day_540_date));
+      setText("nextBuyDate", formatDate(data.next_buy_date));
+      setText("nextBuyCountdown", nextBuyText(data.days_until_next_buy_date));
       setText("day540Distance", day540Text(data.days_from_day_540));
       setText("decisionHalving", formatDate(data.active_halving_date));
-      setText("decisionBuyDate", formatDate(data.buy_date));
-      setText("decisionSellDate", formatDate(data.sell_date || data.day_540_date));
+      setText("decisionBuyDate", formatDate(data.last_buy_date || data.buy_date));
+      setText("decisionSellDate", formatDate(data.last_sell_date || data.sell_date || data.day_540_date));
       setText("decisionRule", data.status === "Hold BTC"
         ? `Latest market date ${formatDate(data.market_date)} is inside the BTC holding window.`
         : `Latest market date ${formatDate(data.market_date)} is outside the BTC holding window.`);
@@ -785,6 +795,8 @@
       decisionFinal.textContent = data.status || "--";
       decisionFinal.className = `decision-result ${statusClass(data.status)}`;
       setText("sma200", money(data.sma_200_week));
+      setText("ema50", money(data.ema_50));
+      setText("ema200", money(data.ema_200));
       setText("realizedPrice", money(data.realized_price));
       setText("realizedSource", data.realized_price_source || "On-chain cost-basis context, not a signal trigger.");
       setText("electricalCost", money(data.electrical_cost_per_btc));

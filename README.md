@@ -8,9 +8,9 @@ Public dashboard for the Bitcoin four-year-cycle tracking system.
 - Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive.
 - Hold Cash before the pre-halving buy date and after the day-540 sell date.
 - For the current studied cycle, the active halving date is 2024-04-20, the buy date is 2022-12-07, and the day-540 sell date is 2025-10-12.
-- The 200-week SMA, realized price, and estimated electrical cost per BTC are context only. They do not override the buy-window signal.
+- The 200-week SMA, BTC EMA50, BTC EMA200, realized price, and estimated electrical cost per BTC are context only. They do not override the buy-window signal.
 
-This dashboard does not use QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA, or 5-day DCA rules.
+This dashboard does not use QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or 5-day DCA rules.
 
 ## Files
 
