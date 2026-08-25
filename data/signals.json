@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-24T22:15:20.553344+00:00",
-  "market_date": "2026-08-24",
-  "btc_close": 78858.92,
+  "generated_at": "2026-08-25T22:15:22.095066+00:00",
+  "market_date": "2026-08-25",
+  "btc_close": 78930.13,
   "status": "Hold Cash",
   "active_halving_date": "2024-04-20",
   "next_halving_date": "2028-04-20",
@@ -10,29 +10,20 @@
   "next_buy_date": "2026-12-07",
   "buy_date": "2022-12-07",
   "sell_date": "2025-10-12",
-  "cycle_day": 856,
+  "cycle_day": 857,
   "day_540_date": "2025-10-12",
-  "days_from_buy_date": 1356,
-  "days_from_day_540": 316,
-  "days_until_next_buy_date": 105,
-  "sma_200_week": 64258.2,
-  "ema_50": 66795.09,
-  "ema_200": 71766.75,
-  "realized_price": 52456.35,
-  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-08-23.",
+  "days_from_buy_date": 1357,
+  "days_from_day_540": 317,
+  "days_until_next_buy_date": 104,
+  "sma_200_week": 64300.3,
+  "ema_50": 67274.95,
+  "ema_200": 71839.07,
+  "realized_price": 52054.05,
+  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-08-24.",
   "electrical_cost_per_btc": 72044.97,
-  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-08-23; assumes 30 J/TH and $0.05/kWh.",
+  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-08-24; assumes 30 J/TH and $0.05/kWh.",
   "rule_summary": "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.",
   "recent_history": [
-    {
-      "date": "2026-08-11",
-      "btc_close": 63551.88,
-      "cycle_day": 843,
-      "buy_date": "2022-12-07",
-      "sell_date": "2025-10-12",
-      "status": "Hold Cash",
-      "notes": "303 days after day 540."
-    },
     {
       "date": "2026-08-12",
       "btc_close": 63402.43,
@@ -143,12 +134,21 @@
     },
     {
       "date": "2026-08-24",
-      "btc_close": 78858.92,
+      "btc_close": 78964.48,
       "cycle_day": 856,
       "buy_date": "2022-12-07",
       "sell_date": "2025-10-12",
       "status": "Hold Cash",
       "notes": "316 days after day 540."
+    },
+    {
+      "date": "2026-08-25",
+      "btc_close": 78930.13,
+      "cycle_day": 857,
+      "buy_date": "2022-12-07",
+      "sell_date": "2025-10-12",
+      "status": "Hold Cash",
+      "notes": "317 days after day 540."
     }
   ]
 }
