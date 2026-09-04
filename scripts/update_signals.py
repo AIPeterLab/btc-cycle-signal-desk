@@ -202,9 +202,18 @@ def build_payload() -> dict[str, Any]:
     next_buy_date = next_halving - timedelta(days=BUY_OFFSET_DAYS)
     days_until_next_buy = (next_buy_date - market_date).days
     closes = [float(row["close"]) for row in yahoo_rows]
+    sma_50_week = rolling_sma(closes, 50 * 7)
     sma_200_week = rolling_sma(closes, 200 * 7)
     ema_50 = exponential_moving_average(closes, 50)
     ema_200 = exponential_moving_average(closes, 200)
+    bull_market_signal = (
+        "Bull Market" if sma_50_week is not None and float(latest["close"]) >= sma_50_week else "Below 50-week SMA"
+    )
+    sma_50_week_distance_pct = (
+        ((float(latest["close"]) - sma_50_week) / sma_50_week) * 100
+        if sma_50_week
+        else None
+    )
 
     realized_price = None
     realized_source = "CoinMetrics MVRV unavailable; on-chain cost-basis context not computed."
@@ -282,6 +291,9 @@ def build_payload() -> dict[str, Any]:
         "days_from_buy_date": days_from_buy,
         "days_from_day_540": days_from_day_540,
         "days_until_next_buy_date": days_until_next_buy,
+        "sma_50_week": round(sma_50_week, 2) if sma_50_week is not None else None,
+        "sma_50_week_signal": bull_market_signal,
+        "sma_50_week_distance_pct": round(sma_50_week_distance_pct, 2) if sma_50_week_distance_pct is not None else None,
         "sma_200_week": round(sma_200_week, 2) if sma_200_week is not None else None,
         "ema_50": round(ema_50, 2) if ema_50 is not None else None,
         "ema_200": round(ema_200, 2) if ema_200 is not None else None,

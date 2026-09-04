@@ -608,6 +608,11 @@
       <aside class="panel context-panel" aria-label="Context indicators">
         <h2 class="panel-title">Context Indicators</h2>
         <div class="context-item">
+          <div class="name">50-week SMA <span class="tag">bull market signal</span></div>
+          <strong id="sma50">--</strong>
+          <p id="sma50Signal">Bull market signal is based on BTC close versus the 50-week SMA.</p>
+        </div>
+        <div class="context-item">
           <div class="name">200-week SMA <span class="tag">context only</span></div>
           <strong id="sma200">--</strong>
           <p>Displayed for market context. It is not the trading trigger for this dashboard.</p>
@@ -702,13 +707,13 @@
           <li>Signal source is the Bitcoin halving date, with fixed pre-halving and post-halving day counts.</li>
           <li>Buy / hold BTC from 500 days before the halving date through day 540 after the halving date, inclusive.</li>
           <li>Hold Cash before the pre-halving buy date and after the day-540 sell date.</li>
-          <li>The 200-week SMA, EMA50, EMA200, realized price, and estimated electrical cost are context only.</li>
+          <li>The 50-week SMA is used as the bull market signal. EMA50, EMA200, 200-week SMA, realized price, and estimated electrical cost are context only.</li>
         </ul>
       </article>
       <article class="panel copy-panel">
         <h2 class="panel-title">Guardrails</h2>
         <ul>
-          <li>No QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or DCA rules are part of this BTC signal.</li>
+          <li>No QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or DCA rules are part of the BTC holding-window signal.</li>
           <li>Bottom-zone context can help describe the cycle, but it is not an automatic buy signal.</li>
           <li>This is a rules-based tracking dashboard and is not financial advice.</li>
         </ul>
@@ -765,6 +770,16 @@
       return `${Math.abs(days)} days since`;
     }
 
+    function bullMarketText(data) {
+      const signal = data.sma_50_week_signal || "--";
+      const distance = data.sma_50_week_distance_pct;
+      if (distance === null || distance === undefined || Number.isNaN(Number(distance))) {
+        return `${signal}. BTC close versus 50-week SMA.`;
+      }
+      const direction = Number(distance) >= 0 ? "above" : "below";
+      return `${signal}. BTC close is ${Math.abs(Number(distance)).toFixed(2)}% ${direction} the 50-week SMA.`;
+    }
+
     function setText(id, value) {
       document.getElementById(id).textContent = value;
     }
@@ -802,6 +817,8 @@
       const decisionFinal = document.getElementById("decisionFinal");
       decisionFinal.textContent = data.status || "--";
       decisionFinal.className = `decision-result ${statusClass(data.status)}`;
+      setText("sma50", money(data.sma_50_week));
+      setText("sma50Signal", bullMarketText(data));
       setText("sma200", money(data.sma_200_week));
       setText("ema50", money(data.ema_50));
       setText("ema200", money(data.ema_200));

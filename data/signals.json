@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-03T22:15:20.124096+00:00",
-  "market_date": "2026-09-03",
-  "btc_close": 81405.32,
+  "generated_at": "2026-09-04T12:01:41.308072+00:00",
+  "market_date": "2026-09-04",
+  "btc_close": 81188.42,
   "status": "Hold Cash",
   "active_halving_date": "2024-04-20",
   "next_halving_date": "2028-04-20",
@@ -10,18 +10,21 @@
   "next_buy_date": "2026-12-07",
   "buy_date": "2022-12-07",
   "sell_date": "2025-10-12",
-  "cycle_day": 866,
+  "cycle_day": 867,
   "day_540_date": "2025-10-12",
-  "days_from_buy_date": 1366,
-  "days_from_day_540": 326,
-  "days_until_next_buy_date": 95,
-  "sma_200_week": 64673.78,
-  "ema_50": 70700.15,
-  "ema_200": 72420.43,
-  "realized_price": 53237.59,
-  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-09-02.",
+  "days_from_buy_date": 1367,
+  "days_from_day_540": 327,
+  "days_until_next_buy_date": 94,
+  "sma_50_week": 80885.58,
+  "sma_50_week_signal": "Bull Market",
+  "sma_50_week_distance_pct": 0.37,
+  "sma_200_week": 64673.62,
+  "ema_50": 70691.64,
+  "ema_200": 72418.27,
+  "realized_price": 50480.35,
+  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-09-03.",
   "electrical_cost_per_btc": 72044.97,
-  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-09-02; assumes 30 J/TH and $0.05/kWh.",
+  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-09-03; assumes 30 J/TH and $0.05/kWh.",
   "rule_summary": "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.",
   "recent_history": [
     {
@@ -142,13 +145,13 @@
       "notes": "325 days after day 540."
     },
     {
-      "date": "2026-09-03",
-      "btc_close": 81405.32,
-      "cycle_day": 866,
+      "date": "2026-09-04",
+      "btc_close": 81188.42,
+      "cycle_day": 867,
       "buy_date": "2022-12-07",
       "sell_date": "2025-10-12",
       "status": "Hold Cash",
-      "notes": "326 days after day 540."
+      "notes": "327 days after day 540."
     }
   ]
 }
