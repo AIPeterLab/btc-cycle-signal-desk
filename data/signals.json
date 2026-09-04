@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-04T12:01:41.308072+00:00",
+  "generated_at": "2026-09-04T22:15:31.434982+00:00",
   "market_date": "2026-09-04",
-  "btc_close": 81188.42,
+  "btc_close": 79684.87,
   "status": "Hold Cash",
   "active_halving_date": "2024-04-20",
   "next_halving_date": "2028-04-20",
@@ -15,27 +15,18 @@
   "days_from_buy_date": 1367,
   "days_from_day_540": 327,
   "days_until_next_buy_date": 94,
-  "sma_50_week": 80885.58,
-  "sma_50_week_signal": "Bull Market",
-  "sma_50_week_distance_pct": 0.37,
-  "sma_200_week": 64673.62,
-  "ema_50": 70691.64,
-  "ema_200": 72418.27,
+  "sma_50_week": 80782.95,
+  "sma_50_week_signal": "Below 50-week SMA",
+  "sma_50_week_distance_pct": -1.36,
+  "sma_200_week": 64715.49,
+  "ema_50": 71047.46,
+  "ema_200": 72491.4,
   "realized_price": 50480.35,
   "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-09-03.",
   "electrical_cost_per_btc": 72044.97,
   "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-09-03; assumes 30 J/TH and $0.05/kWh.",
   "rule_summary": "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.",
   "recent_history": [
-    {
-      "date": "2026-08-21",
-      "btc_close": 78335.19,
-      "cycle_day": 853,
-      "buy_date": "2022-12-07",
-      "sell_date": "2025-10-12",
-      "status": "Hold Cash",
-      "notes": "313 days after day 540."
-    },
     {
       "date": "2026-08-22",
       "btc_close": 77083.41,
@@ -145,8 +136,17 @@
       "notes": "325 days after day 540."
     },
     {
+      "date": "2026-09-03",
+      "btc_close": 81271.74,
+      "cycle_day": 866,
+      "buy_date": "2022-12-07",
+      "sell_date": "2025-10-12",
+      "status": "Hold Cash",
+      "notes": "326 days after day 540."
+    },
+    {
       "date": "2026-09-04",
-      "btc_close": 81188.42,
+      "btc_close": 79684.87,
       "cycle_day": 867,
       "buy_date": "2022-12-07",
       "sell_date": "2025-10-12",
