@@ -46,6 +46,9 @@ RULE_SUMMARY = (
 
 MINER_EFFICIENCY_J_PER_TH = float(os.environ.get("MINER_EFFICIENCY_J_PER_TH", "30"))
 ELECTRICITY_COST_USD_PER_KWH = float(os.environ.get("ELECTRICITY_COST_USD_PER_KWH", "0.05"))
+REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA = max(
+    1, int(os.environ.get("REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA", "1"))
+)
 
 
 def fetch_json(url: str, timeout: int = 30) -> dict[str, Any]:
@@ -165,6 +168,13 @@ def next_halving_for(day: date) -> date:
     return halving
 
 
+def calendar_halving_for(day: date) -> date:
+    halving = HALVINGS[-1]
+    while halving + timedelta(days=SELL_OFFSET_DAYS) < day:
+        halving = add_cycle_years(halving)
+    return halving
+
+
 def signal_for(day: date) -> tuple[str, int, date, date, int, int]:
     halving = active_halving_for(day)
     cycle_day = (day - halving).days
@@ -180,6 +190,56 @@ def rolling_sma(values: list[float], window: int) -> float | None:
     if len(values) < window:
         return None
     return statistics.fmean(values[-window:])
+
+
+def completed_weekly_closes(rows: list[dict[str, Any]], as_of_day: date) -> list[dict[str, Any]]:
+    weekly_rows: list[dict[str, Any]] = []
+    for row in rows:
+        row_date = date.fromisoformat(row["date"])
+        if row_date >= as_of_day:
+            continue
+        if row_date.weekday() == 6:
+            weekly_rows.append({"week_end": row_date, "close": float(row["close"])})
+    return weekly_rows
+
+
+def weekly_50_sma_signal(
+    weekly_rows: list[dict[str, Any]], required_closes: int
+) -> dict[str, Any]:
+    enriched: list[dict[str, Any]] = []
+    for index, row in enumerate(weekly_rows):
+        if index < 49:
+            sma = None
+            above = False
+        else:
+            sma = statistics.fmean(float(item["close"]) for item in weekly_rows[index - 49 : index + 1])
+            above = float(row["close"]) > sma
+        enriched.append(
+            {
+                "week_end": row["week_end"],
+                "close": float(row["close"]),
+                "sma_50_week": sma,
+                "above": above,
+            }
+        )
+
+    latest = enriched[-1] if enriched else None
+    consecutive = 0
+    for row in reversed(enriched):
+        if not row["above"]:
+            break
+        consecutive += 1
+
+    return {
+        "latest_completed_week_end": latest["week_end"] if latest else None,
+        "latest_weekly_close": latest["close"] if latest else None,
+        "sma_50_week": latest["sma_50_week"] if latest else None,
+        "weekly_close_above_50w_sma": bool(latest and latest["above"]),
+        "consecutive_weekly_closes_above_50w_sma": consecutive,
+        "above_50w_sma_confirmed": bool(
+            latest and latest["above"] and consecutive >= required_closes
+        ),
+    }
 
 
 def exponential_moving_average(values: list[float], window: int) -> float | None:
@@ -201,18 +261,50 @@ def build_payload() -> dict[str, Any]:
     next_halving = next_halving_for(market_date)
     next_buy_date = next_halving - timedelta(days=BUY_OFFSET_DAYS)
     days_until_next_buy = (next_buy_date - market_date).days
+    calendar_halving = calendar_halving_for(market_date)
+    calendar_entry_date = calendar_halving - timedelta(days=BUY_OFFSET_DAYS)
+    calendar_exit_date = calendar_halving + timedelta(days=SELL_OFFSET_DAYS)
     closes = [float(row["close"]) for row in yahoo_rows]
-    sma_50_week = rolling_sma(closes, 50 * 7)
+    latest_btc_close = float(latest["close"])
+    weekly_signal = weekly_50_sma_signal(
+        completed_weekly_closes(yahoo_rows, market_date),
+        REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA,
+    )
+    sma_50_week = weekly_signal["sma_50_week"]
     sma_200_week = rolling_sma(closes, 200 * 7)
+    daily_sma_50 = rolling_sma(closes, 50)
+    daily_sma_200 = rolling_sma(closes, 200)
     ema_50 = exponential_moving_average(closes, 50)
     ema_200 = exponential_moving_average(closes, 200)
+    golden_cross_confirmed = (
+        daily_sma_50 is not None and daily_sma_200 is not None and daily_sma_50 > daily_sma_200
+    )
     bull_market_signal = (
-        "Bull Market" if sma_50_week is not None and float(latest["close"]) >= sma_50_week else "Below 50-week SMA"
+        "Bull Market Confirmed"
+        if weekly_signal["above_50w_sma_confirmed"]
+        else "Below 50-week SMA"
     )
     sma_50_week_distance_pct = (
-        ((float(latest["close"]) - sma_50_week) / sma_50_week) * 100
-        if sma_50_week
+        ((float(weekly_signal["latest_weekly_close"]) - sma_50_week) / sma_50_week) * 100
+        if sma_50_week and weekly_signal["latest_weekly_close"] is not None
         else None
+    )
+    indicator_allocation_pct = 0
+    if weekly_signal["above_50w_sma_confirmed"]:
+        indicator_allocation_pct = 50 if golden_cross_confirmed else 25
+    current_btc_allocation_pct = (
+        100 if calendar_entry_date <= market_date <= calendar_exit_date else indicator_allocation_pct
+    )
+    signal_explanation = (
+        f"Current live BTC price: ${latest_btc_close:,.2f} as of {market_date.isoformat()} UTC. "
+        f"Latest completed weekly close: "
+        f"{('$' + format(float(weekly_signal['latest_weekly_close']), ',.2f')) if weekly_signal['latest_weekly_close'] is not None else 'unavailable'} "
+        f"for week ending "
+        f"{weekly_signal['latest_completed_week_end'].isoformat() if weekly_signal['latest_completed_week_end'] else 'unavailable'} UTC. "
+        f"Confirmed weekly signal: {bull_market_signal}; "
+        f"{weekly_signal['consecutive_weekly_closes_above_50w_sma']} completed weekly close(s) above the 50-week SMA "
+        f"with {REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA} required. "
+        f"Current BTC allocation: {current_btc_allocation_pct}%."
     )
 
     realized_price = None
@@ -291,10 +383,32 @@ def build_payload() -> dict[str, Any]:
         "days_from_buy_date": days_from_buy,
         "days_from_day_540": days_from_day_540,
         "days_until_next_buy_date": days_until_next_buy,
+        "latest_completed_week_end": (
+            weekly_signal["latest_completed_week_end"].isoformat()
+            if weekly_signal["latest_completed_week_end"]
+            else None
+        ),
+        "latest_weekly_close": (
+            round(weekly_signal["latest_weekly_close"], 2)
+            if weekly_signal["latest_weekly_close"] is not None
+            else None
+        ),
         "sma_50_week": round(sma_50_week, 2) if sma_50_week is not None else None,
+        "weekly_close_above_50w_sma": weekly_signal["weekly_close_above_50w_sma"],
+        "consecutive_weekly_closes_above_50w_sma": weekly_signal[
+            "consecutive_weekly_closes_above_50w_sma"
+        ],
+        "above_50w_sma_confirmed": weekly_signal["above_50w_sma_confirmed"],
+        "required_weekly_closes_above_50w_sma": REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA,
         "sma_50_week_signal": bull_market_signal,
         "sma_50_week_distance_pct": round(sma_50_week_distance_pct, 2) if sma_50_week_distance_pct is not None else None,
         "sma_200_week": round(sma_200_week, 2) if sma_200_week is not None else None,
+        "daily_sma_50": round(daily_sma_50, 2) if daily_sma_50 is not None else None,
+        "daily_sma_200": round(daily_sma_200, 2) if daily_sma_200 is not None else None,
+        "golden_cross_confirmed": golden_cross_confirmed,
+        "calendar_entry_date": calendar_entry_date.isoformat(),
+        "current_btc_allocation_pct": current_btc_allocation_pct,
+        "signal_explanation": signal_explanation,
         "ema_50": round(ema_50, 2) if ema_50 is not None else None,
         "ema_200": round(ema_200, 2) if ema_200 is not None else None,
         "realized_price": round(realized_price, 2) if realized_price is not None else None,

@@ -595,6 +595,7 @@
           <div class="metric"><span>Last sell date</span><strong id="sellDate">--</strong></div>
           <div class="metric"><span>Next buy date</span><strong id="nextBuyDate">--</strong></div>
           <div class="metric"><span>Next buy countdown</span><strong id="nextBuyCountdown">--</strong></div>
+          <div class="metric"><span>BTC allocation</span><strong id="btcAllocation">--</strong></div>
           <div class="metric"><span>Day 540 distance</span><strong id="day540Distance">--</strong></div>
           <div class="metric"><span>Rule window</span><strong>-500 to +540</strong></div>
         </div>
@@ -608,14 +609,34 @@
       <aside class="panel context-panel" aria-label="Context indicators">
         <h2 class="panel-title">Context Indicators</h2>
         <div class="context-item">
-          <div class="name">50-week SMA <span class="tag">bull market signal</span></div>
+          <div class="name">50-week SMA <span class="tag">confirmed weekly signal</span></div>
           <strong id="sma50">--</strong>
-          <p id="sma50Signal">Bull market signal is based on BTC close versus the 50-week SMA.</p>
+          <p id="sma50Signal">Confirmed signal uses the latest completed Sunday weekly close.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">Latest weekly close <span class="tag">UTC week</span></div>
+          <strong id="latestWeeklyClose">--</strong>
+          <p id="weeklySignal">Weekly confirmation updates only after the completed Sunday close is usable on Monday UTC.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">Allocation overlay <span class="tag">early entry</span></div>
+          <strong id="overlayAllocation">--</strong>
+          <p id="allocationNote">The cycle entry date overrides indicator allocation.</p>
         </div>
         <div class="context-item">
           <div class="name">200-week SMA <span class="tag">context only</span></div>
           <strong id="sma200">--</strong>
           <p>Displayed for market context. It is not the trading trigger for this dashboard.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">Daily SMA50 <span class="tag">golden cross input</span></div>
+          <strong id="dailySma50">--</strong>
+          <p id="goldenCrossSignal">Golden cross confirmation uses daily SMA50 versus daily SMA200.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">Daily SMA200 <span class="tag">golden cross input</span></div>
+          <strong id="dailySma200">--</strong>
+          <p>Used only to increase early allocation after the confirmed weekly signal.</p>
         </div>
         <div class="context-item">
           <div class="name">BTC EMA50 <span class="tag">context only</span></div>
@@ -707,13 +728,14 @@
           <li>Signal source is the Bitcoin halving date, with fixed pre-halving and post-halving day counts.</li>
           <li>Buy / hold BTC from 500 days before the halving date through day 540 after the halving date, inclusive.</li>
           <li>Hold Cash before the pre-halving buy date and after the day-540 sell date.</li>
-          <li>The 50-week SMA is used as the bull market signal. EMA50, EMA200, 200-week SMA, realized price, and estimated electrical cost are context only.</li>
+          <li>The confirmed 50-week SMA signal and daily SMA50/SMA200 golden cross are early-entry overlays only; the calendar cycle entry overrides indicator allocation.</li>
         </ul>
       </article>
       <article class="panel copy-panel">
         <h2 class="panel-title">Guardrails</h2>
         <ul>
           <li>No QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or DCA rules are part of the BTC holding-window signal.</li>
+          <li>The weekly 50-week SMA signal changes only after a completed Sunday weekly close can be used on Monday UTC.</li>
           <li>Bottom-zone context can help describe the cycle, but it is not an automatic buy signal.</li>
           <li>This is a rules-based tracking dashboard and is not financial advice.</li>
         </ul>
@@ -770,14 +792,29 @@
       return `${Math.abs(days)} days since`;
     }
 
-    function bullMarketText(data) {
-      const signal = data.sma_50_week_signal || "--";
+    function weeklySignalText(data) {
+      const signal = data.above_50w_sma_confirmed ? "Bullish confirmed" : "Not bullish confirmed";
       const distance = data.sma_50_week_distance_pct;
       if (distance === null || distance === undefined || Number.isNaN(Number(distance))) {
-        return `${signal}. BTC close versus 50-week SMA.`;
+        return `${signal}. Latest completed weekly close is not yet comparable with the 50-week SMA.`;
       }
       const direction = Number(distance) >= 0 ? "above" : "below";
-      return `${signal}. BTC close is ${Math.abs(Number(distance)).toFixed(2)}% ${direction} the 50-week SMA.`;
+      return `${signal}. Latest completed weekly close is ${Math.abs(Number(distance)).toFixed(2)}% ${direction} the 50-week SMA.`;
+    }
+
+    function weeklyCloseText(data) {
+      const closes = data.consecutive_weekly_closes_above_50w_sma ?? "--";
+      const required = data.required_weekly_closes_above_50w_sma ?? 1;
+      const date = formatDate(data.latest_completed_week_end);
+      const relation = data.weekly_close_above_50w_sma ? "above" : "not above";
+      return `Week ending ${date}; ${closes}/${required} required completed close(s) ${relation} 50-week SMA.`;
+    }
+
+    function allocationText(data) {
+      const allocation = data.current_btc_allocation_pct ?? 0;
+      const calendarEntry = formatDate(data.calendar_entry_date);
+      const goldenCross = data.golden_cross_confirmed ? "confirmed" : "not confirmed";
+      return `${allocation}% BTC. Calendar entry date: ${calendarEntry}. Golden cross: ${goldenCross}.`;
     }
 
     function setText(id, value) {
@@ -807,6 +844,7 @@
       setText("sellDate", formatDate(data.last_sell_date || data.sell_date || data.day_540_date));
       setText("nextBuyDate", formatDate(data.next_buy_date));
       setText("nextBuyCountdown", nextBuyText(data.days_until_next_buy_date));
+      setText("btcAllocation", `${data.current_btc_allocation_pct ?? 0}%`);
       setText("day540Distance", day540Text(data.days_from_day_540));
       setText("decisionHalving", formatDate(data.active_halving_date));
       setText("decisionBuyDate", formatDate(data.last_buy_date || data.buy_date));
@@ -818,8 +856,17 @@
       decisionFinal.textContent = data.status || "--";
       decisionFinal.className = `decision-result ${statusClass(data.status)}`;
       setText("sma50", money(data.sma_50_week));
-      setText("sma50Signal", bullMarketText(data));
+      setText("sma50Signal", data.signal_explanation || weeklySignalText(data));
+      setText("latestWeeklyClose", money(data.latest_weekly_close, true));
+      setText("weeklySignal", weeklyCloseText(data));
+      setText("overlayAllocation", `${data.current_btc_allocation_pct ?? 0}% BTC`);
+      setText("allocationNote", allocationText(data));
       setText("sma200", money(data.sma_200_week));
+      setText("dailySma50", money(data.daily_sma_50));
+      setText("dailySma200", money(data.daily_sma_200));
+      setText("goldenCrossSignal", data.golden_cross_confirmed
+        ? "Daily SMA50 is above daily SMA200; early allocation can increase after weekly confirmation."
+        : "Daily SMA50 is not above daily SMA200; early allocation remains capped by the weekly signal.");
       setText("ema50", money(data.ema_50));
       setText("ema200", money(data.ema_200));
       setText("realizedPrice", money(data.realized_price));
