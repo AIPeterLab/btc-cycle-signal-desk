@@ -10,9 +10,11 @@ indicators never override it.
 from __future__ import annotations
 
 import csv
+import html
 import json
 import math
 import os
+import re
 import statistics
 import sys
 from datetime import date, datetime, timedelta, timezone
@@ -27,6 +29,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 JSON_PATH = DATA_DIR / "signals.json"
 CSV_PATH = DATA_DIR / "signals.csv"
+ETF_FLOW_JSON_PATH = DATA_DIR / "etf_flows.json"
+ETF_FLOW_SOURCE_URL = "https://www.tftc.io/bitcoin-etf-flows"
+ETF_START_DATE = date(2024, 1, 11)
 
 HALVINGS = [
     date(2012, 11, 28),
@@ -60,6 +65,17 @@ def fetch_json(url: str, timeout: int = 30) -> dict[str, Any]:
     )
     with urlopen(request, timeout=timeout) as response:
         return json.loads(response.read().decode("utf-8"))
+
+
+def fetch_text(url: str, timeout: int = 30) -> str:
+    request = Request(
+        url,
+        headers={
+            "User-Agent": "BTC Cycle Signal Desk/1.0 (+https://github.com/AIPeterLab/btc-cycle-signal-desk)"
+        },
+    )
+    with urlopen(request, timeout=timeout) as response:
+        return response.read().decode("utf-8", errors="replace")
 
 
 def parse_float(value: Any) -> float | None:
@@ -108,6 +124,136 @@ def yahoo_btc_daily() -> list[dict[str, Any]]:
     if not rows:
         raise RuntimeError("Yahoo returned no usable BTC-USD daily close rows.")
     return rows
+
+
+def parse_flow_amount_to_musd(sign: str, amount: str, unit: str) -> float:
+    value = float(amount.replace(",", ""))
+    if unit.upper() == "B":
+        value *= 1000
+    if sign in ("-", "−"):
+        value *= -1
+    return value
+
+
+def parse_tftc_flow_rows_from_body(body: str) -> dict[date, float]:
+    text = html.unescape(re.sub(r"<[^>]+>", " ", body))
+    text = re.sub(r"\s+", " ", text.replace("\xa0", " "))
+    pattern = re.compile(
+        r"\b(?:Monday|Tuesday|Wednesday|Thursday|Friday), "
+        r"([A-Z][a-z]{2} \d{1,2}, \d{4})\s*·\s*([+\-−])?\$(\d[\d,]*(?:\.\d+)?)([MB])"
+    )
+    by_date: dict[date, float] = {}
+    for match in pattern.finditer(text):
+        row_date = datetime.strptime(match.group(1), "%b %d, %Y").date()
+        if row_date < ETF_START_DATE:
+            continue
+        by_date[row_date] = parse_flow_amount_to_musd(
+            match.group(2) or "+", match.group(3), match.group(4)
+        )
+    return by_date
+
+
+def month_archive_slugs(start_day: date, end_day: date) -> list[str]:
+    slugs = []
+    month = date(start_day.year, start_day.month, 1)
+    end_month = date(end_day.year, end_day.month, 1)
+    while month <= end_month:
+        slugs.append(month.strftime("%B-%Y").lower())
+        if month.month == 12:
+            month = date(month.year + 1, 1, 1)
+        else:
+            month = date(month.year, month.month + 1, 1)
+    return slugs
+
+
+def tftc_etf_flow_rows(as_of_day: date) -> list[dict[str, Any]]:
+    by_date: dict[date, float] = {}
+    errors: list[str] = []
+    for slug in month_archive_slugs(ETF_START_DATE, as_of_day):
+        url = f"{ETF_FLOW_SOURCE_URL}/{slug}"
+        try:
+            by_date.update(parse_tftc_flow_rows_from_body(fetch_text(url)))
+        except (URLError, TimeoutError, ValueError) as exc:
+            errors.append(f"{slug}: {exc}")
+
+    if not by_date:
+        try:
+            by_date.update(parse_tftc_flow_rows_from_body(fetch_text(ETF_FLOW_SOURCE_URL)))
+        except (URLError, TimeoutError, ValueError) as exc:
+            errors.append(f"live page: {exc}")
+
+    rows = [
+        {"date": row_date.isoformat(), "etf_flow_musd": round(flow, 1)}
+        for row_date, flow in sorted(by_date.items())
+    ]
+    if not rows:
+        raise RuntimeError("TFTC returned no usable BTC ETF flow rows. " + "; ".join(errors))
+    return rows
+
+
+def build_etf_flow_payload(yahoo_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    market_date = date.fromisoformat(yahoo_rows[-1]["date"])
+    price_by_date = {row["date"]: float(row["close"]) for row in yahoo_rows}
+    sorted_price_dates = sorted(price_by_date)
+    previous_close_by_date: dict[str, float] = {}
+    previous_close: float | None = None
+    for row_date in sorted_price_dates:
+        if previous_close is not None:
+            previous_close_by_date[row_date] = previous_close
+        previous_close = price_by_date[row_date]
+
+    try:
+        flow_rows = tftc_etf_flow_rows(market_date)
+        etf_error = None
+    except (RuntimeError, URLError, TimeoutError, ValueError) as exc:
+        if ETF_FLOW_JSON_PATH.exists():
+            return json.loads(ETF_FLOW_JSON_PATH.read_text(encoding="utf-8"))
+        flow_rows = []
+        etf_error = str(exc)
+
+    chart_rows = []
+    cumulative_flow = 0.0
+    for flow_row in flow_rows:
+        row_date = flow_row["date"]
+        btc_close = price_by_date.get(row_date)
+        if btc_close is None:
+            continue
+        cumulative_flow += float(flow_row["etf_flow_musd"])
+        previous_close = previous_close_by_date.get(row_date)
+        daily_btc_change_pct = (
+            ((btc_close - previous_close) / previous_close) * 100 if previous_close else None
+        )
+        chart_rows.append(
+            {
+                "date": row_date,
+                "btc_close": round(btc_close, 2),
+                "daily_btc_change_pct": (
+                    round(daily_btc_change_pct, 2)
+                    if daily_btc_change_pct is not None
+                    else None
+                ),
+                "etf_flow_musd": round(float(flow_row["etf_flow_musd"]), 1),
+                "cumulative_etf_flow_musd": round(cumulative_flow, 1),
+            }
+        )
+
+    latest = chart_rows[-1] if chart_rows else None
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "source": "TFTC Bitcoin ETF Flows, sourced from Farside Investors",
+        "source_url": ETF_FLOW_SOURCE_URL,
+        "btc_price_source": "Yahoo Finance BTC-USD daily close",
+        "start_date": ETF_START_DATE.isoformat(),
+        "end_date": latest["date"] if latest else None,
+        "trading_days": len(chart_rows),
+        "latest_flow_musd": latest["etf_flow_musd"] if latest else None,
+        "latest_btc_close": latest["btc_close"] if latest else None,
+        "cumulative_etf_flow_musd": (
+            round(chart_rows[-1]["cumulative_etf_flow_musd"], 1) if chart_rows else 0.0
+        ),
+        "error": etf_error,
+        "chart": chart_rows,
+    }
 
 
 def coinmetrics_rows() -> list[dict[str, Any]]:
@@ -252,8 +398,9 @@ def exponential_moving_average(values: list[float], window: int) -> float | None
     return ema
 
 
-def build_payload() -> dict[str, Any]:
-    yahoo_rows = yahoo_btc_daily()
+def build_payload(yahoo_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    if yahoo_rows is None:
+        yahoo_rows = yahoo_btc_daily()
     latest = yahoo_rows[-1]
     market_date = date.fromisoformat(latest["date"])
     status, cycle_day, buy_date, day_540, days_from_buy, days_from_day_540 = signal_for(market_date)
@@ -420,9 +567,10 @@ def build_payload() -> dict[str, Any]:
     }
 
 
-def write_outputs(payload: dict[str, Any]) -> None:
+def write_outputs(payload: dict[str, Any], etf_flow_payload: dict[str, Any]) -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     JSON_PATH.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    ETF_FLOW_JSON_PATH.write_text(json.dumps(etf_flow_payload, indent=2) + "\n", encoding="utf-8")
 
     fieldnames = ["date", "btc_close", "cycle_day", "buy_date", "sell_date", "status", "notes"]
     with CSV_PATH.open("w", newline="", encoding="utf-8") as handle:
@@ -432,11 +580,14 @@ def write_outputs(payload: dict[str, Any]) -> None:
 
 
 def main() -> int:
-    payload = build_payload()
-    write_outputs(payload)
+    yahoo_rows = yahoo_btc_daily()
+    payload = build_payload(yahoo_rows)
+    etf_flow_payload = build_etf_flow_payload(yahoo_rows)
+    write_outputs(payload, etf_flow_payload)
     print(
         f"{payload['market_date']} {payload['status']} "
-        f"cycle_day={payload['cycle_day']} btc_close={payload['btc_close']}"
+        f"cycle_day={payload['cycle_day']} btc_close={payload['btc_close']} "
+        f"etf_flow_days={etf_flow_payload['trading_days']}"
     )
     return 0
 

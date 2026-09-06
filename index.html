@@ -469,6 +469,66 @@
       line-height: 1.5;
     }
 
+    .chart-panel {
+      padding-bottom: 16px;
+    }
+
+    .chart-wrap {
+      padding: 12px 18px 6px;
+    }
+
+    .chart-canvas {
+      display: block;
+      width: 100%;
+      aspect-ratio: 2.6 / 1;
+      min-height: 280px;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .chart-summary {
+      margin: 10px 18px 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .chart-legend {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 10px 18px 0;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .legend-swatch {
+      width: 18px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .legend-swatch.inflow {
+      height: 10px;
+      background: var(--green);
+    }
+
+    .legend-swatch.outflow {
+      height: 10px;
+      background: #b42318;
+    }
+
     .loading {
       color: var(--muted);
       font-weight: 650;
@@ -534,9 +594,15 @@
       }
 
       .section-head,
-      .table-wrap {
+      .table-wrap,
+      .chart-wrap {
         padding-left: 14px;
         padding-right: 14px;
+      }
+
+      .chart-canvas {
+        aspect-ratio: 1.35 / 1;
+        min-height: 260px;
       }
 
       table {
@@ -659,6 +725,24 @@
           <p id="electricalAssumptions">Estimated mining electrical cost with published assumptions.</p>
         </div>
       </aside>
+    </section>
+
+    <section class="panel section chart-panel" aria-label="BTC price and ETF flow chart">
+      <div class="section-head">
+        <h2 class="panel-title">BTC Price vs Daily ETF Flow</h2>
+        <span id="flowRange" class="tag">loading</span>
+      </div>
+      <div class="chart-wrap">
+        <svg id="etfFlowChart" class="chart-canvas" viewBox="0 0 1000 380" role="img" aria-label="Bitcoin price and daily spot Bitcoin ETF net flow since ETF launch">
+          <text x="500" y="190" text-anchor="middle" fill="#667085" font-size="18" font-weight="700">Loading ETF flow chart</text>
+        </svg>
+      </div>
+      <div class="chart-legend" aria-label="Chart legend">
+        <span class="legend-item"><span class="legend-swatch"></span>BTC close</span>
+        <span class="legend-item"><span class="legend-swatch inflow"></span>ETF net inflow</span>
+        <span class="legend-item"><span class="legend-swatch outflow"></span>ETF net outflow</span>
+      </div>
+      <p id="flowSummary" class="chart-summary">ETF flow data loads from the generated local dataset.</p>
     </section>
 
     <section class="panel section decision-path" aria-label="Decision path">
@@ -831,7 +915,83 @@
       return response.json();
     }
 
-    loadSignals().then((data) => {
+    async function loadEtfFlows() {
+      const response = await fetch(`data/etf_flows.json?ts=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`ETF flow data returned ${response.status}`);
+      return response.json();
+    }
+
+    function compactMoney(value) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
+      const abs = Math.abs(Number(value));
+      const sign = Number(value) < 0 ? "-" : "";
+      if (abs >= 1000) return `${sign}$${(abs / 1000).toFixed(1)}B`;
+      return `${sign}$${abs.toFixed(1)}M`;
+    }
+
+    function renderEtfFlowChart(payload) {
+      const svg = document.getElementById("etfFlowChart");
+      const rows = payload && Array.isArray(payload.chart) ? payload.chart : [];
+      if (!rows.length) {
+        svg.innerHTML = `<text x="500" y="190" text-anchor="middle" fill="#667085" font-size="18" font-weight="700">ETF flow data unavailable</text>`;
+        setText("flowRange", "unavailable");
+        setText("flowSummary", payload && payload.error ? `ETF flow source unavailable: ${payload.error}` : "ETF flow data unavailable.");
+        return;
+      }
+
+      const width = 1000;
+      const height = 380;
+      const margin = { top: 28, right: 84, bottom: 42, left: 78 };
+      const plotWidth = width - margin.left - margin.right;
+      const plotHeight = height - margin.top - margin.bottom;
+      const priceMin = Math.min(...rows.map((row) => Number(row.btc_close)));
+      const priceMax = Math.max(...rows.map((row) => Number(row.btc_close)));
+      const flowMax = Math.max(1, ...rows.map((row) => Math.abs(Number(row.etf_flow_musd))));
+      const pricePad = Math.max(1000, (priceMax - priceMin) * 0.08);
+      const yPrice = (price) => margin.top + ((priceMax + pricePad - price) / ((priceMax + pricePad) - (priceMin - pricePad))) * plotHeight;
+      const zeroY = margin.top + plotHeight / 2;
+      const flowScale = (plotHeight * 0.43) / flowMax;
+      const x = (index) => margin.left + (rows.length === 1 ? 0 : (index / (rows.length - 1)) * plotWidth);
+      const barWidth = Math.max(1, Math.min(8, plotWidth / rows.length * 0.75));
+      const line = rows.map((row, index) => `${index === 0 ? "M" : "L"} ${x(index).toFixed(2)} ${yPrice(Number(row.btc_close)).toFixed(2)}`).join(" ");
+      const grid = [0, 0.25, 0.5, 0.75, 1].map((step) => {
+        const y = margin.top + plotHeight * step;
+        return `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#edf1f6" stroke-width="1"/>`;
+      }).join("");
+      const bars = rows.map((row, index) => {
+        const flow = Number(row.etf_flow_musd);
+        const barHeight = Math.max(1, Math.abs(flow) * flowScale);
+        const y = flow >= 0 ? zeroY - barHeight : zeroY;
+        const color = flow >= 0 ? "#157347" : "#b42318";
+        return `<rect x="${(x(index) - barWidth / 2).toFixed(2)}" y="${y.toFixed(2)}" width="${barWidth.toFixed(2)}" height="${barHeight.toFixed(2)}" fill="${color}" opacity="0.5"><title>${formatDate(row.date)} ETF flow ${compactMoney(flow)}; BTC close ${money(row.btc_close, true)}</title></rect>`;
+      }).join("");
+      const start = rows[0];
+      const end = rows[rows.length - 1];
+      const priceChange = ((Number(end.btc_close) - Number(start.btc_close)) / Number(start.btc_close)) * 100;
+
+      svg.innerHTML = `
+        ${grid}
+        <line x1="${margin.left}" y1="${zeroY}" x2="${width - margin.right}" y2="${zeroY}" stroke="#98a2b3" stroke-width="1"/>
+        ${bars}
+        <path d="${line}" fill="none" stroke="#1f5eff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="${x(rows.length - 1).toFixed(2)}" cy="${yPrice(Number(end.btc_close)).toFixed(2)}" r="4" fill="#1f5eff"/>
+        <text x="${margin.left}" y="20" fill="#475467" font-size="12" font-weight="700">BTC price</text>
+        <text x="${width - margin.right}" y="20" text-anchor="end" fill="#475467" font-size="12" font-weight="700">ETF daily flow</text>
+        <text x="${margin.left}" y="${height - 14}" fill="#667085" font-size="12">${formatDate(start.date)}</text>
+        <text x="${width - margin.right}" y="${height - 14}" text-anchor="end" fill="#667085" font-size="12">${formatDate(end.date)}</text>
+        <text x="${margin.left - 10}" y="${yPrice(priceMax).toFixed(2)}" text-anchor="end" fill="#667085" font-size="12">${money(priceMax)}</text>
+        <text x="${margin.left - 10}" y="${yPrice(priceMin).toFixed(2)}" text-anchor="end" fill="#667085" font-size="12">${money(priceMin)}</text>
+        <text x="${width - margin.right + 10}" y="${(zeroY - flowMax * flowScale).toFixed(2)}" fill="#667085" font-size="12">${compactMoney(flowMax)}</text>
+        <text x="${width - margin.right + 10}" y="${(zeroY + flowMax * flowScale).toFixed(2)}" fill="#667085" font-size="12">-${compactMoney(flowMax).replace("-", "")}</text>
+      `;
+      setText("flowRange", `${formatDate(payload.start_date)} to ${formatDate(payload.end_date)}`);
+      setText(
+        "flowSummary",
+        `Since spot BTC ETF launch: cumulative ETF net flow ${compactMoney(payload.cumulative_etf_flow_musd)}, BTC price change ${priceChange.toFixed(1)}%, latest daily flow ${compactMoney(payload.latest_flow_musd)} on ${formatDate(payload.end_date)}.`
+      );
+    }
+
+    Promise.all([loadSignals(), loadEtfFlows().catch((error) => ({ error: error.message, chart: [] }))]).then(([data, etfData]) => {
       const statusValue = document.getElementById("statusValue");
       statusValue.textContent = data.status || "--";
       statusValue.className = `status-value ${statusClass(data.status)}`;
@@ -874,6 +1034,7 @@
       setText("electricalCost", money(data.electrical_cost_per_btc));
       setText("electricalAssumptions", data.electrical_cost_assumptions || "Estimated mining electrical cost, context only.");
       setText("ruleSummary", data.rule_summary || "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.");
+      renderEtfFlowChart(etfData);
 
       const history = Array.isArray(data.recent_history) ? data.recent_history : [];
       document.getElementById("historyRows").innerHTML = history.map((row) => `
