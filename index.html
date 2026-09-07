@@ -595,7 +595,8 @@
           <div class="metric"><span>Last sell date</span><strong id="sellDate">--</strong></div>
           <div class="metric"><span>Next buy date</span><strong id="nextBuyDate">--</strong></div>
           <div class="metric"><span>Next buy countdown</span><strong id="nextBuyCountdown">--</strong></div>
-          <div class="metric"><span>BTC allocation</span><strong id="btcAllocation">--</strong></div>
+          <div class="metric"><span>Final allocation</span><strong id="btcAllocation">--</strong></div>
+          <div class="metric"><span>Cycle window active</span><strong id="cycleWindowActive">--</strong></div>
           <div class="metric"><span>Day 540 distance</span><strong id="day540Distance">--</strong></div>
           <div class="metric"><span>Rule window</span><strong>-500 to +540</strong></div>
         </div>
@@ -622,6 +623,11 @@
           <div class="name">Allocation overlay <span class="tag">early entry</span></div>
           <strong id="overlayAllocation">--</strong>
           <p id="allocationNote">The cycle entry date overrides indicator allocation.</p>
+        </div>
+        <div class="context-item">
+          <div class="name">MA120 Defensive Gate <span class="tag">2 up / 2 down</span></div>
+          <strong id="dailySma120">--</strong>
+          <p id="ma120GateSignal">MA120 applies only inside the calendar cycle window.</p>
         </div>
         <div class="context-item">
           <div class="name">200-week SMA <span class="tag">context only</span></div>
@@ -728,7 +734,8 @@
           <li>Signal source is the Bitcoin halving date, with fixed pre-halving and post-halving day counts.</li>
           <li>Buy / hold BTC from 500 days before the halving date through day 540 after the halving date, inclusive.</li>
           <li>Hold Cash before the pre-halving buy date and after the day-540 sell date.</li>
-          <li>The confirmed 50-week SMA signal and daily SMA50/SMA200 golden cross are early-entry overlays only; the calendar cycle entry overrides indicator allocation.</li>
+          <li>Inside the calendar cycle window, the MA120 2-up/2-down defensive gate controls whether the cycle allocation is 100% BTC or cash.</li>
+          <li>Outside the calendar cycle window, the confirmed 50-week SMA signal and daily SMA50/SMA200 golden cross remain early-entry overlays only.</li>
         </ul>
       </article>
       <article class="panel copy-panel">
@@ -736,6 +743,7 @@
         <ul>
           <li>No QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or DCA rules are part of the BTC holding-window signal.</li>
           <li>The weekly 50-week SMA signal changes only after a completed Sunday weekly close can be used on Monday UTC.</li>
+          <li>The MA120 defensive gate requires two consecutive daily closes above MA120 to confirm risk-on, and two consecutive daily closes below MA120 to confirm defensive cash.</li>
           <li>Bottom-zone context can help describe the cycle, but it is not an automatic buy signal.</li>
           <li>This is a rules-based tracking dashboard and is not financial advice.</li>
         </ul>
@@ -811,10 +819,19 @@
     }
 
     function allocationText(data) {
-      const allocation = data.current_btc_allocation_pct ?? 0;
+      const allocation = data.final_strategy_allocation_pct ?? data.current_btc_allocation_pct ?? 0;
       const calendarEntry = formatDate(data.calendar_entry_date);
       const goldenCross = data.golden_cross_confirmed ? "confirmed" : "not confirmed";
-      return `${allocation}% BTC. Calendar entry date: ${calendarEntry}. Golden cross: ${goldenCross}.`;
+      const cycle = data.cycle_window_active ? "active" : "not active";
+      return `${allocation}% BTC. Calendar entry date: ${calendarEntry}. Cycle window: ${cycle}. Golden cross: ${goldenCross}.`;
+    }
+
+    function ma120GateText(data) {
+      const confirmed = data.ma120_gate_confirmed ? "confirmed bullish" : "not confirmed bullish";
+      const above = data.close_above_sma_120 ? "above" : "below";
+      const aboveCount = data.consecutive_closes_above_sma_120 ?? 0;
+      const belowCount = data.consecutive_closes_below_sma_120 ?? 0;
+      return `${confirmed}. Latest close is ${above} MA120; ${aboveCount} close(s) above, ${belowCount} close(s) below. ${data.ma120_gate_explanation || ""}`.trim();
     }
 
     function setText(id, value) {
@@ -844,7 +861,8 @@
       setText("sellDate", formatDate(data.last_sell_date || data.sell_date || data.day_540_date));
       setText("nextBuyDate", formatDate(data.next_buy_date));
       setText("nextBuyCountdown", nextBuyText(data.days_until_next_buy_date));
-      setText("btcAllocation", `${data.current_btc_allocation_pct ?? 0}%`);
+      setText("btcAllocation", `${data.final_strategy_allocation_pct ?? data.current_btc_allocation_pct ?? 0}%`);
+      setText("cycleWindowActive", data.cycle_window_active ? "Yes" : "No");
       setText("day540Distance", day540Text(data.days_from_day_540));
       setText("decisionHalving", formatDate(data.active_halving_date));
       setText("decisionBuyDate", formatDate(data.last_buy_date || data.buy_date));
@@ -861,6 +879,8 @@
       setText("weeklySignal", weeklyCloseText(data));
       setText("overlayAllocation", `${data.current_btc_allocation_pct ?? 0}% BTC`);
       setText("allocationNote", allocationText(data));
+      setText("dailySma120", money(data.daily_sma_120));
+      setText("ma120GateSignal", ma120GateText(data));
       setText("sma200", money(data.sma_200_week));
       setText("dailySma50", money(data.daily_sma_50));
       setText("dailySma200", money(data.daily_sma_200));

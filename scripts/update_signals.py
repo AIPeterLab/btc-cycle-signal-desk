@@ -49,6 +49,7 @@ ELECTRICITY_COST_USD_PER_KWH = float(os.environ.get("ELECTRICITY_COST_USD_PER_KW
 REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA = max(
     1, int(os.environ.get("REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA", "1"))
 )
+MA120_GATE_CONFIRMATION_DAYS = 2
 
 
 def fetch_json(url: str, timeout: int = 30) -> dict[str, Any]:
@@ -192,6 +193,45 @@ def rolling_sma(values: list[float], window: int) -> float | None:
     return statistics.fmean(values[-window:])
 
 
+def confirmed_ma120_gate(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    state = False
+    consecutive_above = 0
+    consecutive_below = 0
+    latest_sma: float | None = None
+    latest_above = False
+
+    for index, row in enumerate(rows):
+        closes = [float(item["close"]) for item in rows[: index + 1]]
+        latest_sma = rolling_sma(closes, 120)
+        if latest_sma is None:
+            consecutive_above = 0
+            consecutive_below = 0
+            latest_above = False
+            continue
+
+        latest_above = float(row["close"]) >= latest_sma
+        if latest_above:
+            consecutive_above += 1
+            consecutive_below = 0
+        else:
+            consecutive_below += 1
+            consecutive_above = 0
+
+        if not state and consecutive_above >= MA120_GATE_CONFIRMATION_DAYS:
+            state = True
+        elif state and consecutive_below >= MA120_GATE_CONFIRMATION_DAYS:
+            state = False
+
+    return {
+        "daily_sma_120": latest_sma,
+        "close_above_sma_120": latest_above,
+        "consecutive_closes_above_sma_120": consecutive_above,
+        "consecutive_closes_below_sma_120": consecutive_below,
+        "ma120_gate_confirmed": state,
+        "ma120_gate_rule": "2 up / 2 down",
+    }
+
+
 def completed_weekly_closes(rows: list[dict[str, Any]], as_of_day: date) -> list[dict[str, Any]]:
     weekly_rows: list[dict[str, Any]] = []
     for row in rows:
@@ -273,6 +313,7 @@ def build_payload() -> dict[str, Any]:
     sma_50_week = weekly_signal["sma_50_week"]
     sma_200_week = rolling_sma(closes, 200 * 7)
     daily_sma_50 = rolling_sma(closes, 50)
+    ma120_gate = confirmed_ma120_gate(yahoo_rows)
     daily_sma_200 = rolling_sma(closes, 200)
     ema_50 = exponential_moving_average(closes, 50)
     ema_200 = exponential_moving_average(closes, 200)
@@ -292,9 +333,33 @@ def build_payload() -> dict[str, Any]:
     indicator_allocation_pct = 0
     if weekly_signal["above_50w_sma_confirmed"]:
         indicator_allocation_pct = 50 if golden_cross_confirmed else 25
-    current_btc_allocation_pct = (
-        100 if calendar_entry_date <= market_date <= calendar_exit_date else indicator_allocation_pct
+    cycle_window_active = calendar_entry_date <= market_date <= calendar_exit_date
+    cycle_window_allocation_pct = (
+        100 if cycle_window_active and ma120_gate["ma120_gate_confirmed"] else 0
     )
+    current_btc_allocation_pct = (
+        cycle_window_allocation_pct if cycle_window_active else indicator_allocation_pct
+    )
+    final_strategy_allocation_pct = current_btc_allocation_pct
+    if cycle_window_active and ma120_gate["ma120_gate_confirmed"]:
+        ma120_gate_explanation = (
+            "The calendar cycle window is active and the MA120 defensive gate is confirmed bullish, "
+            "so the cycle allocation is 100% BTC."
+        )
+    elif cycle_window_active:
+        ma120_gate_explanation = (
+            "The calendar cycle window is active, but the MA120 defensive gate is not confirmed bullish, "
+            "so the cycle allocation is held in cash."
+        )
+    elif ma120_gate["ma120_gate_confirmed"]:
+        ma120_gate_explanation = (
+            "BTC is above the confirmed MA120 defensive gate, but the calendar cycle window is not active, "
+            "so MA120 does not create a full cycle allocation."
+        )
+    else:
+        ma120_gate_explanation = (
+            "The calendar cycle window is not active and the MA120 defensive gate is not confirmed bullish."
+        )
     signal_explanation = (
         f"Current live BTC price: ${latest_btc_close:,.2f} as of {market_date.isoformat()} UTC. "
         f"Latest completed weekly close: "
@@ -304,7 +369,7 @@ def build_payload() -> dict[str, Any]:
         f"Confirmed weekly signal: {bull_market_signal}; "
         f"{weekly_signal['consecutive_weekly_closes_above_50w_sma']} completed weekly close(s) above the 50-week SMA "
         f"with {REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA} required. "
-        f"Current BTC allocation: {current_btc_allocation_pct}%."
+        f"Final strategy allocation: {final_strategy_allocation_pct}%."
     )
 
     realized_price = None
@@ -404,10 +469,20 @@ def build_payload() -> dict[str, Any]:
         "sma_50_week_distance_pct": round(sma_50_week_distance_pct, 2) if sma_50_week_distance_pct is not None else None,
         "sma_200_week": round(sma_200_week, 2) if sma_200_week is not None else None,
         "daily_sma_50": round(daily_sma_50, 2) if daily_sma_50 is not None else None,
+        "daily_sma_120": round(ma120_gate["daily_sma_120"], 2) if ma120_gate["daily_sma_120"] is not None else None,
+        "close_above_sma_120": ma120_gate["close_above_sma_120"],
+        "consecutive_closes_above_sma_120": ma120_gate["consecutive_closes_above_sma_120"],
+        "consecutive_closes_below_sma_120": ma120_gate["consecutive_closes_below_sma_120"],
+        "ma120_gate_confirmed": ma120_gate["ma120_gate_confirmed"],
+        "ma120_gate_rule": ma120_gate["ma120_gate_rule"],
         "daily_sma_200": round(daily_sma_200, 2) if daily_sma_200 is not None else None,
         "golden_cross_confirmed": golden_cross_confirmed,
         "calendar_entry_date": calendar_entry_date.isoformat(),
+        "cycle_window_active": cycle_window_active,
+        "cycle_window_allocation_pct": cycle_window_allocation_pct,
         "current_btc_allocation_pct": current_btc_allocation_pct,
+        "final_strategy_allocation_pct": final_strategy_allocation_pct,
+        "ma120_gate_explanation": ma120_gate_explanation,
         "signal_explanation": signal_explanation,
         "ema_50": round(ema_50, 2) if ema_50 is not None else None,
         "ema_200": round(ema_200, 2) if ema_200 is not None else None,
