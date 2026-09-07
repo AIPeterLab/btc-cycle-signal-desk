@@ -670,7 +670,7 @@
     <section class="panel section decision-path" aria-label="Decision path">
       <div class="section-head" style="padding: 0;">
         <h2 class="panel-title">Decision Path</h2>
-        <span class="tag">why status is selected</span>
+        <span class="tag">why allocation is selected</span>
       </div>
       <div class="decision-steps">
         <div class="decision-step">
@@ -690,13 +690,13 @@
         </div>
         <div class="decision-step">
           <span class="step-number">4</span>
-          <h3>Check Market Date</h3>
-          <p id="decisionRule">Hold BTC only when the latest market date is inside the inclusive buy/sell window.</p>
+          <h3>Apply Gates</h3>
+          <p id="decisionRule">Use the cycle window, MA120 defensive gate, and early-entry overlays to set final allocation.</p>
         </div>
         <div class="decision-step">
           <span class="step-number">5</span>
-          <h3>Final Decision</h3>
-          <p>The buy-window rule selects:</p>
+          <h3>Final Allocation</h3>
+          <p>The full strategy selects:</p>
           <span id="decisionFinal" class="decision-result">--</span>
         </div>
       </div>
@@ -705,7 +705,7 @@
     <section class="panel section">
       <div class="section-head">
         <h2 class="panel-title">Recent Signal History</h2>
-        <span class="tag">buy-window rule</span>
+        <span class="tag">final allocation</span>
       </div>
       <div class="table-wrap">
         <table>
@@ -716,7 +716,7 @@
               <th>Cycle day</th>
               <th>Last buy date</th>
               <th>Last sell date</th>
-              <th>Status</th>
+              <th>Final allocation</th>
               <th>Notes</th>
             </tr>
           </thead>
@@ -826,6 +826,27 @@
       return `${allocation}% BTC. Calendar entry date: ${calendarEntry}. Cycle window: ${cycle}. Golden cross: ${goldenCross}.`;
     }
 
+    function finalStatus(data) {
+      if (data.final_strategy_status) return data.final_strategy_status;
+      const allocation = data.final_strategy_allocation_pct ?? data.current_btc_allocation_pct ?? 0;
+      if (allocation >= 100) return "Hold BTC";
+      if (allocation > 0) return `Hold ${allocation}% BTC`;
+      return "Hold Cash";
+    }
+
+    function decisionRuleText(data) {
+      const allocation = data.final_strategy_allocation_pct ?? data.current_btc_allocation_pct ?? 0;
+      if (data.cycle_window_active) {
+        return data.ma120_gate_confirmed
+          ? `Latest market date ${formatDate(data.market_date)} is inside the cycle window and MA120 gate is confirmed bullish, so final allocation is 100% BTC.`
+          : `Latest market date ${formatDate(data.market_date)} is inside the cycle window, but MA120 gate is not confirmed bullish, so final allocation is cash.`;
+      }
+      if (allocation > 0) {
+        return `Latest market date ${formatDate(data.market_date)} is outside the cycle window, but the confirmed early-entry overlay allows ${allocation}% BTC.`;
+      }
+      return `Latest market date ${formatDate(data.market_date)} is outside the cycle window and early-entry overlays are not confirmed, so final allocation is cash.`;
+    }
+
     function ma120GateText(data) {
       const confirmed = data.ma120_gate_confirmed ? "confirmed bullish" : "not confirmed bullish";
       const above = data.close_above_sma_120 ? "above" : "below";
@@ -850,8 +871,8 @@
 
     loadSignals().then((data) => {
       const statusValue = document.getElementById("statusValue");
-      statusValue.textContent = data.status || "--";
-      statusValue.className = `status-value ${statusClass(data.status)}`;
+      statusValue.textContent = finalStatus(data);
+      statusValue.className = `status-value ${statusClass(finalStatus(data))}`;
 
       setText("marketDate", formatDate(data.market_date));
       setText("generatedAt", formatTimestamp(data.generated_at));
@@ -867,12 +888,10 @@
       setText("decisionHalving", formatDate(data.active_halving_date));
       setText("decisionBuyDate", formatDate(data.last_buy_date || data.buy_date));
       setText("decisionSellDate", formatDate(data.last_sell_date || data.sell_date || data.day_540_date));
-      setText("decisionRule", data.status === "Hold BTC"
-        ? `Latest market date ${formatDate(data.market_date)} is inside the BTC holding window.`
-        : `Latest market date ${formatDate(data.market_date)} is outside the BTC holding window.`);
+      setText("decisionRule", decisionRuleText(data));
       const decisionFinal = document.getElementById("decisionFinal");
-      decisionFinal.textContent = data.status || "--";
-      decisionFinal.className = `decision-result ${statusClass(data.status)}`;
+      decisionFinal.textContent = finalStatus(data);
+      decisionFinal.className = `decision-result ${statusClass(finalStatus(data))}`;
       setText("sma50", money(data.sma_50_week));
       setText("sma50Signal", data.signal_explanation || weeklySignalText(data));
       setText("latestWeeklyClose", money(data.latest_weekly_close, true));
@@ -903,7 +922,7 @@
           <td>${row.cycle_day ?? "--"}</td>
           <td>${formatDate(row.buy_date)}</td>
           <td>${formatDate(row.sell_date)}</td>
-          <td><span class="status-chip ${statusClass(row.status)}">${row.status || "--"}</span></td>
+          <td><span class="status-chip ${statusClass(row.final_strategy_status || row.status)}">${row.final_strategy_status || row.status || "--"}</span></td>
           <td>${row.notes || ""}</td>
         </tr>
       `).join("") || `<tr><td colspan="7">No signal history available.</td></tr>`;

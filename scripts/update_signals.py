@@ -199,9 +199,10 @@ def confirmed_ma120_gate(rows: list[dict[str, Any]]) -> dict[str, Any]:
     consecutive_below = 0
     latest_sma: float | None = None
     latest_above = False
+    closes: list[float] = []
 
     for index, row in enumerate(rows):
-        closes = [float(item["close"]) for item in rows[: index + 1]]
+        closes.append(float(row["close"]))
         latest_sma = rolling_sma(closes, 120)
         if latest_sma is None:
             consecutive_above = 0
@@ -230,6 +231,14 @@ def confirmed_ma120_gate(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "ma120_gate_confirmed": state,
         "ma120_gate_rule": "2 up / 2 down",
     }
+
+
+def strategy_status_for_allocation(allocation_pct: int) -> str:
+    if allocation_pct >= 100:
+        return "Hold BTC"
+    if allocation_pct > 0:
+        return f"Hold {allocation_pct}% BTC"
+    return "Hold Cash"
 
 
 def completed_weekly_closes(rows: list[dict[str, Any]], as_of_day: date) -> list[dict[str, Any]]:
@@ -282,65 +291,39 @@ def weekly_50_sma_signal(
     }
 
 
-def exponential_moving_average(values: list[float], window: int) -> float | None:
-    if len(values) < window:
-        return None
-    smoothing = 2 / (window + 1)
-    ema = statistics.fmean(values[:window])
-    for value in values[window:]:
-        ema = (value * smoothing) + (ema * (1 - smoothing))
-    return ema
-
-
-def build_payload() -> dict[str, Any]:
-    yahoo_rows = yahoo_btc_daily()
-    latest = yahoo_rows[-1]
-    market_date = date.fromisoformat(latest["date"])
-    status, cycle_day, buy_date, day_540, days_from_buy, days_from_day_540 = signal_for(market_date)
-    active_halving = active_halving_for(market_date)
-    next_halving = next_halving_for(market_date)
-    next_buy_date = next_halving - timedelta(days=BUY_OFFSET_DAYS)
-    days_until_next_buy = (next_buy_date - market_date).days
-    calendar_halving = calendar_halving_for(market_date)
-    calendar_entry_date = calendar_halving - timedelta(days=BUY_OFFSET_DAYS)
-    calendar_exit_date = calendar_halving + timedelta(days=SELL_OFFSET_DAYS)
-    closes = [float(row["close"]) for row in yahoo_rows]
-    latest_btc_close = float(latest["close"])
+def strategy_allocation_details(
+    yahoo_rows: list[dict[str, Any]], as_of_day: date
+) -> dict[str, Any]:
+    rows_to_day = [
+        row for row in yahoo_rows if date.fromisoformat(row["date"]) <= as_of_day
+    ]
+    closes = [float(row["close"]) for row in rows_to_day]
     weekly_signal = weekly_50_sma_signal(
-        completed_weekly_closes(yahoo_rows, market_date),
+        completed_weekly_closes(yahoo_rows, as_of_day),
         REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA,
     )
-    sma_50_week = weekly_signal["sma_50_week"]
-    sma_200_week = rolling_sma(closes, 200 * 7)
     daily_sma_50 = rolling_sma(closes, 50)
-    ma120_gate = confirmed_ma120_gate(yahoo_rows)
     daily_sma_200 = rolling_sma(closes, 200)
-    ema_50 = exponential_moving_average(closes, 50)
-    ema_200 = exponential_moving_average(closes, 200)
+    ma120_gate = confirmed_ma120_gate(rows_to_day)
     golden_cross_confirmed = (
         daily_sma_50 is not None and daily_sma_200 is not None and daily_sma_50 > daily_sma_200
     )
-    bull_market_signal = (
-        "Bull Market Confirmed"
-        if weekly_signal["above_50w_sma_confirmed"]
-        else "Below 50-week SMA"
-    )
-    sma_50_week_distance_pct = (
-        ((float(weekly_signal["latest_weekly_close"]) - sma_50_week) / sma_50_week) * 100
-        if sma_50_week and weekly_signal["latest_weekly_close"] is not None
-        else None
-    )
+
     indicator_allocation_pct = 0
     if weekly_signal["above_50w_sma_confirmed"]:
         indicator_allocation_pct = 50 if golden_cross_confirmed else 25
-    cycle_window_active = calendar_entry_date <= market_date <= calendar_exit_date
+
+    calendar_halving = calendar_halving_for(as_of_day)
+    calendar_entry_date = calendar_halving - timedelta(days=BUY_OFFSET_DAYS)
+    calendar_exit_date = calendar_halving + timedelta(days=SELL_OFFSET_DAYS)
+    cycle_window_active = calendar_entry_date <= as_of_day <= calendar_exit_date
     cycle_window_allocation_pct = (
         100 if cycle_window_active and ma120_gate["ma120_gate_confirmed"] else 0
     )
-    current_btc_allocation_pct = (
+    final_strategy_allocation_pct = (
         cycle_window_allocation_pct if cycle_window_active else indicator_allocation_pct
     )
-    final_strategy_allocation_pct = current_btc_allocation_pct
+
     if cycle_window_active and ma120_gate["ma120_gate_confirmed"]:
         ma120_gate_explanation = (
             "The calendar cycle window is active and the MA120 defensive gate is confirmed bullish, "
@@ -360,6 +343,73 @@ def build_payload() -> dict[str, Any]:
         ma120_gate_explanation = (
             "The calendar cycle window is not active and the MA120 defensive gate is not confirmed bullish."
         )
+
+    return {
+        "weekly_signal": weekly_signal,
+        "daily_sma_50": daily_sma_50,
+        "daily_sma_200": daily_sma_200,
+        "ma120_gate": ma120_gate,
+        "golden_cross_confirmed": golden_cross_confirmed,
+        "indicator_allocation_pct": indicator_allocation_pct,
+        "calendar_entry_date": calendar_entry_date,
+        "calendar_exit_date": calendar_exit_date,
+        "cycle_window_active": cycle_window_active,
+        "cycle_window_allocation_pct": cycle_window_allocation_pct,
+        "current_btc_allocation_pct": final_strategy_allocation_pct,
+        "final_strategy_allocation_pct": final_strategy_allocation_pct,
+        "final_strategy_status": strategy_status_for_allocation(final_strategy_allocation_pct),
+        "ma120_gate_explanation": ma120_gate_explanation,
+    }
+
+
+def exponential_moving_average(values: list[float], window: int) -> float | None:
+    if len(values) < window:
+        return None
+    smoothing = 2 / (window + 1)
+    ema = statistics.fmean(values[:window])
+    for value in values[window:]:
+        ema = (value * smoothing) + (ema * (1 - smoothing))
+    return ema
+
+
+def build_payload() -> dict[str, Any]:
+    yahoo_rows = yahoo_btc_daily()
+    latest = yahoo_rows[-1]
+    market_date = date.fromisoformat(latest["date"])
+    status, cycle_day, buy_date, day_540, days_from_buy, days_from_day_540 = signal_for(market_date)
+    active_halving = active_halving_for(market_date)
+    next_halving = next_halving_for(market_date)
+    next_buy_date = next_halving - timedelta(days=BUY_OFFSET_DAYS)
+    days_until_next_buy = (next_buy_date - market_date).days
+    closes = [float(row["close"]) for row in yahoo_rows]
+    latest_btc_close = float(latest["close"])
+    allocation_details = strategy_allocation_details(yahoo_rows, market_date)
+    weekly_signal = allocation_details["weekly_signal"]
+    sma_50_week = weekly_signal["sma_50_week"]
+    sma_200_week = rolling_sma(closes, 200 * 7)
+    daily_sma_50 = allocation_details["daily_sma_50"]
+    ma120_gate = allocation_details["ma120_gate"]
+    daily_sma_200 = allocation_details["daily_sma_200"]
+    ema_50 = exponential_moving_average(closes, 50)
+    ema_200 = exponential_moving_average(closes, 200)
+    golden_cross_confirmed = allocation_details["golden_cross_confirmed"]
+    bull_market_signal = (
+        "Bull Market Confirmed"
+        if weekly_signal["above_50w_sma_confirmed"]
+        else "Below 50-week SMA"
+    )
+    sma_50_week_distance_pct = (
+        ((float(weekly_signal["latest_weekly_close"]) - sma_50_week) / sma_50_week) * 100
+        if sma_50_week and weekly_signal["latest_weekly_close"] is not None
+        else None
+    )
+    cycle_window_active = allocation_details["cycle_window_active"]
+    cycle_window_allocation_pct = allocation_details["cycle_window_allocation_pct"]
+    current_btc_allocation_pct = allocation_details["current_btc_allocation_pct"]
+    final_strategy_allocation_pct = allocation_details["final_strategy_allocation_pct"]
+    final_strategy_status = allocation_details["final_strategy_status"]
+    ma120_gate_explanation = allocation_details["ma120_gate_explanation"]
+    calendar_entry_date = allocation_details["calendar_entry_date"]
     signal_explanation = (
         f"Current live BTC price: ${latest_btc_close:,.2f} as of {market_date.isoformat()} UTC. "
         f"Latest completed weekly close: "
@@ -410,6 +460,7 @@ def build_payload() -> dict[str, Any]:
     recent_history = []
     for row in yahoo_rows[-14:]:
         row_date = date.fromisoformat(row["date"])
+        row_allocation_details = strategy_allocation_details(yahoo_rows, row_date)
         row_status, row_cycle_day, row_buy_date, row_day_540, row_days_from_buy, row_days_from_day_540 = signal_for(row_date)
         if row_date < row_buy_date:
             notes = f"{abs(row_days_from_buy)} days before the BTC buy window."
@@ -419,6 +470,10 @@ def build_payload() -> dict[str, Any]:
             notes = f"{row_days_from_day_540} days after day 540."
         else:
             notes = f"Inside BTC holding window; {abs(row_days_from_day_540)} days until day 540."
+        notes = (
+            f"{notes} Final allocation: "
+            f"{row_allocation_details['final_strategy_allocation_pct']}% BTC."
+        )
         recent_history.append(
             {
                 "date": row_date.isoformat(),
@@ -427,6 +482,14 @@ def build_payload() -> dict[str, Any]:
                 "buy_date": row_buy_date.isoformat(),
                 "sell_date": row_day_540.isoformat(),
                 "status": row_status,
+                "final_strategy_status": row_allocation_details["final_strategy_status"],
+                "final_strategy_allocation_pct": row_allocation_details[
+                    "final_strategy_allocation_pct"
+                ],
+                "cycle_window_active": row_allocation_details["cycle_window_active"],
+                "ma120_gate_confirmed": row_allocation_details["ma120_gate"][
+                    "ma120_gate_confirmed"
+                ],
                 "notes": notes,
             }
         )
@@ -436,6 +499,7 @@ def build_payload() -> dict[str, Any]:
         "market_date": market_date.isoformat(),
         "btc_close": round(float(latest["close"]), 2),
         "status": status,
+        "final_strategy_status": final_strategy_status,
         "active_halving_date": active_halving.isoformat(),
         "next_halving_date": next_halving.isoformat(),
         "last_buy_date": buy_date.isoformat(),
@@ -499,7 +563,19 @@ def write_outputs(payload: dict[str, Any]) -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     JSON_PATH.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
-    fieldnames = ["date", "btc_close", "cycle_day", "buy_date", "sell_date", "status", "notes"]
+    fieldnames = [
+        "date",
+        "btc_close",
+        "cycle_day",
+        "buy_date",
+        "sell_date",
+        "status",
+        "final_strategy_status",
+        "final_strategy_allocation_pct",
+        "cycle_window_active",
+        "ma120_gate_confirmed",
+        "notes",
+    ]
     with CSV_PATH.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
