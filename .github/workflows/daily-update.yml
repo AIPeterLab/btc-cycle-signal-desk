@@ -23,13 +23,13 @@ jobs:
       - name: Refresh BTC cycle signal data
         run: python scripts/update_signals.py
 
-      - name: Commit changed dashboard data
+      - name: Commit changed signal data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/signals.json data/signals.csv data/etf_flows.json
+          git add data/signals.json data/signals.csv
           if git diff --cached --quiet; then
-            echo "No dashboard data changes to commit."
+            echo "No signal data changes to commit."
           else
             git commit -m "Update BTC cycle signal data"
             git push
