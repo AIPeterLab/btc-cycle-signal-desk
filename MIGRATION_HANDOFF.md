@@ -1,0 +1,102 @@
+# BTC Cycle Signal Desk Migration Handoff
+
+## Purpose and status
+
+BTC Cycle Signal Desk is a public, static dashboard for a rules-based Bitcoin four-year-cycle tracking system. The current production branch is `main`, hosted from the GitHub repository `AIPeterLab/btc-cycle-signal-desk` and deployed through Cloudflare Pages at `https://btc.aipeterlab.com`.
+
+The signal methodology, current operating assumptions, local refresh command, and hosting configuration are documented in `README.md`. Cloudflare project, domain, and cutover details are documented in `CLOUDFLARE_PAGES.md`. `Real_Account_Tracking_System.doc` is the tracked legacy plain-language operating manual.
+
+At the time of this handoff, the current implementation includes the calendar cycle window, the MA120 two-up/two-down defensive gate, the confirmed 50-week SMA early-entry overlay, and the daily SMA50/SMA200 golden-cross overlay. The final displayed allocation is calculated by `scripts/update_signals.py`.
+
+## Project structure
+
+- `index.html`: self-contained static dashboard UI.
+- `data/signals.json`: generated current status, indicator context, and recent history used by the dashboard.
+- `data/signals.csv`: generated recent history export.
+- `scripts/update_signals.py`: Python standard-library-only data updater and strategy calculation.
+- `.github/workflows/daily-update.yml`: manually dispatched workflow that refreshes and commits generated data.
+- `_headers`: Cloudflare Pages cache rules.
+- `README.md`: authoritative project and strategy overview.
+- `CLOUDFLARE_PAGES.md`: deployment configuration and domain instructions.
+- `AGENTS.md`: durable Codex instructions for future sessions.
+
+There are no repository-scoped custom slash commands or skills. The `.agents/` and `.codex/` directories are intentionally ignored and currently contain no project files.
+
+## Design and operating decisions
+
+- The strategy decisions in `README.md` are authoritative. Context indicators must not silently become allocation overrides.
+- The site is deliberately static and has no build step, package manager, application server, or database.
+- Dashboard data paths are relative so the same files work locally and at the deployment root.
+- The repository workflow remains dispatch-only because scheduling is centralized in an external AIPeterLab Cloudflare Worker.
+- Cloudflare Pages deploys from GitHub `main`; successful data-refresh commits should trigger production deployment.
+- Secrets and account authorization stay outside Git. No API key is required by the updater.
+
+## Development and refresh workflow
+
+Requirements: Git, Python 3.12 or a compatible modern Python 3 release, network access to the public data sources, and an HTTP server/browser for dashboard review. The Python updater uses only the standard library, so there is no `requirements.txt` or package installation step.
+
+Refresh and validate:
+
+```powershell
+python scripts/update_signals.py
+python -m py_compile scripts/update_signals.py
+git diff --check
+git status --short
+```
+
+For local UI review, serve the repository root with a static HTTP server, for example:
+
+```powershell
+python -m http.server 8765
+```
+
+Then open `http://localhost:8765/`. Do not load `index.html` solely through a `file:` URL because browser fetch rules can interfere with loading the JSON file.
+
+## Configuration and dependencies
+
+Optional environment variable names used by the updater:
+
+- `MINER_EFFICIENCY_J_PER_TH` (default `30`)
+- `ELECTRICITY_COST_USD_PER_KWH` (default `0.05`)
+- `REQUIRED_WEEKLY_CLOSES_ABOVE_50W_SMA` (default `1`)
+
+External services and integrations:
+
+- Yahoo Finance public chart endpoint for BTC-USD daily prices.
+- CoinMetrics Community API for on-chain and mining context.
+- GitHub repository and GitHub Actions for source backup and refresh commits.
+- Cloudflare Pages for production hosting and the custom domain.
+- An external AIPeterLab Cloudflare Worker dispatches the GitHub Actions workflow on schedule.
+
+GitHub and Cloudflare authentication, organization membership, repository permissions, DNS permissions, and the central Worker configuration are not stored here. A new ChatGPT Business/Codex workspace must be granted its own authorized access when operations require those services.
+
+## Secrets and local-only state
+
+`.gitignore` excludes `.agents/`, `.codex/`, `.wrangler/`, `output/`, Python `__pycache__/`, and `.pytest_cache/`. Do not remove these exclusions without reviewing their contents. In particular, `.wrangler/cache/wrangler-account.json` is account-related local metadata and must not be committed.
+
+Ignored local files observed during the migration audit:
+
+- `.wrangler/cache/pages.json`: reproducible Wrangler cache; no backup required.
+- `.wrangler/cache/wrangler-account.json`: local account metadata; keep out of Git and reauthenticate Cloudflare after migration if needed.
+- `scripts/__pycache__/update_signals.cpython-314.pyc`: generated bytecode; no backup required.
+
+The local Git repository also contains two historical `autostash` entries. They predate and are substantially superseded by later commits on `main`; they were not applied, deleted, or pushed during migration preparation. They are not needed to reproduce the current checked-out project. Preserve the existing `.git` directory locally until the account migration is complete if historical recovery is desired.
+
+Project-related commands and history were found in account-local Codex state under `C:\Users\Ella\.codex`, including global rules. Those files can contain machine- or account-specific permissions and credential-handling commands and must not be copied into this public repository. The durable, safe project instructions needed for a fresh session are captured in this file and `AGENTS.md`.
+
+## Unfinished work and known problems
+
+No uncommitted feature work was present when this handoff was prepared. The updater depends on public third-party endpoints, so transient network, schema, or availability changes can break refreshes. CoinMetrics failure is handled as missing context, but Yahoo BTC price data is required for a successful run.
+
+The account migration does not itself grant the ChatGPT Business workspace access to GitHub, Cloudflare, or local Codex execution. After switching accounts, confirm the Business workspace permits local Codex use and reconnect or reauthorize external services as necessary.
+
+## Recovery procedure
+
+1. Clone `https://github.com/AIPeterLab/btc-cycle-signal-desk.git`.
+2. Open the repository root in Codex and read `AGENTS.md`, `README.md`, this file, and `CLOUDFLARE_PAGES.md`.
+3. Confirm Python is available; no package installation is required.
+4. Run the compile check and, with network access, the updater.
+5. Serve the repository root locally and inspect the dashboard.
+6. Confirm access to the GitHub repository, GitHub Actions workflow, Cloudflare Pages project, DNS zone, and external scheduler before performing production operations.
+
+The repository alone is sufficient to open, understand, run, and modify the current project. Production operations additionally require externally managed GitHub and Cloudflare permissions.

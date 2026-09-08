@@ -4,3 +4,10 @@
 output/
 __pycache__/
 .pytest_cache/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
