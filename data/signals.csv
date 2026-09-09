@@ -1,5 +1,4 @@
 date,btc_close,cycle_day,buy_date,sell_date,status,final_strategy_status,final_strategy_allocation_pct,cycle_window_active,ma120_gate_confirmed,notes
-2026-08-26,79027.42,858,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,318 days after day 540. Final allocation: 0% BTC.
 2026-08-27,80257.54,859,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,319 days after day 540. Final allocation: 0% BTC.
 2026-08-28,77830.29,860,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,320 days after day 540. Final allocation: 0% BTC.
 2026-08-29,78245.81,861,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,321 days after day 540. Final allocation: 0% BTC.
@@ -12,4 +11,5 @@ date,btc_close,cycle_day,buy_date,sell_date,status,final_strategy_status,final_s
 2026-09-05,79823.87,868,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,328 days after day 540. Final allocation: 0% BTC.
 2026-09-06,80350.05,869,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,329 days after day 540. Final allocation: 0% BTC.
 2026-09-07,79115.85,870,2022-12-07,2025-10-12,Hold Cash,Hold 25% BTC,25,False,True,330 days after day 540. Final allocation: 25% BTC.
-2026-09-08,78493.4,871,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,331 days after day 540. Final allocation: 50% BTC.
+2026-09-08,78438.58,871,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,331 days after day 540. Final allocation: 50% BTC.
+2026-09-09,77847.03,872,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,332 days after day 540. Final allocation: 50% BTC.
