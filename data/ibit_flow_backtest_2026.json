@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-09-27T14:49:13.561840+00:00",
+  "initial_capital": 1000.0,
+  "training_window": {
+    "start": "2024-01",
+    "end": "2025-12"
+  },
+  "training_max_monthly_ibit_flow_usd": 6201600000.0,
+  "rule": "Score prior-month IBIT flow from 0 to 100 using the maximum positive monthly flow in Jan 2024-Dec 2025 as 100 and any flow at or below zero as 0. A negative prior-month flow forces a 0% BTC allocation. Otherwise, current-month BTC allocation equals 100 minus that score; the remainder is non-interest-bearing cash. Rebalance at each month start.",
+  "comparison": "QQQ adjusted-close buy-and-hold over identical dates",
+  "period": {
+    "start": "2026-01",
+    "end": "2026-08"
+  },
+  "results": {
+    "strategy_ending_value": 1322.35,
+    "strategy_return_pct": 32.23,
+    "qqq_ending_value": 1169.53,
+    "qqq_return_pct": 16.95,
+    "btc_buy_hold_ending_value": 897.61,
+    "btc_buy_hold_return_pct": -10.24
+  },
+  "months": [
+    {
+      "month": "2026-01",
+      "signal_flow_month": "2025-12",
+      "prior_month_ibit_flow_usd": -473800000.0,
+      "flow_score": 0,
+      "btc_allocation_pct": 0,
+      "btc_monthly_return_pct": -10.1564,
+      "strategy_monthly_return_pct": -0.0,
+      "strategy_value": 1000.0,
+      "qqq_value": 1012.31,
+      "btc_buy_hold_value": 898.44
+    },
+    {
+      "month": "2026-02",
+      "signal_flow_month": "2026-01",
+      "prior_month_ibit_flow_usd": -136500000.0,
+      "flow_score": 0,
+      "btc_allocation_pct": 0,
+      "btc_monthly_return_pct": -14.7864,
+      "strategy_monthly_return_pct": -0.0,
+      "strategy_value": 1000.0,
+      "qqq_value": 988.57,
+      "btc_buy_hold_value": 765.59
+    },
+    {
+      "month": "2026-03",
+      "signal_flow_month": "2026-02",
+      "prior_month_ibit_flow_usd": -150400000.0,
+      "flow_score": 0,
+      "btc_allocation_pct": 0,
+      "btc_monthly_return_pct": 1.8471,
+      "strategy_monthly_return_pct": 0.0,
+      "strategy_value": 1000.0,
+      "qqq_value": 940.74,
+      "btc_buy_hold_value": 779.73
+    },
+    {
+      "month": "2026-04",
+      "signal_flow_month": "2026-03",
+      "prior_month_ibit_flow_usd": 1398600000.0,
+      "flow_score": 22.5522,
+      "btc_allocation_pct": 77.4478,
+      "btc_monthly_return_pct": 11.8285,
+      "strategy_monthly_return_pct": 9.1609,
+      "strategy_value": 1091.61,
+      "qqq_value": 1088.35,
+      "btc_buy_hold_value": 871.96
+    },
+    {
+      "month": "2026-05",
+      "signal_flow_month": "2026-04",
+      "prior_month_ibit_flow_usd": 2013500000.0,
+      "flow_score": 32.4674,
+      "btc_allocation_pct": 67.5326,
+      "btc_monthly_return_pct": -3.5707,
+      "strategy_monthly_return_pct": -2.4114,
+      "strategy_value": 1065.29,
+      "qqq_value": 1203.37,
+      "btc_buy_hold_value": 840.83
+    },
+    {
+      "month": "2026-06",
+      "signal_flow_month": "2026-05",
+      "prior_month_ibit_flow_usd": -1410900000.0,
+      "flow_score": 0,
+      "btc_allocation_pct": 0,
+      "btc_monthly_return_pct": -20.4144,
+      "strategy_monthly_return_pct": -0.0,
+      "strategy_value": 1065.29,
+      "qqq_value": 1201.57,
+      "btc_buy_hold_value": 669.18
+    },
+    {
+      "month": "2026-07",
+      "signal_flow_month": "2026-06",
+      "prior_month_ibit_flow_usd": -3553200000.0,
+      "flow_score": 0,
+      "btc_allocation_pct": 0,
+      "btc_monthly_return_pct": 7.266,
+      "strategy_monthly_return_pct": 0.0,
+      "strategy_value": 1065.29,
+      "qqq_value": 1122.58,
+      "btc_buy_hold_value": 717.8
+    },
+    {
+      "month": "2026-08",
+      "signal_flow_month": "2026-07",
+      "prior_month_ibit_flow_usd": 227600000.0,
+      "flow_score": 3.67,
+      "btc_allocation_pct": 96.33,
+      "btc_monthly_return_pct": 25.0501,
+      "strategy_monthly_return_pct": 24.1307,
+      "strategy_value": 1322.35,
+      "qqq_value": 1169.53,
+      "btc_buy_hold_value": 897.61
+    }
+  ]
+}

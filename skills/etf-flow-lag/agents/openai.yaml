@@ -1,0 +1,4 @@
+interface:
+  display_name: "ETF Flow Lag"
+  short_description: "Repeat the lagged IBIT allocation backtest"
+  default_prompt: "Use $etf-flow-lag to refresh and review the lagged IBIT-flow allocation backtest."

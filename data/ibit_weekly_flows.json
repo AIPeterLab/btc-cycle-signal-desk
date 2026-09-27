@@ -1,0 +1,1001 @@
+{
+  "generated_at": "2026-09-27T13:49:11.535429+00:00",
+  "source_updated_at": "2026-09-27T10:14:30+00:00",
+  "source": "The Block \u2014 BTC Spot ETF Flows",
+  "source_url": "https://data.tbstat.com/dashboard/markets_structuredproducts_btcspotetfflows_daily_other.json",
+  "btc_price_source": "Yahoo Finance BTC-USD daily adjusted close",
+  "methodology": "Daily IBIT net fund flows are summed into Friday-ending calendar weeks. BTC price is the Friday UTC close. Partial latest weeks are excluded.",
+  "units": {
+    "ibit_net_flow": "USD",
+    "btc_close": "USD"
+  },
+  "weeks": [
+    {
+      "week_end": "2024-01-12",
+      "ibit_net_flow_usd": 497700000.0,
+      "btc_close_usd": 42853.17,
+      "flow_observations": 2,
+      "last_flow_date": "2024-01-12"
+    },
+    {
+      "week_end": "2024-01-19",
+      "ibit_net_flow_usd": 931100000.0,
+      "btc_close_usd": 41618.41,
+      "flow_observations": 4,
+      "last_flow_date": "2024-01-19"
+    },
+    {
+      "week_end": "2024-01-26",
+      "ibit_net_flow_usd": 744700000.0,
+      "btc_close_usd": 41816.87,
+      "flow_observations": 5,
+      "last_flow_date": "2024-01-26"
+    },
+    {
+      "week_end": "2024-02-02",
+      "ibit_net_flow_usd": 883500000.0,
+      "btc_close_usd": 43185.86,
+      "flow_observations": 5,
+      "last_flow_date": "2024-02-02"
+    },
+    {
+      "week_end": "2024-02-09",
+      "ibit_net_flow_usd": 693500000.0,
+      "btc_close_usd": 47147.2,
+      "flow_observations": 5,
+      "last_flow_date": "2024-02-09"
+    },
+    {
+      "week_end": "2024-02-16",
+      "ibit_net_flow_usd": 1614400000.0,
+      "btc_close_usd": 52160.2,
+      "flow_observations": 5,
+      "last_flow_date": "2024-02-16"
+    },
+    {
+      "week_end": "2024-02-23",
+      "ibit_net_flow_usd": 543400000.0,
+      "btc_close_usd": 50731.95,
+      "flow_observations": 4,
+      "last_flow_date": "2024-02-23"
+    },
+    {
+      "week_end": "2024-03-01",
+      "ibit_net_flow_usd": 2050500000.0,
+      "btc_close_usd": 62440.63,
+      "flow_observations": 5,
+      "last_flow_date": "2024-03-01"
+    },
+    {
+      "week_end": "2024-03-08",
+      "ibit_net_flow_usd": 2070600000.0,
+      "btc_close_usd": 68300.09,
+      "flow_observations": 5,
+      "last_flow_date": "2024-03-08"
+    },
+    {
+      "week_end": "2024-03-15",
+      "ibit_net_flow_usd": 2483600000.0,
+      "btc_close_usd": 69403.77,
+      "flow_observations": 5,
+      "last_flow_date": "2024-03-15"
+    },
+    {
+      "week_end": "2024-03-22",
+      "ibit_net_flow_usd": 828300000.0,
+      "btc_close_usd": 63778.76,
+      "flow_observations": 5,
+      "last_flow_date": "2024-03-22"
+    },
+    {
+      "week_end": "2024-03-29",
+      "ibit_net_flow_usd": 616600000.0,
+      "btc_close_usd": 69892.83,
+      "flow_observations": 4,
+      "last_flow_date": "2024-03-28"
+    },
+    {
+      "week_end": "2024-04-05",
+      "ibit_net_flow_usd": 811200000.0,
+      "btc_close_usd": 67837.64,
+      "flow_observations": 5,
+      "last_flow_date": "2024-04-05"
+    },
+    {
+      "week_end": "2024-04-12",
+      "ibit_net_flow_usd": 486500000.0,
+      "btc_close_usd": 67195.87,
+      "flow_observations": 5,
+      "last_flow_date": "2024-04-12"
+    },
+    {
+      "week_end": "2024-04-19",
+      "ibit_net_flow_usd": 165400000.0,
+      "btc_close_usd": 63843.57,
+      "flow_observations": 5,
+      "last_flow_date": "2024-04-19"
+    },
+    {
+      "week_end": "2024-04-26",
+      "ibit_net_flow_usd": 57600000.0,
+      "btc_close_usd": 63755.32,
+      "flow_observations": 5,
+      "last_flow_date": "2024-04-26"
+    },
+    {
+      "week_end": "2024-05-03",
+      "ibit_net_flow_usd": -24200000.0,
+      "btc_close_usd": 62889.84,
+      "flow_observations": 5,
+      "last_flow_date": "2024-05-03"
+    },
+    {
+      "week_end": "2024-05-10",
+      "ibit_net_flow_usd": 48100000.0,
+      "btc_close_usd": 60792.78,
+      "flow_observations": 5,
+      "last_flow_date": "2024-05-10"
+    },
+    {
+      "week_end": "2024-05-17",
+      "ibit_net_flow_usd": 131800000.0,
+      "btc_close_usd": 67051.88,
+      "flow_observations": 5,
+      "last_flow_date": "2024-05-17"
+    },
+    {
+      "week_end": "2024-05-24",
+      "ibit_net_flow_usd": 719500000.0,
+      "btc_close_usd": 68526.1,
+      "flow_observations": 5,
+      "last_flow_date": "2024-05-24"
+    },
+    {
+      "week_end": "2024-05-31",
+      "ibit_net_flow_usd": 297800000.0,
+      "btc_close_usd": 67491.41,
+      "flow_observations": 4,
+      "last_flow_date": "2024-05-31"
+    },
+    {
+      "week_end": "2024-06-07",
+      "ibit_net_flow_usd": 948000000.0,
+      "btc_close_usd": 69342.59,
+      "flow_observations": 5,
+      "last_flow_date": "2024-06-07"
+    },
+    {
+      "week_end": "2024-06-14",
+      "ibit_net_flow_usd": 41600000.0,
+      "btc_close_usd": 66011.09,
+      "flow_observations": 5,
+      "last_flow_date": "2024-06-14"
+    },
+    {
+      "week_end": "2024-06-21",
+      "ibit_net_flow_usd": 1500000.0,
+      "btc_close_usd": 64096.2,
+      "flow_observations": 4,
+      "last_flow_date": "2024-06-21"
+    },
+    {
+      "week_end": "2024-06-28",
+      "ibit_net_flow_usd": 82400000.0,
+      "btc_close_usd": 60320.14,
+      "flow_observations": 5,
+      "last_flow_date": "2024-06-28"
+    },
+    {
+      "week_end": "2024-07-05",
+      "ibit_net_flow_usd": 14100000.0,
+      "btc_close_usd": 56662.38,
+      "flow_observations": 4,
+      "last_flow_date": "2024-07-05"
+    },
+    {
+      "week_end": "2024-07-12",
+      "ibit_net_flow_usd": 522500000.0,
+      "btc_close_usd": 57899.46,
+      "flow_observations": 5,
+      "last_flow_date": "2024-07-12"
+    },
+    {
+      "week_end": "2024-07-19",
+      "ibit_net_flow_usd": 706700000.0,
+      "btc_close_usd": 66710.16,
+      "flow_observations": 5,
+      "last_flow_date": "2024-07-19"
+    },
+    {
+      "week_end": "2024-07-26",
+      "ibit_net_flow_usd": 758500000.0,
+      "btc_close_usd": 67912.06,
+      "flow_observations": 5,
+      "last_flow_date": "2024-07-26"
+    },
+    {
+      "week_end": "2024-08-02",
+      "ibit_net_flow_usd": 370200000.0,
+      "btc_close_usd": 61415.07,
+      "flow_observations": 5,
+      "last_flow_date": "2024-08-02"
+    },
+    {
+      "week_end": "2024-08-09",
+      "ibit_net_flow_usd": 219700000.0,
+      "btc_close_usd": 60880.11,
+      "flow_observations": 5,
+      "last_flow_date": "2024-08-09"
+    },
+    {
+      "week_end": "2024-08-16",
+      "ibit_net_flow_usd": 71100000.0,
+      "btc_close_usd": 58894.11,
+      "flow_observations": 5,
+      "last_flow_date": "2024-08-16"
+    },
+    {
+      "week_end": "2024-08-23",
+      "ibit_net_flow_usd": 318800000.0,
+      "btc_close_usd": 64094.36,
+      "flow_observations": 5,
+      "last_flow_date": "2024-08-23"
+    },
+    {
+      "week_end": "2024-08-30",
+      "ibit_net_flow_usd": 210600000.0,
+      "btc_close_usd": 59119.48,
+      "flow_observations": 5,
+      "last_flow_date": "2024-08-30"
+    },
+    {
+      "week_end": "2024-09-06",
+      "ibit_net_flow_usd": 0.0,
+      "btc_close_usd": 53948.75,
+      "flow_observations": 4,
+      "last_flow_date": "2024-09-06"
+    },
+    {
+      "week_end": "2024-09-13",
+      "ibit_net_flow_usd": -9100000.0,
+      "btc_close_usd": 60571.3,
+      "flow_observations": 5,
+      "last_flow_date": "2024-09-13"
+    },
+    {
+      "week_end": "2024-09-20",
+      "ibit_net_flow_usd": 15800000.0,
+      "btc_close_usd": 63192.98,
+      "flow_observations": 5,
+      "last_flow_date": "2024-09-20"
+    },
+    {
+      "week_end": "2024-09-27",
+      "ibit_net_flow_usd": 499000000.0,
+      "btc_close_usd": 65790.66,
+      "flow_observations": 5,
+      "last_flow_date": "2024-09-27"
+    },
+    {
+      "week_end": "2024-10-04",
+      "ibit_net_flow_usd": 135300000.0,
+      "btc_close_usd": 62067.48,
+      "flow_observations": 5,
+      "last_flow_date": "2024-10-04"
+    },
+    {
+      "week_end": "2024-10-11",
+      "ibit_net_flow_usd": 140600000.0,
+      "btc_close_usd": 62445.09,
+      "flow_observations": 5,
+      "last_flow_date": "2024-10-11"
+    },
+    {
+      "week_end": "2024-10-18",
+      "ibit_net_flow_usd": 1141100000.0,
+      "btc_close_usd": 68418.79,
+      "flow_observations": 5,
+      "last_flow_date": "2024-10-18"
+    },
+    {
+      "week_end": "2024-10-25",
+      "ibit_net_flow_usd": 1147000000.0,
+      "btc_close_usd": 66642.41,
+      "flow_observations": 5,
+      "last_flow_date": "2024-10-25"
+    },
+    {
+      "week_end": "2024-11-01",
+      "ibit_net_flow_usd": 2148900000.0,
+      "btc_close_usd": 69482.47,
+      "flow_observations": 5,
+      "last_flow_date": "2024-11-01"
+    },
+    {
+      "week_end": "2024-11-08",
+      "ibit_net_flow_usd": 1251100000.0,
+      "btc_close_usd": 76545.48,
+      "flow_observations": 5,
+      "last_flow_date": "2024-11-08"
+    },
+    {
+      "week_end": "2024-11-15",
+      "ibit_net_flow_usd": 2022500000.0,
+      "btc_close_usd": 91066.01,
+      "flow_observations": 5,
+      "last_flow_date": "2024-11-15"
+    },
+    {
+      "week_end": "2024-11-22",
+      "ibit_net_flow_usd": 2053500000.0,
+      "btc_close_usd": 98997.66,
+      "flow_observations": 5,
+      "last_flow_date": "2024-11-22"
+    },
+    {
+      "week_end": "2024-11-29",
+      "ibit_net_flow_usd": 405300000.0,
+      "btc_close_usd": 97461.52,
+      "flow_observations": 4,
+      "last_flow_date": "2024-11-29"
+    },
+    {
+      "week_end": "2024-12-06",
+      "ibit_net_flow_usd": 2630800000.0,
+      "btc_close_usd": 99920.71,
+      "flow_observations": 5,
+      "last_flow_date": "2024-12-06"
+    },
+    {
+      "week_end": "2024-12-13",
+      "ibit_net_flow_usd": 1514300000.0,
+      "btc_close_usd": 101459.26,
+      "flow_observations": 5,
+      "last_flow_date": "2024-12-13"
+    },
+    {
+      "week_end": "2024-12-20",
+      "ibit_net_flow_usd": 1446500000.0,
+      "btc_close_usd": 97755.93,
+      "flow_observations": 5,
+      "last_flow_date": "2024-12-20"
+    },
+    {
+      "week_end": "2024-12-27",
+      "ibit_net_flow_usd": -21100000.0,
+      "btc_close_usd": 94164.86,
+      "flow_observations": 4,
+      "last_flow_date": "2024-12-27"
+    },
+    {
+      "week_end": "2025-01-03",
+      "ibit_net_flow_usd": -139500000.0,
+      "btc_close_usd": 98107.43,
+      "flow_observations": 4,
+      "last_flow_date": "2025-01-03"
+    },
+    {
+      "week_end": "2025-01-10",
+      "ibit_net_flow_usd": 497600000.0,
+      "btc_close_usd": 94701.45,
+      "flow_observations": 4,
+      "last_flow_date": "2025-01-10"
+    },
+    {
+      "week_end": "2025-01-17",
+      "ibit_net_flow_usd": 745700000.0,
+      "btc_close_usd": 104462.04,
+      "flow_observations": 5,
+      "last_flow_date": "2025-01-17"
+    },
+    {
+      "week_end": "2025-01-24",
+      "ibit_net_flow_usd": 1316500000.0,
+      "btc_close_usd": 104819.48,
+      "flow_observations": 4,
+      "last_flow_date": "2025-01-24"
+    },
+    {
+      "week_end": "2025-01-31",
+      "ibit_net_flow_usd": 750900000.0,
+      "btc_close_usd": 102405.02,
+      "flow_observations": 5,
+      "last_flow_date": "2025-01-31"
+    },
+    {
+      "week_end": "2025-02-07",
+      "ibit_net_flow_usd": 315300000.0,
+      "btc_close_usd": 96529.09,
+      "flow_observations": 5,
+      "last_flow_date": "2025-02-07"
+    },
+    {
+      "week_end": "2025-02-14",
+      "ibit_net_flow_usd": 105600000.0,
+      "btc_close_usd": 97508.97,
+      "flow_observations": 5,
+      "last_flow_date": "2025-02-14"
+    },
+    {
+      "week_end": "2025-02-21",
+      "ibit_net_flow_usd": -22000000.0,
+      "btc_close_usd": 96125.55,
+      "flow_observations": 4,
+      "last_flow_date": "2025-02-21"
+    },
+    {
+      "week_end": "2025-02-28",
+      "ibit_net_flow_usd": -1174700000.0,
+      "btc_close_usd": 84373.01,
+      "flow_observations": 5,
+      "last_flow_date": "2025-02-28"
+    },
+    {
+      "week_end": "2025-03-07",
+      "ibit_net_flow_usd": -129600000.0,
+      "btc_close_usd": 86742.67,
+      "flow_observations": 5,
+      "last_flow_date": "2025-03-07"
+    },
+    {
+      "week_end": "2025-03-14",
+      "ibit_net_flow_usd": -338100000.0,
+      "btc_close_usd": 83969.1,
+      "flow_observations": 5,
+      "last_flow_date": "2025-03-14"
+    },
+    {
+      "week_end": "2025-03-21",
+      "ibit_net_flow_usd": 537500000.0,
+      "btc_close_usd": 84043.24,
+      "flow_observations": 5,
+      "last_flow_date": "2025-03-21"
+    },
+    {
+      "week_end": "2025-03-28",
+      "ibit_net_flow_usd": 172000000.0,
+      "btc_close_usd": 84353.15,
+      "flow_observations": 5,
+      "last_flow_date": "2025-03-28"
+    },
+    {
+      "week_end": "2025-04-04",
+      "ibit_net_flow_usd": -35500000.0,
+      "btc_close_usd": 83843.8,
+      "flow_observations": 5,
+      "last_flow_date": "2025-04-04"
+    },
+    {
+      "week_end": "2025-04-11",
+      "ibit_net_flow_usd": -342600000.0,
+      "btc_close_usd": 83404.84,
+      "flow_observations": 5,
+      "last_flow_date": "2025-04-11"
+    },
+    {
+      "week_end": "2025-04-18",
+      "ibit_net_flow_usd": 186500000.0,
+      "btc_close_usd": 84450.8,
+      "flow_observations": 4,
+      "last_flow_date": "2025-04-17"
+    },
+    {
+      "week_end": "2025-04-25",
+      "ibit_net_flow_usd": 1445700000.0,
+      "btc_close_usd": 94720.5,
+      "flow_observations": 5,
+      "last_flow_date": "2025-04-25"
+    },
+    {
+      "week_end": "2025-05-02",
+      "ibit_net_flow_usd": 2480900000.0,
+      "btc_close_usd": 96910.07,
+      "flow_observations": 5,
+      "last_flow_date": "2025-05-02"
+    },
+    {
+      "week_end": "2025-05-09",
+      "ibit_net_flow_usd": 1030300000.0,
+      "btc_close_usd": 102970.85,
+      "flow_observations": 5,
+      "last_flow_date": "2025-05-09"
+    },
+    {
+      "week_end": "2025-05-16",
+      "ibit_net_flow_usd": 841700000.0,
+      "btc_close_usd": 103489.29,
+      "flow_observations": 5,
+      "last_flow_date": "2025-05-16"
+    },
+    {
+      "week_end": "2025-05-23",
+      "ibit_net_flow_usd": 2432000000.0,
+      "btc_close_usd": 107287.8,
+      "flow_observations": 5,
+      "last_flow_date": "2025-05-23"
+    },
+    {
+      "week_end": "2025-05-30",
+      "ibit_net_flow_usd": 584600000.0,
+      "btc_close_usd": 103998.57,
+      "flow_observations": 4,
+      "last_flow_date": "2025-05-30"
+    },
+    {
+      "week_end": "2025-06-06",
+      "ibit_net_flow_usd": 81100000.0,
+      "btc_close_usd": 104390.34,
+      "flow_observations": 5,
+      "last_flow_date": "2025-06-06"
+    },
+    {
+      "week_end": "2025-06-13",
+      "ibit_net_flow_usd": 1115900000.0,
+      "btc_close_usd": 106090.97,
+      "flow_observations": 5,
+      "last_flow_date": "2025-06-13"
+    },
+    {
+      "week_end": "2025-06-20",
+      "ibit_net_flow_usd": 1231600000.0,
+      "btc_close_usd": 103309.6,
+      "flow_observations": 4,
+      "last_flow_date": "2025-06-20"
+    },
+    {
+      "week_end": "2025-06-27",
+      "ibit_net_flow_usd": 1310900000.0,
+      "btc_close_usd": 107088.43,
+      "flow_observations": 5,
+      "last_flow_date": "2025-06-27"
+    },
+    {
+      "week_end": "2025-07-04",
+      "ibit_net_flow_usd": 336800000.0,
+      "btc_close_usd": 108034.34,
+      "flow_observations": 4,
+      "last_flow_date": "2025-07-03"
+    },
+    {
+      "week_end": "2025-07-11",
+      "ibit_net_flow_usd": 1759000000.0,
+      "btc_close_usd": 117516.99,
+      "flow_observations": 5,
+      "last_flow_date": "2025-07-11"
+    },
+    {
+      "week_end": "2025-07-18",
+      "ibit_net_flow_usd": 2569000000.0,
+      "btc_close_usd": 118003.23,
+      "flow_observations": 5,
+      "last_flow_date": "2025-07-18"
+    },
+    {
+      "week_end": "2025-07-25",
+      "ibit_net_flow_usd": 267900000.0,
+      "btc_close_usd": 117635.88,
+      "flow_observations": 5,
+      "last_flow_date": "2025-07-25"
+    },
+    {
+      "week_end": "2025-08-01",
+      "ibit_net_flow_usd": 355400000.0,
+      "btc_close_usd": 113320.09,
+      "flow_observations": 5,
+      "last_flow_date": "2025-08-01"
+    },
+    {
+      "week_end": "2025-08-08",
+      "ibit_net_flow_usd": 188900000.0,
+      "btc_close_usd": 116688.73,
+      "flow_observations": 5,
+      "last_flow_date": "2025-08-08"
+    },
+    {
+      "week_end": "2025-08-15",
+      "ibit_net_flow_usd": 887700000.0,
+      "btc_close_usd": 117398.35,
+      "flow_observations": 5,
+      "last_flow_date": "2025-08-15"
+    },
+    {
+      "week_end": "2025-08-22",
+      "ibit_net_flow_usd": -615000000.0,
+      "btc_close_usd": 116874.09,
+      "flow_observations": 5,
+      "last_flow_date": "2025-08-22"
+    },
+    {
+      "week_end": "2025-08-29",
+      "ibit_net_flow_usd": 247900000.0,
+      "btc_close_usd": 108410.84,
+      "flow_observations": 5,
+      "last_flow_date": "2025-08-29"
+    },
+    {
+      "week_end": "2025-09-05",
+      "ibit_net_flow_usd": 434300000.0,
+      "btc_close_usd": 110650.98,
+      "flow_observations": 4,
+      "last_flow_date": "2025-09-05"
+    },
+    {
+      "week_end": "2025-09-12",
+      "ibit_net_flow_usd": 1036900000.0,
+      "btc_close_usd": 116101.58,
+      "flow_observations": 5,
+      "last_flow_date": "2025-09-12"
+    },
+    {
+      "week_end": "2025-09-19",
+      "ibit_net_flow_usd": 866800000.0,
+      "btc_close_usd": 115688.86,
+      "flow_observations": 5,
+      "last_flow_date": "2025-09-19"
+    },
+    {
+      "week_end": "2025-09-26",
+      "ibit_net_flow_usd": 173800000.0,
+      "btc_close_usd": 109712.83,
+      "flow_observations": 5,
+      "last_flow_date": "2025-09-26"
+    },
+    {
+      "week_end": "2025-10-03",
+      "ibit_net_flow_usd": 1816400000.0,
+      "btc_close_usd": 122266.53,
+      "flow_observations": 5,
+      "last_flow_date": "2025-10-03"
+    },
+    {
+      "week_end": "2025-10-10",
+      "ibit_net_flow_usd": 2625300000.0,
+      "btc_close_usd": 113214.37,
+      "flow_observations": 5,
+      "last_flow_date": "2025-10-10"
+    },
+    {
+      "week_end": "2025-10-17",
+      "ibit_net_flow_usd": -278600000.0,
+      "btc_close_usd": 106467.79,
+      "flow_observations": 5,
+      "last_flow_date": "2025-10-17"
+    },
+    {
+      "week_end": "2025-10-24",
+      "ibit_net_flow_usd": 324300000.0,
+      "btc_close_usd": 111033.92,
+      "flow_observations": 5,
+      "last_flow_date": "2025-10-24"
+    },
+    {
+      "week_end": "2025-10-31",
+      "ibit_net_flow_usd": -403400000.0,
+      "btc_close_usd": 109556.16,
+      "flow_observations": 5,
+      "last_flow_date": "2025-10-31"
+    },
+    {
+      "week_end": "2025-11-07",
+      "ibit_net_flow_usd": -581000000.0,
+      "btc_close_usd": 103372.41,
+      "flow_observations": 5,
+      "last_flow_date": "2025-11-07"
+    },
+    {
+      "week_end": "2025-11-14",
+      "ibit_net_flow_usd": -532400000.0,
+      "btc_close_usd": 94397.79,
+      "flow_observations": 5,
+      "last_flow_date": "2025-11-14"
+    },
+    {
+      "week_end": "2025-11-21",
+      "ibit_net_flow_usd": -1085700000.0,
+      "btc_close_usd": 85090.69,
+      "flow_observations": 5,
+      "last_flow_date": "2025-11-21"
+    },
+    {
+      "week_end": "2025-11-28",
+      "ibit_net_flow_usd": -137000000.0,
+      "btc_close_usd": 90919.27,
+      "flow_observations": 4,
+      "last_flow_date": "2025-11-28"
+    },
+    {
+      "week_end": "2025-12-05",
+      "ibit_net_flow_usd": -49100000.0,
+      "btc_close_usd": 89387.76,
+      "flow_observations": 5,
+      "last_flow_date": "2025-12-05"
+    },
+    {
+      "week_end": "2025-12-12",
+      "ibit_net_flow_usd": 214100000.0,
+      "btc_close_usd": 90270.41,
+      "flow_observations": 5,
+      "last_flow_date": "2025-12-12"
+    },
+    {
+      "week_end": "2025-12-19",
+      "ibit_net_flow_usd": -240300000.0,
+      "btc_close_usd": 88103.38,
+      "flow_observations": 5,
+      "last_flow_date": "2025-12-19"
+    },
+    {
+      "week_end": "2025-12-26",
+      "ibit_net_flow_usd": -435300000.0,
+      "btc_close_usd": 87301.43,
+      "flow_observations": 4,
+      "last_flow_date": "2025-12-26"
+    },
+    {
+      "week_end": "2026-01-02",
+      "ibit_net_flow_usd": 324200000.0,
+      "btc_close_usd": 89944.7,
+      "flow_observations": 4,
+      "last_flow_date": "2026-01-02"
+    },
+    {
+      "week_end": "2026-01-09",
+      "ibit_net_flow_usd": 25900000.0,
+      "btc_close_usd": 90513.1,
+      "flow_observations": 5,
+      "last_flow_date": "2026-01-09"
+    },
+    {
+      "week_end": "2026-01-16",
+      "ibit_net_flow_usd": 1034900000.0,
+      "btc_close_usd": 95525.12,
+      "flow_observations": 5,
+      "last_flow_date": "2026-01-16"
+    },
+    {
+      "week_end": "2026-01-23",
+      "ibit_net_flow_usd": -537500000.0,
+      "btc_close_usd": 89503.88,
+      "flow_observations": 4,
+      "last_flow_date": "2026-01-23"
+    },
+    {
+      "week_end": "2026-01-30",
+      "ibit_net_flow_usd": -947200000.0,
+      "btc_close_usd": 84128.66,
+      "flow_observations": 5,
+      "last_flow_date": "2026-01-30"
+    },
+    {
+      "week_end": "2026-02-06",
+      "ibit_net_flow_usd": -115100000.0,
+      "btc_close_usd": 70555.39,
+      "flow_observations": 5,
+      "last_flow_date": "2026-02-06"
+    },
+    {
+      "week_end": "2026-02-13",
+      "ibit_net_flow_usd": -234800000.0,
+      "btc_close_usd": 68857.84,
+      "flow_observations": 5,
+      "last_flow_date": "2026-02-13"
+    },
+    {
+      "week_end": "2026-02-20",
+      "ibit_net_flow_usd": -303500000.0,
+      "btc_close_usd": 68005.42,
+      "flow_observations": 4,
+      "last_flow_date": "2026-02-20"
+    },
+    {
+      "week_end": "2026-02-27",
+      "ibit_net_flow_usd": 503000000.0,
+      "btc_close_usd": 65881.8,
+      "flow_observations": 5,
+      "last_flow_date": "2026-02-27"
+    },
+    {
+      "week_end": "2026-03-06",
+      "ibit_net_flow_usd": 660000000.0,
+      "btc_close_usd": 68136.49,
+      "flow_observations": 5,
+      "last_flow_date": "2026-03-06"
+    },
+    {
+      "week_end": "2026-03-13",
+      "ibit_net_flow_usd": 600100000.0,
+      "btc_close_usd": 70968.27,
+      "flow_observations": 5,
+      "last_flow_date": "2026-03-13"
+    },
+    {
+      "week_end": "2026-03-20",
+      "ibit_net_flow_usd": 190600000.0,
+      "btc_close_usd": 70522.59,
+      "flow_observations": 5,
+      "last_flow_date": "2026-03-20"
+    },
+    {
+      "week_end": "2026-03-27",
+      "ibit_net_flow_usd": -158000000.0,
+      "btc_close_usd": 66338.38,
+      "flow_observations": 5,
+      "last_flow_date": "2026-03-27"
+    },
+    {
+      "week_end": "2026-04-03",
+      "ibit_net_flow_usd": 16400000.0,
+      "btc_close_usd": 66931.1,
+      "flow_observations": 4,
+      "last_flow_date": "2026-04-02"
+    },
+    {
+      "week_end": "2026-04-10",
+      "ibit_net_flow_usd": 612100000.0,
+      "btc_close_usd": 72979.05,
+      "flow_observations": 5,
+      "last_flow_date": "2026-04-10"
+    },
+    {
+      "week_end": "2026-04-17",
+      "ibit_net_flow_usd": 906100000.0,
+      "btc_close_usd": 77126.88,
+      "flow_observations": 5,
+      "last_flow_date": "2026-04-17"
+    },
+    {
+      "week_end": "2026-04-24",
+      "ibit_net_flow_usd": 732600000.0,
+      "btc_close_usd": 77455.31,
+      "flow_observations": 5,
+      "last_flow_date": "2026-04-24"
+    },
+    {
+      "week_end": "2026-05-01",
+      "ibit_net_flow_usd": 136600000.0,
+      "btc_close_usd": 78179.0,
+      "flow_observations": 5,
+      "last_flow_date": "2026-05-01"
+    },
+    {
+      "week_end": "2026-05-08",
+      "ibit_net_flow_usd": 596300000.0,
+      "btc_close_usd": 80186.77,
+      "flow_observations": 5,
+      "last_flow_date": "2026-05-08"
+    },
+    {
+      "week_end": "2026-05-15",
+      "ibit_net_flow_usd": -317200000.0,
+      "btc_close_usd": 79065.68,
+      "flow_observations": 5,
+      "last_flow_date": "2026-05-15"
+    },
+    {
+      "week_end": "2026-05-22",
+      "ibit_net_flow_usd": -1008100000.0,
+      "btc_close_usd": 75488.24,
+      "flow_observations": 5,
+      "last_flow_date": "2026-05-22"
+    },
+    {
+      "week_end": "2026-05-29",
+      "ibit_net_flow_usd": -966300000.0,
+      "btc_close_usd": 73372.52,
+      "flow_observations": 4,
+      "last_flow_date": "2026-05-29"
+    },
+    {
+      "week_end": "2026-06-05",
+      "ibit_net_flow_usd": -1337200000.0,
+      "btc_close_usd": 60922.67,
+      "flow_observations": 5,
+      "last_flow_date": "2026-06-05"
+    },
+    {
+      "week_end": "2026-06-12",
+      "ibit_net_flow_usd": -355000000.0,
+      "btc_close_usd": 63543.2,
+      "flow_observations": 5,
+      "last_flow_date": "2026-06-12"
+    },
+    {
+      "week_end": "2026-06-19",
+      "ibit_net_flow_usd": -44700000.0,
+      "btc_close_usd": 63540.84,
+      "flow_observations": 4,
+      "last_flow_date": "2026-06-18"
+    },
+    {
+      "week_end": "2026-06-26",
+      "ibit_net_flow_usd": -1303500000.0,
+      "btc_close_usd": 60016.43,
+      "flow_observations": 5,
+      "last_flow_date": "2026-06-26"
+    },
+    {
+      "week_end": "2026-07-03",
+      "ibit_net_flow_usd": -772600000.0,
+      "btc_close_usd": 62544.2,
+      "flow_observations": 4,
+      "last_flow_date": "2026-07-02"
+    },
+    {
+      "week_end": "2026-07-10",
+      "ibit_net_flow_usd": 291900000.0,
+      "btc_close_usd": 64127.14,
+      "flow_observations": 5,
+      "last_flow_date": "2026-07-10"
+    },
+    {
+      "week_end": "2026-07-17",
+      "ibit_net_flow_usd": 204100000.0,
+      "btc_close_usd": 63899.46,
+      "flow_observations": 5,
+      "last_flow_date": "2026-07-17"
+    },
+    {
+      "week_end": "2026-07-24",
+      "ibit_net_flow_usd": -95500000.0,
+      "btc_close_usd": 64098.5,
+      "flow_observations": 5,
+      "last_flow_date": "2026-07-24"
+    },
+    {
+      "week_end": "2026-07-31",
+      "ibit_net_flow_usd": 86900000.0,
+      "btc_close_usd": 62813.75,
+      "flow_observations": 5,
+      "last_flow_date": "2026-07-31"
+    },
+    {
+      "week_end": "2026-08-07",
+      "ibit_net_flow_usd": 693500000.0,
+      "btc_close_usd": 64880.19,
+      "flow_observations": 5,
+      "last_flow_date": "2026-08-07"
+    },
+    {
+      "week_end": "2026-08-14",
+      "ibit_net_flow_usd": -78900000.0,
+      "btc_close_usd": 62975.59,
+      "flow_observations": 5,
+      "last_flow_date": "2026-08-14"
+    },
+    {
+      "week_end": "2026-08-21",
+      "ibit_net_flow_usd": 1330800000.0,
+      "btc_close_usd": 78335.19,
+      "flow_observations": 5,
+      "last_flow_date": "2026-08-21"
+    },
+    {
+      "week_end": "2026-08-28",
+      "ibit_net_flow_usd": 938300000.0,
+      "btc_close_usd": 77830.29,
+      "flow_observations": 5,
+      "last_flow_date": "2026-08-28"
+    },
+    {
+      "week_end": "2026-09-04",
+      "ibit_net_flow_usd": 691500000.0,
+      "btc_close_usd": 79671.97,
+      "flow_observations": 5,
+      "last_flow_date": "2026-09-04"
+    },
+    {
+      "week_end": "2026-09-11",
+      "ibit_net_flow_usd": -52500000.0,
+      "btc_close_usd": 77173.8,
+      "flow_observations": 4,
+      "last_flow_date": "2026-09-11"
+    },
+    {
+      "week_end": "2026-09-18",
+      "ibit_net_flow_usd": 120600000.0,
+      "btc_close_usd": 80901.46,
+      "flow_observations": 5,
+      "last_flow_date": "2026-09-18"
+    }
+  ]
+}

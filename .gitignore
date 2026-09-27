@@ -2,6 +2,7 @@
 .codex/
 .wrangler/
 output/
+data/ibit_*_flows.png
 __pycache__/
 .pytest_cache/
 .env

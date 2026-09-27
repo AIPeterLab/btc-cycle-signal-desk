@@ -19,7 +19,15 @@ This dashboard does not use QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or 5-
 - `index.html` - static public dashboard.
 - `data/signals.json` - current status, context values, and recent history.
 - `data/signals.csv` - recent signal history.
+- `data/ibit_weekly_flows.json` - chart-ready weekly IBIT net flows and BTC closes.
+- `data/ibit_weekly_flows.csv` - tabular weekly IBIT net flows and BTC closes.
+- `data/ibit_weekly_flows.svg` - backend-generated Bitcoin price versus IBIT flow chart.
+- `data/ibit_monthly_flows.json` - chart-ready monthly IBIT net flows and BTC closes.
+- `data/ibit_monthly_flows.csv` - tabular monthly IBIT net flows and BTC closes.
+- `data/ibit_monthly_flows.svg` - backend-generated monthly IBIT flow chart.
 - `scripts/update_signals.py` - no-key updater using public BTC-USD and CoinMetrics data.
+- `scripts/backtest_ibit_flow_allocation.py` - reproducible lagged-IBIT-flow research backtest.
+- `skills/etf-flow-lag/` - reusable agent instructions for reviewing and repeating that backtest.
 - `.github/workflows/daily-update.yml` - dispatch-only GitHub Actions refresh.
 - `_headers` - Cloudflare Pages cache rules matching the QLD/SSO signal desks.
 - `Real_Account_Tracking_System.doc` - plain-language operating manual from the source project.
@@ -31,6 +39,13 @@ Run the updater locally:
 ```powershell
 python scripts/update_signals.py
 ```
+
+The updater also retrieves The Block's public daily IBIT net-flow dataset, aggregates
+completed Friday-ending weeks, pairs them with Yahoo Finance BTC-USD Friday closes,
+and refreshes the three IBIT chart artifacts. If that optional source is temporarily
+unavailable, the core signal refresh continues and the last good chart is preserved.
+It also creates equivalent monthly artifacts using completed calendar months and the
+final BTC close of each month.
 
 The daily schedule is centralized in the AIPeterLab Cloudflare Worker. The Worker dispatches this repo's GitHub Actions workflow at the New York refresh window, and the workflow can also be run manually with `workflow_dispatch`. Keep this repository workflow dispatch-only; do not add a GitHub `schedule:` block.
 

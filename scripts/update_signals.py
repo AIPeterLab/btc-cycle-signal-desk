@@ -15,6 +15,7 @@ import math
 import os
 import statistics
 import sys
+from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -27,6 +28,17 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 JSON_PATH = DATA_DIR / "signals.json"
 CSV_PATH = DATA_DIR / "signals.csv"
+IBIT_JSON_PATH = DATA_DIR / "ibit_weekly_flows.json"
+IBIT_CSV_PATH = DATA_DIR / "ibit_weekly_flows.csv"
+IBIT_SVG_PATH = DATA_DIR / "ibit_weekly_flows.svg"
+IBIT_MONTHLY_JSON_PATH = DATA_DIR / "ibit_monthly_flows.json"
+IBIT_MONTHLY_CSV_PATH = DATA_DIR / "ibit_monthly_flows.csv"
+IBIT_MONTHLY_SVG_PATH = DATA_DIR / "ibit_monthly_flows.svg"
+
+THE_BLOCK_IBIT_FLOW_URL = (
+    "https://data.tbstat.com/dashboard/"
+    "markets_structuredproducts_btcspotetfflows_daily_other.json"
+)
 
 HALVINGS = [
     date(2012, 11, 28),
@@ -109,6 +121,237 @@ def yahoo_btc_daily() -> list[dict[str, Any]]:
     if not rows:
         raise RuntimeError("Yahoo returned no usable BTC-USD daily close rows.")
     return rows
+
+
+def the_block_ibit_daily() -> tuple[list[dict[str, Any]], int | None]:
+    payload = fetch_json(THE_BLOCK_IBIT_FLOW_URL)
+    series = payload.get("Series", {}).get("IBIT", {}).get("Data", [])
+    rows: list[dict[str, Any]] = []
+    seen_dates: set[date] = set()
+
+    for item in series:
+        timestamp = item.get("Timestamp")
+        flow = parse_float(item.get("Result"))
+        if timestamp is None or flow is None:
+            continue
+        flow_date = datetime.fromtimestamp(int(timestamp), tz=timezone.utc).date()
+        if flow_date in seen_dates:
+            raise RuntimeError(f"The Block returned duplicate IBIT flow date {flow_date}.")
+        seen_dates.add(flow_date)
+        rows.append({"date": flow_date, "flow_usd": flow})
+
+    rows.sort(key=lambda row: row["date"])
+    if not rows:
+        raise RuntimeError("The Block returned no usable IBIT daily flow rows.")
+    if rows[0]["date"] > date(2024, 1, 11):
+        raise RuntimeError("The Block IBIT history does not reach the fund's launch.")
+
+    runtime = payload.get("Runtime")
+    return rows, int(runtime) if runtime is not None else None
+
+
+def ibit_weekly_chart_data(
+    daily_flows: list[dict[str, Any]], yahoo_rows: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    flows_by_monday: dict[date, list[dict[str, Any]]] = defaultdict(list)
+    for row in daily_flows:
+        flow_date = row["date"]
+        monday = flow_date - timedelta(days=flow_date.weekday())
+        flows_by_monday[monday].append(row)
+
+    btc_by_date = {
+        date.fromisoformat(row["date"]): float(row["close"]) for row in yahoo_rows
+    }
+    latest_flow_date = max(row["date"] for row in daily_flows)
+    weekly_rows: list[dict[str, Any]] = []
+
+    for monday in sorted(flows_by_monday):
+        friday = monday + timedelta(days=4)
+        next_monday = monday + timedelta(days=7)
+        # Include a week only after a later week has begun, or once Friday's
+        # observation is present. This prevents a partial latest week.
+        complete = latest_flow_date >= next_monday or any(
+            row["date"].weekday() == 4 for row in flows_by_monday[monday]
+        )
+        if not complete:
+            continue
+
+        btc_close = btc_by_date.get(friday)
+        if btc_close is None:
+            prior_closes = [
+                (market_day, close)
+                for market_day, close in btc_by_date.items()
+                if monday <= market_day <= friday
+            ]
+            if not prior_closes:
+                continue
+            btc_close = max(prior_closes, key=lambda item: item[0])[1]
+
+        week_flows = flows_by_monday[monday]
+        weekly_rows.append(
+            {
+                "week_end": friday.isoformat(),
+                "ibit_net_flow_usd": round(
+                    sum(float(row["flow_usd"]) for row in week_flows), 2
+                ),
+                "btc_close_usd": round(btc_close, 2),
+                "flow_observations": len(week_flows),
+                "last_flow_date": max(row["date"] for row in week_flows).isoformat(),
+            }
+        )
+
+    if not weekly_rows:
+        raise RuntimeError("No completed IBIT weekly flow rows could be built.")
+    return weekly_rows
+
+
+def ibit_monthly_chart_data(
+    daily_flows: list[dict[str, Any]], yahoo_rows: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    flows_by_month: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in daily_flows:
+        flows_by_month[row["date"].strftime("%Y-%m")].append(row)
+
+    btc_by_month: dict[str, list[tuple[date, float]]] = defaultdict(list)
+    for row in yahoo_rows:
+        market_day = date.fromisoformat(row["date"])
+        btc_by_month[market_day.strftime("%Y-%m")].append(
+            (market_day, float(row["close"]))
+        )
+
+    latest_flow_month = max(row["date"] for row in daily_flows).strftime("%Y-%m")
+    monthly_rows: list[dict[str, Any]] = []
+    for month in sorted(flows_by_month):
+        # A month is final only after the source has begun publishing a later month.
+        if month >= latest_flow_month:
+            continue
+        price_rows = btc_by_month.get(month, [])
+        if not price_rows:
+            continue
+        month_flows = flows_by_month[month]
+        month_end_day, btc_close = max(price_rows, key=lambda item: item[0])
+        monthly_rows.append(
+            {
+                "month": month,
+                "month_end": month_end_day.isoformat(),
+                "ibit_net_flow_usd": round(
+                    sum(float(row["flow_usd"]) for row in month_flows), 2
+                ),
+                "btc_close_usd": round(btc_close, 2),
+                "flow_observations": len(month_flows),
+                "last_flow_date": max(row["date"] for row in month_flows).isoformat(),
+            }
+        )
+
+    if not monthly_rows:
+        raise RuntimeError("No completed IBIT monthly flow rows could be built.")
+    return monthly_rows
+
+
+def svg_number(value: float) -> str:
+    return f"{value:.2f}".rstrip("0").rstrip(".")
+
+
+def render_ibit_svg(
+    periods: list[dict[str, Any]], *, date_key: str = "week_end", period_label: str = "Weekly"
+) -> str:
+    width, height = 1440, 760
+    left, right, top, bottom = 105, 110, 72, 115
+    plot_width = width - left - right
+    plot_height = height - top - bottom
+    flows = [float(row["ibit_net_flow_usd"]) / 1_000_000 for row in periods]
+    prices = [float(row["btc_close_usd"]) for row in periods]
+    flow_limit = max(abs(min(flows)), abs(max(flows)), 1.0) * 1.1
+    price_min = min(prices)
+    price_max = max(prices)
+    price_padding = max((price_max - price_min) * 0.08, 1.0)
+    price_low = max(0.0, price_min - price_padding)
+    price_high = price_max + price_padding
+
+    def x_at(index: int) -> float:
+        return left + ((index + 0.5) / len(periods)) * plot_width
+
+    def flow_y(value: float) -> float:
+        return top + ((flow_limit - value) / (flow_limit * 2)) * plot_height
+
+    def price_y(value: float) -> float:
+        return top + ((price_high - value) / (price_high - price_low)) * plot_height
+
+    zero_y = flow_y(0)
+    title_period = period_label.lower()
+    subtitle = (
+        "Friday-ending weeks · Green line: IBIT net flow · Blue line: BTC close"
+        if period_label == "Weekly"
+        else "Completed calendar months · Green line: IBIT net flow · Blue line: BTC month-end close"
+    )
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc">',
+        f'<title id="title">Bitcoin price versus IBIT {title_period} net inflows</title>',
+        f'<desc id="desc">The green line shows {title_period} IBIT net fund flow in US dollars, with red points for outflows. The blue line shows the corresponding Bitcoin closing price.</desc>',
+        '<rect width="100%" height="100%" fill="#07111f"/>',
+        f'<text x="105" y="35" fill="#f4f7fb" font-family="Arial, sans-serif" font-size="25" font-weight="700">Bitcoin Price vs. IBIT {period_label} Net Inflows</text>',
+        f'<text x="105" y="58" fill="#98a9bd" font-family="Arial, sans-serif" font-size="13">{subtitle}</text>',
+    ]
+
+    for tick in range(-4, 5):
+        flow_value = flow_limit * tick / 4
+        y = flow_y(flow_value)
+        parts.append(
+            f'<line x1="{left}" y1="{svg_number(y)}" x2="{width-right}" y2="{svg_number(y)}" stroke="#223148" stroke-width="1"/>'
+        )
+        parts.append(
+            f'<text x="{left-12}" y="{svg_number(y+4)}" text-anchor="end" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">{flow_value:,.0f}M</text>'
+        )
+
+    for tick in range(5):
+        price_value = price_low + (price_high - price_low) * tick / 4
+        y = price_y(price_value)
+        parts.append(
+            f'<text x="{width-right+12}" y="{svg_number(y+4)}" fill="#63b3ff" font-family="Arial, sans-serif" font-size="11">${price_value/1000:,.0f}k</text>'
+        )
+
+    flow_points = " ".join(
+        f'{svg_number(x_at(index))},{svg_number(flow_y(flow))}'
+        for index, flow in enumerate(flows)
+    )
+    parts.append(
+        f'<polyline points="{flow_points}" fill="none" stroke="#28c98b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>'
+    )
+    point_radius = 3.5 if len(periods) <= 50 else 2.2
+    for index, (row, flow) in enumerate(zip(periods, flows)):
+        color = "#28c98b" if flow >= 0 else "#ff6474"
+        parts.append(
+            f'<circle cx="{svg_number(x_at(index))}" cy="{svg_number(flow_y(flow))}" r="{svg_number(point_radius)}" fill="{color}" stroke="#07111f" stroke-width="1"><title>{row[date_key]}: ${flow:,.1f}M</title></circle>'
+        )
+
+    points = " ".join(
+        f'{svg_number(x_at(index))},{svg_number(price_y(price))}'
+        for index, price in enumerate(prices)
+    )
+    parts.append(
+        f'<polyline points="{points}" fill="none" stroke="#55aaff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>'
+    )
+    parts.append(
+        f'<line x1="{left}" y1="{svg_number(zero_y)}" x2="{width-right}" y2="{svg_number(zero_y)}" stroke="#d8e1ec" stroke-width="1.25"/>'
+    )
+
+    label_step = max(1, len(periods) // 10)
+    for index in range(0, len(periods), label_step):
+        label = periods[index][date_key][:7]
+        x = x_at(index)
+        parts.append(
+            f'<text x="{svg_number(x)}" y="{height-bottom+28}" transform="rotate(35 {svg_number(x)} {height-bottom+28})" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">{label}</text>'
+        )
+
+    parts.extend(
+        [
+            f'<text x="{left}" y="{height-24}" fill="#70849b" font-family="Arial, sans-serif" font-size="11">Sources: The Block (IBIT daily net flows); Yahoo Finance (BTC-USD). Generated {datetime.now(timezone.utc).date().isoformat()} UTC.</text>',
+            f'<text x="{width-right}" y="35" text-anchor="end" fill="#28c98b" font-family="Arial, sans-serif" font-size="12">━ IBIT net flow <tspan fill="#ff6474">● outflow</tspan></text>',
+            f'<text x="{width-right}" y="53" text-anchor="end" fill="#55aaff" font-family="Arial, sans-serif" font-size="12">━ BTC price</text>',
+            "</svg>",
+        ]
+    )
+    return "\n".join(parts) + "\n"
 
 
 def coinmetrics_rows() -> list[dict[str, Any]]:
@@ -372,8 +615,9 @@ def exponential_moving_average(values: list[float], window: int) -> float | None
     return ema
 
 
-def build_payload() -> dict[str, Any]:
-    yahoo_rows = yahoo_btc_daily()
+def build_payload(yahoo_rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    if yahoo_rows is None:
+        yahoo_rows = yahoo_btc_daily()
     latest = yahoo_rows[-1]
     market_date = date.fromisoformat(latest["date"])
     status, cycle_day, buy_date, day_540, days_from_buy, days_from_day_540 = signal_for(market_date)
@@ -582,12 +826,117 @@ def write_outputs(payload: dict[str, Any]) -> None:
         writer.writerows(payload["recent_history"])
 
 
+def write_ibit_outputs(
+    weeks: list[dict[str, Any]], source_runtime: int | None
+) -> None:
+    generated_at = datetime.now(timezone.utc)
+    source_updated_at = (
+        datetime.fromtimestamp(source_runtime, tz=timezone.utc).isoformat()
+        if source_runtime is not None
+        else None
+    )
+    chart_payload = {
+        "generated_at": generated_at.isoformat(),
+        "source_updated_at": source_updated_at,
+        "source": "The Block — BTC Spot ETF Flows",
+        "source_url": THE_BLOCK_IBIT_FLOW_URL,
+        "btc_price_source": "Yahoo Finance BTC-USD daily adjusted close",
+        "methodology": (
+            "Daily IBIT net fund flows are summed into Friday-ending calendar weeks. "
+            "BTC price is the Friday UTC close. Partial latest weeks are excluded."
+        ),
+        "units": {"ibit_net_flow": "USD", "btc_close": "USD"},
+        "weeks": weeks,
+    }
+    IBIT_JSON_PATH.write_text(
+        json.dumps(chart_payload, indent=2) + "\n", encoding="utf-8"
+    )
+
+    fieldnames = [
+        "week_end",
+        "ibit_net_flow_usd",
+        "btc_close_usd",
+        "flow_observations",
+        "last_flow_date",
+    ]
+    with IBIT_CSV_PATH.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(weeks)
+
+    IBIT_SVG_PATH.write_text(render_ibit_svg(weeks), encoding="utf-8")
+
+
+def write_ibit_monthly_outputs(
+    months: list[dict[str, Any]], source_runtime: int | None
+) -> None:
+    generated_at = datetime.now(timezone.utc)
+    source_updated_at = (
+        datetime.fromtimestamp(source_runtime, tz=timezone.utc).isoformat()
+        if source_runtime is not None
+        else None
+    )
+    chart_payload = {
+        "generated_at": generated_at.isoformat(),
+        "source_updated_at": source_updated_at,
+        "source": "The Block — BTC Spot ETF Flows",
+        "source_url": THE_BLOCK_IBIT_FLOW_URL,
+        "btc_price_source": "Yahoo Finance BTC-USD daily adjusted close",
+        "methodology": (
+            "Daily IBIT net fund flows are summed into completed calendar months. "
+            "BTC price is the final UTC daily close of each month. The current "
+            "incomplete month is excluded."
+        ),
+        "units": {"ibit_net_flow": "USD", "btc_close": "USD"},
+        "months": months,
+    }
+    IBIT_MONTHLY_JSON_PATH.write_text(
+        json.dumps(chart_payload, indent=2) + "\n", encoding="utf-8"
+    )
+
+    fieldnames = [
+        "month",
+        "month_end",
+        "ibit_net_flow_usd",
+        "btc_close_usd",
+        "flow_observations",
+        "last_flow_date",
+    ]
+    with IBIT_MONTHLY_CSV_PATH.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(months)
+
+    IBIT_MONTHLY_SVG_PATH.write_text(
+        render_ibit_svg(months, date_key="month", period_label="Monthly"),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
-    payload = build_payload()
+    yahoo_rows = yahoo_btc_daily()
+    payload = build_payload(yahoo_rows)
     write_outputs(payload)
+    ibit_message = "IBIT chart unchanged"
+    try:
+        ibit_daily, source_runtime = the_block_ibit_daily()
+        ibit_weeks = ibit_weekly_chart_data(ibit_daily, yahoo_rows)
+        ibit_months = ibit_monthly_chart_data(ibit_daily, yahoo_rows)
+        write_ibit_outputs(ibit_weeks, source_runtime)
+        write_ibit_monthly_outputs(ibit_months, source_runtime)
+        ibit_message = (
+            f"IBIT chart weeks={len(ibit_weeks)} "
+            f"latest={ibit_weeks[-1]['week_end']} months={len(ibit_months)} "
+            f"latest_month={ibit_months[-1]['month']}"
+        )
+    except (RuntimeError, URLError, TimeoutError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        print(
+            f"Warning: IBIT chart refresh failed; existing chart artifacts were preserved: {exc}",
+            file=sys.stderr,
+        )
     print(
         f"{payload['market_date']} {payload['status']} "
-        f"cycle_day={payload['cycle_day']} btc_close={payload['btc_close']}"
+        f"cycle_day={payload['cycle_day']} btc_close={payload['btc_close']} {ibit_message}"
     )
     return 0
 

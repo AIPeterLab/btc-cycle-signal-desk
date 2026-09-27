@@ -1,0 +1,270 @@
+{
+  "generated_at": "2026-09-27T13:49:11.539477+00:00",
+  "source_updated_at": "2026-09-27T10:14:30+00:00",
+  "source": "The Block \u2014 BTC Spot ETF Flows",
+  "source_url": "https://data.tbstat.com/dashboard/markets_structuredproducts_btcspotetfflows_daily_other.json",
+  "btc_price_source": "Yahoo Finance BTC-USD daily adjusted close",
+  "methodology": "Daily IBIT net fund flows are summed into completed calendar months. BTC price is the final UTC daily close of each month. The current incomplete month is excluded.",
+  "units": {
+    "ibit_net_flow": "USD",
+    "btc_close": "USD"
+  },
+  "months": [
+    {
+      "month": "2024-01",
+      "month_end": "2024-01-31",
+      "ibit_net_flow_usd": 2787300000.0,
+      "btc_close_usd": 42582.61,
+      "flow_observations": 14,
+      "last_flow_date": "2024-01-31"
+    },
+    {
+      "month": "2024-02",
+      "month_end": "2024-02-29",
+      "ibit_net_flow_usd": 4969000000.0,
+      "btc_close_usd": 61198.38,
+      "flow_observations": 20,
+      "last_flow_date": "2024-02-29"
+    },
+    {
+      "month": "2024-03",
+      "month_end": "2024-03-31",
+      "ibit_net_flow_usd": 6201600000.0,
+      "btc_close_usd": 71333.65,
+      "flow_observations": 20,
+      "last_flow_date": "2024-03-28"
+    },
+    {
+      "month": "2024-04",
+      "month_end": "2024-04-30",
+      "ibit_net_flow_usd": 1520700000.0,
+      "btc_close_usd": 60636.86,
+      "flow_observations": 22,
+      "last_flow_date": "2024-04-30"
+    },
+    {
+      "month": "2024-05",
+      "month_end": "2024-05-31",
+      "ibit_net_flow_usd": 1173000000.0,
+      "btc_close_usd": 67491.41,
+      "flow_observations": 22,
+      "last_flow_date": "2024-05-31"
+    },
+    {
+      "month": "2024-06",
+      "month_end": "2024-06-30",
+      "ibit_net_flow_usd": 1073500000.0,
+      "btc_close_usd": 62678.29,
+      "flow_observations": 19,
+      "last_flow_date": "2024-06-28"
+    },
+    {
+      "month": "2024-07",
+      "month_end": "2024-07-31",
+      "ibit_net_flow_usd": 2303300000.0,
+      "btc_close_usd": 64619.25,
+      "flow_observations": 22,
+      "last_flow_date": "2024-07-31"
+    },
+    {
+      "month": "2024-08",
+      "month_end": "2024-08-31",
+      "ibit_net_flow_usd": 888900000.0,
+      "btc_close_usd": 58969.9,
+      "flow_observations": 22,
+      "last_flow_date": "2024-08-30"
+    },
+    {
+      "month": "2024-09",
+      "month_end": "2024-09-30",
+      "ibit_net_flow_usd": 577900000.0,
+      "btc_close_usd": 63329.5,
+      "flow_observations": 20,
+      "last_flow_date": "2024-09-30"
+    },
+    {
+      "month": "2024-10",
+      "month_end": "2024-10-31",
+      "ibit_net_flow_usd": 4640700000.0,
+      "btc_close_usd": 70215.19,
+      "flow_observations": 23,
+      "last_flow_date": "2024-10-31"
+    },
+    {
+      "month": "2024-11",
+      "month_end": "2024-11-30",
+      "ibit_net_flow_usd": 5732400000.0,
+      "btc_close_usd": 96449.05,
+      "flow_observations": 20,
+      "last_flow_date": "2024-11-29"
+    },
+    {
+      "month": "2024-12",
+      "month_end": "2024-12-31",
+      "ibit_net_flow_usd": 5510500000.0,
+      "btc_close_usd": 93429.2,
+      "flow_observations": 21,
+      "last_flow_date": "2024-12-31"
+    },
+    {
+      "month": "2025-01",
+      "month_end": "2025-01-31",
+      "ibit_net_flow_usd": 3231200000.0,
+      "btc_close_usd": 102405.02,
+      "flow_observations": 20,
+      "last_flow_date": "2025-01-31"
+    },
+    {
+      "month": "2025-02",
+      "month_end": "2025-02-28",
+      "ibit_net_flow_usd": -775800000.0,
+      "btc_close_usd": 84373.01,
+      "flow_observations": 19,
+      "last_flow_date": "2025-02-28"
+    },
+    {
+      "month": "2025-03",
+      "month_end": "2025-03-31",
+      "ibit_net_flow_usd": 256900000.0,
+      "btc_close_usd": 82548.91,
+      "flow_observations": 21,
+      "last_flow_date": "2025-03-31"
+    },
+    {
+      "month": "2025-04",
+      "month_end": "2025-04-30",
+      "ibit_net_flow_usd": 2693600000.0,
+      "btc_close_usd": 94207.31,
+      "flow_observations": 21,
+      "last_flow_date": "2025-04-30"
+    },
+    {
+      "month": "2025-05",
+      "month_end": "2025-05-31",
+      "ibit_net_flow_usd": 5914900000.0,
+      "btc_close_usd": 104638.09,
+      "flow_observations": 21,
+      "last_flow_date": "2025-05-30"
+    },
+    {
+      "month": "2025-06",
+      "month_end": "2025-06-30",
+      "ibit_net_flow_usd": 3851800000.0,
+      "btc_close_usd": 107135.34,
+      "flow_observations": 20,
+      "last_flow_date": "2025-06-30"
+    },
+    {
+      "month": "2025-07",
+      "month_end": "2025-07-31",
+      "ibit_net_flow_usd": 5178400000.0,
+      "btc_close_usd": 115758.2,
+      "flow_observations": 22,
+      "last_flow_date": "2025-07-31"
+    },
+    {
+      "month": "2025-08",
+      "month_end": "2025-08-31",
+      "ibit_net_flow_usd": 706900000.0,
+      "btc_close_usd": 108236.71,
+      "flow_observations": 21,
+      "last_flow_date": "2025-08-29"
+    },
+    {
+      "month": "2025-09",
+      "month_end": "2025-09-30",
+      "ibit_net_flow_usd": 2664600000.0,
+      "btc_close_usd": 114056.09,
+      "flow_observations": 21,
+      "last_flow_date": "2025-09-30"
+    },
+    {
+      "month": "2025-10",
+      "month_end": "2025-10-31",
+      "ibit_net_flow_usd": 3931200000.0,
+      "btc_close_usd": 109556.16,
+      "flow_observations": 23,
+      "last_flow_date": "2025-10-31"
+    },
+    {
+      "month": "2025-11",
+      "month_end": "2025-11-30",
+      "ibit_net_flow_usd": -2336100000.0,
+      "btc_close_usd": 90394.31,
+      "flow_observations": 19,
+      "last_flow_date": "2025-11-28"
+    },
+    {
+      "month": "2025-12",
+      "month_end": "2025-12-31",
+      "ibit_net_flow_usd": -473800000.0,
+      "btc_close_usd": 87508.83,
+      "flow_observations": 22,
+      "last_flow_date": "2025-12-31"
+    },
+    {
+      "month": "2026-01",
+      "month_end": "2026-01-31",
+      "ibit_net_flow_usd": -136500000.0,
+      "btc_close_usd": 78621.12,
+      "flow_observations": 20,
+      "last_flow_date": "2026-01-30"
+    },
+    {
+      "month": "2026-02",
+      "month_end": "2026-02-28",
+      "ibit_net_flow_usd": -150400000.0,
+      "btc_close_usd": 66995.86,
+      "flow_observations": 19,
+      "last_flow_date": "2026-02-27"
+    },
+    {
+      "month": "2026-03",
+      "month_end": "2026-03-31",
+      "ibit_net_flow_usd": 1398600000.0,
+      "btc_close_usd": 68233.31,
+      "flow_observations": 22,
+      "last_flow_date": "2026-03-31"
+    },
+    {
+      "month": "2026-04",
+      "month_end": "2026-04-30",
+      "ibit_net_flow_usd": 2013500000.0,
+      "btc_close_usd": 76304.32,
+      "flow_observations": 21,
+      "last_flow_date": "2026-04-30"
+    },
+    {
+      "month": "2026-05",
+      "month_end": "2026-05-31",
+      "ibit_net_flow_usd": -1410900000.0,
+      "btc_close_usd": 73579.69,
+      "flow_observations": 20,
+      "last_flow_date": "2026-05-29"
+    },
+    {
+      "month": "2026-06",
+      "month_end": "2026-06-30",
+      "ibit_net_flow_usd": -3553200000.0,
+      "btc_close_usd": 58558.86,
+      "flow_observations": 21,
+      "last_flow_date": "2026-06-30"
+    },
+    {
+      "month": "2026-07",
+      "month_end": "2026-07-31",
+      "ibit_net_flow_usd": 227600000.0,
+      "btc_close_usd": 62813.75,
+      "flow_observations": 22,
+      "last_flow_date": "2026-07-31"
+    },
+    {
+      "month": "2026-08",
+      "month_end": "2026-08-31",
+      "ibit_net_flow_usd": 3089600000.0,
+      "btc_close_usd": 78548.63,
+      "flow_observations": 21,
+      "last_flow_date": "2026-08-31"
+    }
+  ]
+}
