@@ -1,7 +1,4 @@
 date,btc_close,cycle_day,buy_date,sell_date,status,final_strategy_status,final_strategy_allocation_pct,cycle_window_active,ma120_gate_confirmed,notes
-2026-09-12,77270.47,875,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,335 days after day 540. Final allocation: 50% BTC.
-2026-09-13,76838.16,876,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,336 days after day 540. Final allocation: 50% BTC.
-2026-09-14,78163.38,877,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,337 days after day 540. Final allocation: 0% BTC.
 2026-09-15,75612.51,878,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,338 days after day 540. Final allocation: 0% BTC.
 2026-09-16,76150.32,879,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,339 days after day 540. Final allocation: 0% BTC.
 2026-09-17,76403.77,880,2022-12-07,2025-10-12,Hold Cash,Hold Cash,0,False,True,340 days after day 540. Final allocation: 0% BTC.
@@ -12,4 +9,7 @@ date,btc_close,cycle_day,buy_date,sell_date,status,final_strategy_status,final_s
 2026-09-22,86172.28,885,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,345 days after day 540. Final allocation: 50% BTC.
 2026-09-23,84383.01,886,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,346 days after day 540. Final allocation: 50% BTC.
 2026-09-24,84379.06,887,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,347 days after day 540. Final allocation: 50% BTC.
-2026-09-25,83924.78,888,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,348 days after day 540. Final allocation: 50% BTC.
+2026-09-25,84034.92,888,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,348 days after day 540. Final allocation: 50% BTC.
+2026-09-26,84406.45,889,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,349 days after day 540. Final allocation: 50% BTC.
+2026-09-27,84458.09,890,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,350 days after day 540. Final allocation: 50% BTC.
+2026-09-28,83128.55,891,2022-12-07,2025-10-12,Hold Cash,Hold 50% BTC,50,False,True,351 days after day 540. Final allocation: 50% BTC.
