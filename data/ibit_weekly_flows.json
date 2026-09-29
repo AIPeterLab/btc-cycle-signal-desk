@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-27T13:49:11.535429+00:00",
-  "source_updated_at": "2026-09-27T10:14:30+00:00",
+  "generated_at": "2026-09-29T03:20:06.080309+00:00",
+  "source_updated_at": "2026-09-29T02:23:40+00:00",
   "source": "The Block \u2014 BTC Spot ETF Flows",
   "source_url": "https://data.tbstat.com/dashboard/markets_structuredproducts_btcspotetfflows_daily_other.json",
   "btc_price_source": "Yahoo Finance BTC-USD daily adjusted close",
@@ -996,6 +996,13 @@
       "btc_close_usd": 80901.46,
       "flow_observations": 5,
       "last_flow_date": "2026-09-18"
+    },
+    {
+      "week_end": "2026-09-25",
+      "ibit_net_flow_usd": 1157600000.0,
+      "btc_close_usd": 84034.92,
+      "flow_observations": 5,
+      "last_flow_date": "2026-09-25"
     }
   ]
 }

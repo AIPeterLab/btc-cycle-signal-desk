@@ -25,7 +25,10 @@ This dashboard does not use QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or 5-
 - `data/ibit_monthly_flows.json` - chart-ready monthly IBIT net flows and BTC closes.
 - `data/ibit_monthly_flows.csv` - tabular monthly IBIT net flows and BTC closes.
 - `data/ibit_monthly_flows.svg` - backend-generated monthly IBIT flow chart.
+- `data/pure_gate_btc.json` and `.csv` - reproducible BTC-USD pure-gate paper backtest.
+- `data/pure_gate_bitx.json` and `.csv` - reproducible BITX pure-gate paper backtest.
 - `scripts/update_signals.py` - no-key updater using public BTC-USD and CoinMetrics data.
+- `scripts/backtest_pure_gate.py` - stdlib-only IBIT pure-gate paper backtest.
 - `scripts/backtest_ibit_flow_allocation.py` - reproducible lagged-IBIT-flow research backtest.
 - `skills/etf-flow-lag/` - reusable agent instructions for reviewing and repeating that backtest.
 - `.github/workflows/daily-update.yml` - dispatch-only GitHub Actions refresh.
@@ -46,6 +49,25 @@ and refreshes the three IBIT chart artifacts. If that optional source is tempora
 unavailable, the core signal refresh continues and the last good chart is preserved.
 It also creates equivalent monthly artifacts using completed calendar months and the
 final BTC close of each month.
+
+## Experimental Paper Sleeve: IBIT Flow Pure Gate
+
+This research sleeve is separate from the live halving-cycle strategy and never
+changes its signal or allocation. For each calendar month beginning February 2024,
+it sums IBIT's prior completed UTC calendar-month net USD flow from The Block. A
+negative prior-month flow holds non-interest-bearing cash; a zero or positive flow
+holds 100% of the selected exposure asset. It rebalances at month start with no
+fees, taxes, or slippage and is tested independently on BTC-USD spot and BITX using
+Yahoo Finance adjusted closes (falling back to close).
+
+Run the reproducible backtest with:
+
+```powershell
+python scripts/backtest_pure_gate.py
+```
+
+Backtest totals exclude the incomplete current month. The generated JSON also
+records a clearly labeled current-month paper snapshot for dashboard context.
 
 The daily schedule is centralized in the AIPeterLab Cloudflare Worker. The Worker dispatches this repo's GitHub Actions workflow at the New York refresh window, and the workflow can also be run manually with `workflow_dispatch`. Keep this repository workflow dispatch-only; do not add a GitHub `schedule:` block.
 

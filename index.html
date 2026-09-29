@@ -247,6 +247,22 @@
       padding: 18px;
     }
 
+    .experimental-paper {
+      padding: 18px;
+      border-color: rgba(217, 119, 6, 0.38);
+    }
+
+    .experimental-paper .metrics {
+      margin-top: 14px;
+    }
+
+    .experimental-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     .decision-steps {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -667,6 +683,38 @@
       </aside>
     </section>
 
+    <section class="panel section experimental-paper" aria-label="Experimental IBIT Flow Gate paper strategy">
+      <div class="section-head" style="padding: 0;">
+        <div>
+          <h2 class="panel-title">Experimental: IBIT Flow Gate <span class="tag">paper only</span></h2>
+          <p class="experimental-note">Separate research sleeve. It does not change the live halving-cycle signal or allocation above.</p>
+        </div>
+        <span class="status-chip" id="ibitGateSignal">--</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <span>Prior-month IBIT flow</span>
+          <strong id="ibitGatePriorFlow">--</strong>
+          <small id="ibitGateFlowMonth">Signal month: --</small>
+        </div>
+        <div class="metric">
+          <span>Paper allocation</span>
+          <strong id="ibitGateAllocation">--</strong>
+          <small>Negative flow = cash; otherwise exposure asset</small>
+        </div>
+        <div class="metric">
+          <span>BTC-USD YTD 2026</span>
+          <strong id="ibitGateBtcYtd">--</strong>
+          <small>$1,000 at Dec. 2025 month-end</small>
+        </div>
+        <div class="metric">
+          <span>BITX YTD 2026</span>
+          <strong id="ibitGateBitxYtd">--</strong>
+          <small id="ibitGateAsOf">Paper performance: --</small>
+        </div>
+      </div>
+    </section>
+
     <section class="panel section decision-path" aria-label="Decision path">
       <div class="section-head" style="padding: 0;">
         <h2 class="panel-title">Decision Path</h2>
@@ -826,6 +874,18 @@
       return `${allocation}% BTC. Calendar entry date: ${calendarEntry}. Cycle window: ${cycle}. Golden cross: ${goldenCross}.`;
     }
 
+    function signedPercent(value) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
+      const number = Number(value);
+      return `${number >= 0 ? "+" : ""}${number.toFixed(1)}%`;
+    }
+
+    function flowMoney(value) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
+      const millions = Number(value) / 1_000_000;
+      return `${millions >= 0 ? "+" : "-"}$${Math.abs(millions).toLocaleString("en-US", { maximumFractionDigits: 1 })}M`;
+    }
+
     function finalStatus(data) {
       if (data.final_strategy_status) return data.final_strategy_status;
       const allocation = data.final_strategy_allocation_pct ?? data.current_btc_allocation_pct ?? 0;
@@ -913,6 +973,17 @@
       setText("electricalCost", money(data.electrical_cost_per_btc));
       setText("electricalAssumptions", data.electrical_cost_assumptions || "Estimated mining electrical cost, context only.");
       setText("ruleSummary", data.rule_summary || "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.");
+
+      const gate = data.experimental_ibit_flow_gate || {};
+      const gateSignal = document.getElementById("ibitGateSignal");
+      gateSignal.textContent = gate.available ? gate.signal : "Unavailable";
+      gateSignal.className = `status-chip ${gate.signal === "OUT" ? "cash" : ""}`;
+      setText("ibitGatePriorFlow", gate.available ? flowMoney(gate.prior_month_flow_usd) : "--");
+      setText("ibitGateFlowMonth", gate.available ? `Signal month: ${gate.signal_flow_month}` : "Signal unavailable");
+      setText("ibitGateAllocation", gate.available ? `${gate.allocation_pct}% ${gate.signal === "IN" ? "asset" : "cash"}` : "--");
+      setText("ibitGateBtcYtd", gate.available ? `${money(gate.btc?.ytd_2026_value_from_1000, true)} (${signedPercent(gate.btc?.ytd_2026_return_pct)})` : "--");
+      setText("ibitGateBitxYtd", gate.available ? `${money(gate.bitx?.ytd_2026_value_from_1000, true)} (${signedPercent(gate.bitx?.ytd_2026_return_pct)})` : "--");
+      setText("ibitGateAsOf", gate.available ? `Paper performance through ${formatDate(gate.bitx?.price_date)}` : "Paper performance unavailable");
 
       const history = Array.isArray(data.recent_history) ? data.recent_history : [];
       document.getElementById("historyRows").innerHTML = history.map((row) => `

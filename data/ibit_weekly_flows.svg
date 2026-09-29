@@ -27,162 +27,163 @@
 <text x="1342" y="362.5" fill="#63b3ff" font-family="Arial, sans-serif" font-size="11">$82k</text>
 <text x="1342" y="219.25" fill="#63b3ff" font-family="Arial, sans-serif" font-size="11">$105k</text>
 <text x="1342" y="76" fill="#63b3ff" font-family="Arial, sans-serif" font-size="11">$129k</text>
-<polyline points="109.34,309.23 118.03,266.32 126.72,284.77 135.41,271.03 144.1,289.84 152.78,198.67 161.47,304.7 170.16,155.5 178.85,153.51 187.54,112.62 196.22,276.5 204.91,297.46 213.6,278.19 222.29,310.34 230.98,342.13 239.66,352.8 248.35,360.9 257.04,353.74 265.73,345.45 274.41,287.27 283.1,329.02 291.79,264.65 300.48,354.38 309.17,358.35 317.85,350.34 326.54,357.1 335.23,306.77 343.92,288.54 352.61,283.41 361.29,321.85 369.98,336.75 378.67,351.46 387.36,326.94 396.05,337.65 404.73,358.5 413.42,359.4 422.11,356.94 430.8,309.1 439.49,345.11 448.17,344.58 456.86,245.53 465.55,244.94 474.24,145.75 482.93,234.64 491.61,158.27 500.3,155.2 508.99,318.37 517.68,98.05 526.37,208.58 535.05,215.29 543.74,360.59 552.43,372.31 561.12,309.24 569.8,284.67 578.49,228.16 587.18,284.16 595.87,327.28 604.56,348.05 613.24,360.68 621.93,474.8 630.62,371.33 639.31,391.97 648,305.29 656.68,341.47 665.37,362.01 674.06,392.42 682.75,340.04 691.44,215.37 700.12,112.89 708.81,256.5 717.5,275.17 726.19,117.73 734.88,300.62 743.56,350.47 752.25,248.02 760.94,236.57 769.63,228.72 778.32,325.16 787,184.36 795.69,104.16 804.38,331.98 813.07,323.31 821.76,339.8 830.44,270.62 839.13,419.39 847.82,333.96 856.51,315.5 865.2,255.84 873.88,272.69 882.57,341.29 891.26,178.67 899.95,98.59 908.63,386.08 917.32,326.39 926.01,398.44 934.7,416.02 943.39,411.21 952.07,465.99 960.76,372.06 969.45,363.36 978.14,337.3 986.83,382.29 995.51,401.6 1004.2,326.4 1012.89,355.94 1021.58,256.04 1030.27,411.71 1038.95,452.27 1047.64,369.9 1056.33,381.75 1065.02,388.55 1073.71,308.7 1082.39,293.16 1091.08,299.09 1099.77,339.63 1108.46,374.14 1117.15,356.88 1125.83,297.9 1134.52,268.79 1143.21,285.97 1151.9,344.98 1160.59,299.47 1169.27,389.9 1177.96,458.3 1186.65,454.17 1195.34,490.89 1204.02,393.65 1212.71,362.93 1221.4,487.55 1230.09,434.99 1238.78,329.6 1247.46,338.29 1256.15,367.95 1264.84,349.9 1273.53,289.84 1282.22,366.31 1290.9,226.75 1299.59,265.61 1308.28,290.04 1316.97,363.7 1325.66,346.56" fill="none" stroke="#28c98b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-<circle cx="109.34" cy="309.23" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-01-12: $497.7M</title></circle>
-<circle cx="118.03" cy="266.32" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-01-19: $931.1M</title></circle>
-<circle cx="126.72" cy="284.77" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-01-26: $744.7M</title></circle>
-<circle cx="135.41" cy="271.03" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-02: $883.5M</title></circle>
-<circle cx="144.1" cy="289.84" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-09: $693.5M</title></circle>
-<circle cx="152.78" cy="198.67" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-16: $1,614.4M</title></circle>
-<circle cx="161.47" cy="304.7" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-23: $543.4M</title></circle>
-<circle cx="170.16" cy="155.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-01: $2,050.5M</title></circle>
-<circle cx="178.85" cy="153.51" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-08: $2,070.6M</title></circle>
-<circle cx="187.54" cy="112.62" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-15: $2,483.6M</title></circle>
-<circle cx="196.22" cy="276.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-22: $828.3M</title></circle>
-<circle cx="204.91" cy="297.46" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-29: $616.6M</title></circle>
-<circle cx="213.6" cy="278.19" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-05: $811.2M</title></circle>
-<circle cx="222.29" cy="310.34" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-12: $486.5M</title></circle>
-<circle cx="230.98" cy="342.13" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-19: $165.4M</title></circle>
-<circle cx="239.66" cy="352.8" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-26: $57.6M</title></circle>
-<circle cx="248.35" cy="360.9" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2024-05-03: $-24.2M</title></circle>
-<circle cx="257.04" cy="353.74" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-10: $48.1M</title></circle>
-<circle cx="265.73" cy="345.45" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-17: $131.8M</title></circle>
-<circle cx="274.41" cy="287.27" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-24: $719.5M</title></circle>
-<circle cx="283.1" cy="329.02" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-31: $297.8M</title></circle>
-<circle cx="291.79" cy="264.65" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-07: $948.0M</title></circle>
-<circle cx="300.48" cy="354.38" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-14: $41.6M</title></circle>
-<circle cx="309.17" cy="358.35" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-21: $1.5M</title></circle>
-<circle cx="317.85" cy="350.34" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-28: $82.4M</title></circle>
-<circle cx="326.54" cy="357.1" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-05: $14.1M</title></circle>
-<circle cx="335.23" cy="306.77" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-12: $522.5M</title></circle>
-<circle cx="343.92" cy="288.54" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-19: $706.7M</title></circle>
-<circle cx="352.61" cy="283.41" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-26: $758.5M</title></circle>
-<circle cx="361.29" cy="321.85" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-02: $370.2M</title></circle>
-<circle cx="369.98" cy="336.75" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-09: $219.7M</title></circle>
-<circle cx="378.67" cy="351.46" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-16: $71.1M</title></circle>
-<circle cx="387.36" cy="326.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-23: $318.8M</title></circle>
-<circle cx="396.05" cy="337.65" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-30: $210.6M</title></circle>
-<circle cx="404.73" cy="358.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-09-06: $0.0M</title></circle>
-<circle cx="413.42" cy="359.4" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2024-09-13: $-9.1M</title></circle>
-<circle cx="422.11" cy="356.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-09-20: $15.8M</title></circle>
-<circle cx="430.8" cy="309.1" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-09-27: $499.0M</title></circle>
-<circle cx="439.49" cy="345.11" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-04: $135.3M</title></circle>
-<circle cx="448.17" cy="344.58" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-11: $140.6M</title></circle>
-<circle cx="456.86" cy="245.53" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-18: $1,141.1M</title></circle>
-<circle cx="465.55" cy="244.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-25: $1,147.0M</title></circle>
-<circle cx="474.24" cy="145.75" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-01: $2,148.9M</title></circle>
-<circle cx="482.93" cy="234.64" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-08: $1,251.1M</title></circle>
-<circle cx="491.61" cy="158.27" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-15: $2,022.5M</title></circle>
-<circle cx="500.3" cy="155.2" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-22: $2,053.5M</title></circle>
-<circle cx="508.99" cy="318.37" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-29: $405.3M</title></circle>
-<circle cx="517.68" cy="98.05" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-12-06: $2,630.8M</title></circle>
-<circle cx="526.37" cy="208.58" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-12-13: $1,514.3M</title></circle>
-<circle cx="535.05" cy="215.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-12-20: $1,446.5M</title></circle>
-<circle cx="543.74" cy="360.59" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2024-12-27: $-21.1M</title></circle>
-<circle cx="552.43" cy="372.31" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-01-03: $-139.5M</title></circle>
-<circle cx="561.12" cy="309.24" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-10: $497.6M</title></circle>
-<circle cx="569.8" cy="284.67" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-17: $745.7M</title></circle>
-<circle cx="578.49" cy="228.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-24: $1,316.5M</title></circle>
-<circle cx="587.18" cy="284.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-31: $750.9M</title></circle>
-<circle cx="595.87" cy="327.28" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-02-07: $315.3M</title></circle>
-<circle cx="604.56" cy="348.05" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-02-14: $105.6M</title></circle>
-<circle cx="613.24" cy="360.68" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-02-21: $-22.0M</title></circle>
-<circle cx="621.93" cy="474.8" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-02-28: $-1,174.7M</title></circle>
-<circle cx="630.62" cy="371.33" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-03-07: $-129.6M</title></circle>
-<circle cx="639.31" cy="391.97" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-03-14: $-338.1M</title></circle>
-<circle cx="648" cy="305.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-03-21: $537.5M</title></circle>
-<circle cx="656.68" cy="341.47" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-03-28: $172.0M</title></circle>
-<circle cx="665.37" cy="362.01" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-04-04: $-35.5M</title></circle>
-<circle cx="674.06" cy="392.42" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-04-11: $-342.6M</title></circle>
-<circle cx="682.75" cy="340.04" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-04-18: $186.5M</title></circle>
-<circle cx="691.44" cy="215.37" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-04-25: $1,445.7M</title></circle>
-<circle cx="700.12" cy="112.89" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-02: $2,480.9M</title></circle>
-<circle cx="708.81" cy="256.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-09: $1,030.3M</title></circle>
-<circle cx="717.5" cy="275.17" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-16: $841.7M</title></circle>
-<circle cx="726.19" cy="117.73" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-23: $2,432.0M</title></circle>
-<circle cx="734.88" cy="300.62" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-30: $584.6M</title></circle>
-<circle cx="743.56" cy="350.47" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-06: $81.1M</title></circle>
-<circle cx="752.25" cy="248.02" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-13: $1,115.9M</title></circle>
-<circle cx="760.94" cy="236.57" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-20: $1,231.6M</title></circle>
-<circle cx="769.63" cy="228.72" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-27: $1,310.9M</title></circle>
-<circle cx="778.32" cy="325.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-04: $336.8M</title></circle>
-<circle cx="787" cy="184.36" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-11: $1,759.0M</title></circle>
-<circle cx="795.69" cy="104.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-18: $2,569.0M</title></circle>
-<circle cx="804.38" cy="331.98" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-25: $267.9M</title></circle>
-<circle cx="813.07" cy="323.31" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-01: $355.4M</title></circle>
-<circle cx="821.76" cy="339.8" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-08: $188.9M</title></circle>
-<circle cx="830.44" cy="270.62" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-15: $887.7M</title></circle>
-<circle cx="839.13" cy="419.39" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-08-22: $-615.0M</title></circle>
-<circle cx="847.82" cy="333.96" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-29: $247.9M</title></circle>
-<circle cx="856.51" cy="315.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-05: $434.3M</title></circle>
-<circle cx="865.2" cy="255.84" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-12: $1,036.9M</title></circle>
-<circle cx="873.88" cy="272.69" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-19: $866.8M</title></circle>
-<circle cx="882.57" cy="341.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-26: $173.8M</title></circle>
-<circle cx="891.26" cy="178.67" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-10-03: $1,816.4M</title></circle>
-<circle cx="899.95" cy="98.59" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-10-10: $2,625.3M</title></circle>
-<circle cx="908.63" cy="386.08" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-10-17: $-278.6M</title></circle>
-<circle cx="917.32" cy="326.39" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-10-24: $324.3M</title></circle>
-<circle cx="926.01" cy="398.44" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-10-31: $-403.4M</title></circle>
-<circle cx="934.7" cy="416.02" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-07: $-581.0M</title></circle>
-<circle cx="943.39" cy="411.21" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-14: $-532.4M</title></circle>
-<circle cx="952.07" cy="465.99" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-21: $-1,085.7M</title></circle>
-<circle cx="960.76" cy="372.06" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-28: $-137.0M</title></circle>
-<circle cx="969.45" cy="363.36" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-12-05: $-49.1M</title></circle>
-<circle cx="978.14" cy="337.3" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-12-12: $214.1M</title></circle>
-<circle cx="986.83" cy="382.29" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-12-19: $-240.3M</title></circle>
-<circle cx="995.51" cy="401.6" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-12-26: $-435.3M</title></circle>
-<circle cx="1004.2" cy="326.4" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-01-02: $324.2M</title></circle>
-<circle cx="1012.89" cy="355.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-01-09: $25.9M</title></circle>
-<circle cx="1021.58" cy="256.04" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-01-16: $1,034.9M</title></circle>
-<circle cx="1030.27" cy="411.71" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-01-23: $-537.5M</title></circle>
-<circle cx="1038.95" cy="452.27" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-01-30: $-947.2M</title></circle>
-<circle cx="1047.64" cy="369.9" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-02-06: $-115.1M</title></circle>
-<circle cx="1056.33" cy="381.75" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-02-13: $-234.8M</title></circle>
-<circle cx="1065.02" cy="388.55" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-02-20: $-303.5M</title></circle>
-<circle cx="1073.71" cy="308.7" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-02-27: $503.0M</title></circle>
-<circle cx="1082.39" cy="293.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-03-06: $660.0M</title></circle>
-<circle cx="1091.08" cy="299.09" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-03-13: $600.1M</title></circle>
-<circle cx="1099.77" cy="339.63" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-03-20: $190.6M</title></circle>
-<circle cx="1108.46" cy="374.14" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-03-27: $-158.0M</title></circle>
-<circle cx="1117.15" cy="356.88" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-03: $16.4M</title></circle>
-<circle cx="1125.83" cy="297.9" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-10: $612.1M</title></circle>
-<circle cx="1134.52" cy="268.79" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-17: $906.1M</title></circle>
-<circle cx="1143.21" cy="285.97" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-24: $732.6M</title></circle>
-<circle cx="1151.9" cy="344.98" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-05-01: $136.6M</title></circle>
-<circle cx="1160.59" cy="299.47" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-05-08: $596.3M</title></circle>
-<circle cx="1169.27" cy="389.9" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-05-15: $-317.2M</title></circle>
-<circle cx="1177.96" cy="458.3" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-05-22: $-1,008.1M</title></circle>
-<circle cx="1186.65" cy="454.17" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-05-29: $-966.3M</title></circle>
-<circle cx="1195.34" cy="490.89" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-05: $-1,337.2M</title></circle>
-<circle cx="1204.02" cy="393.65" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-12: $-355.0M</title></circle>
-<circle cx="1212.71" cy="362.93" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-19: $-44.7M</title></circle>
-<circle cx="1221.4" cy="487.55" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-26: $-1,303.5M</title></circle>
-<circle cx="1230.09" cy="434.99" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-07-03: $-772.6M</title></circle>
-<circle cx="1238.78" cy="329.6" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-07-10: $291.9M</title></circle>
-<circle cx="1247.46" cy="338.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-07-17: $204.1M</title></circle>
-<circle cx="1256.15" cy="367.95" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-07-24: $-95.5M</title></circle>
-<circle cx="1264.84" cy="349.9" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-07-31: $86.9M</title></circle>
-<circle cx="1273.53" cy="289.84" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-08-07: $693.5M</title></circle>
-<circle cx="1282.22" cy="366.31" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-08-14: $-78.9M</title></circle>
-<circle cx="1290.9" cy="226.75" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-08-21: $1,330.8M</title></circle>
-<circle cx="1299.59" cy="265.61" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-08-28: $938.3M</title></circle>
-<circle cx="1308.28" cy="290.04" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-09-04: $691.5M</title></circle>
-<circle cx="1316.97" cy="363.7" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-09-11: $-52.5M</title></circle>
-<circle cx="1325.66" cy="346.56" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-09-18: $120.6M</title></circle>
-<polyline points="109.34,597.92 118.03,605.48 126.72,604.27 135.41,595.88 144.1,571.62 152.78,540.91 161.47,549.66 170.16,477.95 178.85,442.06 187.54,435.3 196.22,469.75 204.91,432.3 213.6,444.89 222.29,448.82 230.98,469.35 239.66,469.9 248.35,475.2 257.04,488.04 265.73,449.7 274.41,440.67 283.1,447.01 291.79,435.67 300.48,456.08 309.17,467.81 317.85,490.94 326.54,513.34 335.23,505.76 343.92,451.8 352.61,444.44 361.29,484.23 369.98,487.51 378.67,499.67 387.36,467.82 396.05,498.29 404.73,529.96 413.42,489.4 422.11,473.34 430.8,457.43 439.49,480.23 448.17,477.92 456.86,441.33 465.55,452.21 474.24,434.82 482.93,391.56 491.61,302.62 500.3,254.04 508.99,263.45 517.68,248.38 526.37,238.96 535.05,261.64 543.74,283.64 552.43,259.49 561.12,280.35 569.8,220.57 578.49,218.38 587.18,233.17 595.87,269.16 604.56,263.16 613.24,271.63 621.93,343.61 630.62,329.1 639.31,346.09 648,345.63 656.68,343.73 665.37,346.85 674.06,349.54 682.75,343.14 691.44,280.24 700.12,266.82 708.81,229.7 717.5,226.53 726.19,203.26 734.88,223.41 743.56,221.01 752.25,210.59 760.94,227.63 769.63,204.48 778.32,198.69 787,140.61 795.69,137.63 804.38,139.88 813.07,166.31 821.76,145.68 830.44,141.33 839.13,144.55 847.82,196.38 856.51,182.66 865.2,149.28 873.88,151.81 882.57,188.41 891.26,111.52 899.95,166.96 908.63,208.28 917.32,180.32 926.01,189.37 934.7,227.24 943.39,282.21 952.07,339.22 960.76,303.52 969.45,312.9 978.14,307.49 986.83,320.76 995.51,325.68 1004.2,309.49 1012.89,306.01 1021.58,275.31 1030.27,312.19 1038.95,345.11 1047.64,428.25 1056.33,438.64 1065.02,443.86 1073.71,456.87 1082.39,443.06 1091.08,425.72 1099.77,428.45 1108.46,454.07 1117.15,450.44 1125.83,413.4 1134.52,388 1143.21,385.98 1151.9,381.55 1160.59,369.25 1169.27,376.12 1177.96,398.03 1186.65,410.99 1195.34,487.25 1204.02,471.19 1212.71,471.21 1221.4,492.8 1230.09,477.31 1238.78,467.62 1247.46,469.01 1256.15,467.79 1264.84,475.66 1273.53,463.01 1282.22,474.67 1290.9,380.59 1299.59,383.69 1308.28,372.41 1316.97,387.71 1325.66,364.88" fill="none" stroke="#55aaff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="109.31,309.23 117.94,266.32 126.57,284.77 135.19,271.03 143.82,289.84 152.45,198.67 161.07,304.7 169.7,155.5 178.33,153.51 186.95,112.62 195.58,276.5 204.21,297.46 212.83,278.19 221.46,310.34 230.09,342.13 238.71,352.8 247.34,360.9 255.97,353.74 264.6,345.45 273.22,287.27 281.85,329.02 290.48,264.65 299.1,354.38 307.73,358.35 316.36,350.34 324.98,357.1 333.61,306.77 342.24,288.54 350.86,283.41 359.49,321.85 368.12,336.75 376.74,351.46 385.37,326.94 394,337.65 402.62,358.5 411.25,359.4 419.88,356.94 428.5,309.1 437.13,345.11 445.76,344.58 454.38,245.53 463.01,244.94 471.64,145.75 480.26,234.64 488.89,158.27 497.52,155.2 506.14,318.37 514.77,98.05 523.4,208.58 532.02,215.29 540.65,360.59 549.28,372.31 557.9,309.24 566.53,284.67 575.16,228.16 583.79,284.16 592.41,327.28 601.04,348.05 609.67,360.68 618.29,474.8 626.92,371.33 635.55,391.97 644.17,305.29 652.8,341.47 661.43,362.01 670.05,392.42 678.68,340.04 687.31,215.37 695.93,112.89 704.56,256.5 713.19,275.17 721.81,117.73 730.44,300.62 739.07,350.47 747.69,248.02 756.32,236.57 764.95,228.72 773.57,325.16 782.2,184.36 790.83,104.16 799.45,331.98 808.08,323.31 816.71,339.8 825.33,270.62 833.96,419.39 842.59,333.96 851.21,315.5 859.84,255.84 868.47,272.69 877.1,341.29 885.72,178.67 894.35,98.59 902.98,386.08 911.6,326.39 920.23,398.44 928.86,416.02 937.48,411.21 946.11,465.99 954.74,372.06 963.36,363.36 971.99,337.3 980.62,382.29 989.24,401.6 997.87,326.4 1006.5,355.94 1015.12,256.04 1023.75,411.71 1032.38,452.27 1041,369.9 1049.63,381.75 1058.26,388.55 1066.88,308.7 1075.51,293.16 1084.14,299.09 1092.76,339.63 1101.39,374.14 1110.02,356.88 1118.64,297.9 1127.27,268.79 1135.9,285.97 1144.52,344.98 1153.15,299.47 1161.78,389.9 1170.4,458.3 1179.03,454.17 1187.66,490.89 1196.29,393.65 1204.91,362.93 1213.54,487.55 1222.17,434.99 1230.79,329.6 1239.42,338.29 1248.05,367.95 1256.67,349.9 1265.3,289.84 1273.93,366.31 1282.55,226.75 1291.18,265.61 1299.81,290.04 1308.43,363.7 1317.06,346.56 1325.69,243.9" fill="none" stroke="#28c98b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="109.31" cy="309.23" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-01-12: $497.7M</title></circle>
+<circle cx="117.94" cy="266.32" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-01-19: $931.1M</title></circle>
+<circle cx="126.57" cy="284.77" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-01-26: $744.7M</title></circle>
+<circle cx="135.19" cy="271.03" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-02: $883.5M</title></circle>
+<circle cx="143.82" cy="289.84" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-09: $693.5M</title></circle>
+<circle cx="152.45" cy="198.67" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-16: $1,614.4M</title></circle>
+<circle cx="161.07" cy="304.7" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-02-23: $543.4M</title></circle>
+<circle cx="169.7" cy="155.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-01: $2,050.5M</title></circle>
+<circle cx="178.33" cy="153.51" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-08: $2,070.6M</title></circle>
+<circle cx="186.95" cy="112.62" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-15: $2,483.6M</title></circle>
+<circle cx="195.58" cy="276.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-22: $828.3M</title></circle>
+<circle cx="204.21" cy="297.46" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-03-29: $616.6M</title></circle>
+<circle cx="212.83" cy="278.19" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-05: $811.2M</title></circle>
+<circle cx="221.46" cy="310.34" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-12: $486.5M</title></circle>
+<circle cx="230.09" cy="342.13" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-19: $165.4M</title></circle>
+<circle cx="238.71" cy="352.8" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-04-26: $57.6M</title></circle>
+<circle cx="247.34" cy="360.9" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2024-05-03: $-24.2M</title></circle>
+<circle cx="255.97" cy="353.74" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-10: $48.1M</title></circle>
+<circle cx="264.6" cy="345.45" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-17: $131.8M</title></circle>
+<circle cx="273.22" cy="287.27" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-24: $719.5M</title></circle>
+<circle cx="281.85" cy="329.02" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-05-31: $297.8M</title></circle>
+<circle cx="290.48" cy="264.65" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-07: $948.0M</title></circle>
+<circle cx="299.1" cy="354.38" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-14: $41.6M</title></circle>
+<circle cx="307.73" cy="358.35" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-21: $1.5M</title></circle>
+<circle cx="316.36" cy="350.34" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-06-28: $82.4M</title></circle>
+<circle cx="324.98" cy="357.1" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-05: $14.1M</title></circle>
+<circle cx="333.61" cy="306.77" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-12: $522.5M</title></circle>
+<circle cx="342.24" cy="288.54" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-19: $706.7M</title></circle>
+<circle cx="350.86" cy="283.41" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-07-26: $758.5M</title></circle>
+<circle cx="359.49" cy="321.85" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-02: $370.2M</title></circle>
+<circle cx="368.12" cy="336.75" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-09: $219.7M</title></circle>
+<circle cx="376.74" cy="351.46" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-16: $71.1M</title></circle>
+<circle cx="385.37" cy="326.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-23: $318.8M</title></circle>
+<circle cx="394" cy="337.65" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-08-30: $210.6M</title></circle>
+<circle cx="402.62" cy="358.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-09-06: $0.0M</title></circle>
+<circle cx="411.25" cy="359.4" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2024-09-13: $-9.1M</title></circle>
+<circle cx="419.88" cy="356.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-09-20: $15.8M</title></circle>
+<circle cx="428.5" cy="309.1" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-09-27: $499.0M</title></circle>
+<circle cx="437.13" cy="345.11" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-04: $135.3M</title></circle>
+<circle cx="445.76" cy="344.58" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-11: $140.6M</title></circle>
+<circle cx="454.38" cy="245.53" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-18: $1,141.1M</title></circle>
+<circle cx="463.01" cy="244.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-10-25: $1,147.0M</title></circle>
+<circle cx="471.64" cy="145.75" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-01: $2,148.9M</title></circle>
+<circle cx="480.26" cy="234.64" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-08: $1,251.1M</title></circle>
+<circle cx="488.89" cy="158.27" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-15: $2,022.5M</title></circle>
+<circle cx="497.52" cy="155.2" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-22: $2,053.5M</title></circle>
+<circle cx="506.14" cy="318.37" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-11-29: $405.3M</title></circle>
+<circle cx="514.77" cy="98.05" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-12-06: $2,630.8M</title></circle>
+<circle cx="523.4" cy="208.58" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-12-13: $1,514.3M</title></circle>
+<circle cx="532.02" cy="215.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2024-12-20: $1,446.5M</title></circle>
+<circle cx="540.65" cy="360.59" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2024-12-27: $-21.1M</title></circle>
+<circle cx="549.28" cy="372.31" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-01-03: $-139.5M</title></circle>
+<circle cx="557.9" cy="309.24" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-10: $497.6M</title></circle>
+<circle cx="566.53" cy="284.67" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-17: $745.7M</title></circle>
+<circle cx="575.16" cy="228.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-24: $1,316.5M</title></circle>
+<circle cx="583.79" cy="284.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-01-31: $750.9M</title></circle>
+<circle cx="592.41" cy="327.28" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-02-07: $315.3M</title></circle>
+<circle cx="601.04" cy="348.05" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-02-14: $105.6M</title></circle>
+<circle cx="609.67" cy="360.68" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-02-21: $-22.0M</title></circle>
+<circle cx="618.29" cy="474.8" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-02-28: $-1,174.7M</title></circle>
+<circle cx="626.92" cy="371.33" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-03-07: $-129.6M</title></circle>
+<circle cx="635.55" cy="391.97" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-03-14: $-338.1M</title></circle>
+<circle cx="644.17" cy="305.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-03-21: $537.5M</title></circle>
+<circle cx="652.8" cy="341.47" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-03-28: $172.0M</title></circle>
+<circle cx="661.43" cy="362.01" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-04-04: $-35.5M</title></circle>
+<circle cx="670.05" cy="392.42" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-04-11: $-342.6M</title></circle>
+<circle cx="678.68" cy="340.04" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-04-18: $186.5M</title></circle>
+<circle cx="687.31" cy="215.37" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-04-25: $1,445.7M</title></circle>
+<circle cx="695.93" cy="112.89" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-02: $2,480.9M</title></circle>
+<circle cx="704.56" cy="256.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-09: $1,030.3M</title></circle>
+<circle cx="713.19" cy="275.17" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-16: $841.7M</title></circle>
+<circle cx="721.81" cy="117.73" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-23: $2,432.0M</title></circle>
+<circle cx="730.44" cy="300.62" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-05-30: $584.6M</title></circle>
+<circle cx="739.07" cy="350.47" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-06: $81.1M</title></circle>
+<circle cx="747.69" cy="248.02" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-13: $1,115.9M</title></circle>
+<circle cx="756.32" cy="236.57" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-20: $1,231.6M</title></circle>
+<circle cx="764.95" cy="228.72" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-06-27: $1,310.9M</title></circle>
+<circle cx="773.57" cy="325.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-04: $336.8M</title></circle>
+<circle cx="782.2" cy="184.36" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-11: $1,759.0M</title></circle>
+<circle cx="790.83" cy="104.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-18: $2,569.0M</title></circle>
+<circle cx="799.45" cy="331.98" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-07-25: $267.9M</title></circle>
+<circle cx="808.08" cy="323.31" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-01: $355.4M</title></circle>
+<circle cx="816.71" cy="339.8" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-08: $188.9M</title></circle>
+<circle cx="825.33" cy="270.62" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-15: $887.7M</title></circle>
+<circle cx="833.96" cy="419.39" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-08-22: $-615.0M</title></circle>
+<circle cx="842.59" cy="333.96" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-08-29: $247.9M</title></circle>
+<circle cx="851.21" cy="315.5" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-05: $434.3M</title></circle>
+<circle cx="859.84" cy="255.84" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-12: $1,036.9M</title></circle>
+<circle cx="868.47" cy="272.69" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-19: $866.8M</title></circle>
+<circle cx="877.1" cy="341.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-09-26: $173.8M</title></circle>
+<circle cx="885.72" cy="178.67" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-10-03: $1,816.4M</title></circle>
+<circle cx="894.35" cy="98.59" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-10-10: $2,625.3M</title></circle>
+<circle cx="902.98" cy="386.08" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-10-17: $-278.6M</title></circle>
+<circle cx="911.6" cy="326.39" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-10-24: $324.3M</title></circle>
+<circle cx="920.23" cy="398.44" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-10-31: $-403.4M</title></circle>
+<circle cx="928.86" cy="416.02" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-07: $-581.0M</title></circle>
+<circle cx="937.48" cy="411.21" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-14: $-532.4M</title></circle>
+<circle cx="946.11" cy="465.99" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-21: $-1,085.7M</title></circle>
+<circle cx="954.74" cy="372.06" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-11-28: $-137.0M</title></circle>
+<circle cx="963.36" cy="363.36" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-12-05: $-49.1M</title></circle>
+<circle cx="971.99" cy="337.3" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2025-12-12: $214.1M</title></circle>
+<circle cx="980.62" cy="382.29" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-12-19: $-240.3M</title></circle>
+<circle cx="989.24" cy="401.6" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2025-12-26: $-435.3M</title></circle>
+<circle cx="997.87" cy="326.4" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-01-02: $324.2M</title></circle>
+<circle cx="1006.5" cy="355.94" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-01-09: $25.9M</title></circle>
+<circle cx="1015.12" cy="256.04" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-01-16: $1,034.9M</title></circle>
+<circle cx="1023.75" cy="411.71" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-01-23: $-537.5M</title></circle>
+<circle cx="1032.38" cy="452.27" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-01-30: $-947.2M</title></circle>
+<circle cx="1041" cy="369.9" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-02-06: $-115.1M</title></circle>
+<circle cx="1049.63" cy="381.75" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-02-13: $-234.8M</title></circle>
+<circle cx="1058.26" cy="388.55" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-02-20: $-303.5M</title></circle>
+<circle cx="1066.88" cy="308.7" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-02-27: $503.0M</title></circle>
+<circle cx="1075.51" cy="293.16" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-03-06: $660.0M</title></circle>
+<circle cx="1084.14" cy="299.09" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-03-13: $600.1M</title></circle>
+<circle cx="1092.76" cy="339.63" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-03-20: $190.6M</title></circle>
+<circle cx="1101.39" cy="374.14" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-03-27: $-158.0M</title></circle>
+<circle cx="1110.02" cy="356.88" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-03: $16.4M</title></circle>
+<circle cx="1118.64" cy="297.9" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-10: $612.1M</title></circle>
+<circle cx="1127.27" cy="268.79" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-17: $906.1M</title></circle>
+<circle cx="1135.9" cy="285.97" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-04-24: $732.6M</title></circle>
+<circle cx="1144.52" cy="344.98" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-05-01: $136.6M</title></circle>
+<circle cx="1153.15" cy="299.47" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-05-08: $596.3M</title></circle>
+<circle cx="1161.78" cy="389.9" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-05-15: $-317.2M</title></circle>
+<circle cx="1170.4" cy="458.3" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-05-22: $-1,008.1M</title></circle>
+<circle cx="1179.03" cy="454.17" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-05-29: $-966.3M</title></circle>
+<circle cx="1187.66" cy="490.89" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-05: $-1,337.2M</title></circle>
+<circle cx="1196.29" cy="393.65" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-12: $-355.0M</title></circle>
+<circle cx="1204.91" cy="362.93" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-19: $-44.7M</title></circle>
+<circle cx="1213.54" cy="487.55" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-06-26: $-1,303.5M</title></circle>
+<circle cx="1222.17" cy="434.99" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-07-03: $-772.6M</title></circle>
+<circle cx="1230.79" cy="329.6" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-07-10: $291.9M</title></circle>
+<circle cx="1239.42" cy="338.29" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-07-17: $204.1M</title></circle>
+<circle cx="1248.05" cy="367.95" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-07-24: $-95.5M</title></circle>
+<circle cx="1256.67" cy="349.9" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-07-31: $86.9M</title></circle>
+<circle cx="1265.3" cy="289.84" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-08-07: $693.5M</title></circle>
+<circle cx="1273.93" cy="366.31" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-08-14: $-78.9M</title></circle>
+<circle cx="1282.55" cy="226.75" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-08-21: $1,330.8M</title></circle>
+<circle cx="1291.18" cy="265.61" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-08-28: $938.3M</title></circle>
+<circle cx="1299.81" cy="290.04" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-09-04: $691.5M</title></circle>
+<circle cx="1308.43" cy="363.7" r="2.2" fill="#ff6474" stroke="#07111f" stroke-width="1"><title>2026-09-11: $-52.5M</title></circle>
+<circle cx="1317.06" cy="346.56" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-09-18: $120.6M</title></circle>
+<circle cx="1325.69" cy="243.9" r="2.2" fill="#28c98b" stroke="#07111f" stroke-width="1"><title>2026-09-25: $1,157.6M</title></circle>
+<polyline points="109.31,597.92 117.94,605.48 126.57,604.27 135.19,595.88 143.82,571.62 152.45,540.91 161.07,549.66 169.7,477.95 178.33,442.06 186.95,435.3 195.58,469.75 204.21,432.3 212.83,444.89 221.46,448.82 230.09,469.35 238.71,469.9 247.34,475.2 255.97,488.04 264.6,449.7 273.22,440.67 281.85,447.01 290.48,435.67 299.1,456.08 307.73,467.81 316.36,490.94 324.98,513.34 333.61,505.76 342.24,451.8 350.86,444.44 359.49,484.23 368.12,487.51 376.74,499.67 385.37,467.82 394,498.29 402.62,529.96 411.25,489.4 419.88,473.34 428.5,457.43 437.13,480.23 445.76,477.92 454.38,441.33 463.01,452.21 471.64,434.82 480.26,391.56 488.89,302.62 497.52,254.04 506.14,263.45 514.77,248.38 523.4,238.96 532.02,261.64 540.65,283.64 549.28,259.49 557.9,280.35 566.53,220.57 575.16,218.38 583.79,233.17 592.41,269.16 601.04,263.16 609.67,271.63 618.29,343.61 626.92,329.1 635.55,346.09 644.17,345.63 652.8,343.73 661.43,346.85 670.05,349.54 678.68,343.14 687.31,280.24 695.93,266.82 704.56,229.7 713.19,226.53 721.81,203.26 730.44,223.41 739.07,221.01 747.69,210.59 756.32,227.63 764.95,204.48 773.57,198.69 782.2,140.61 790.83,137.63 799.45,139.88 808.08,166.31 816.71,145.68 825.33,141.33 833.96,144.55 842.59,196.38 851.21,182.66 859.84,149.28 868.47,151.81 877.1,188.41 885.72,111.52 894.35,166.96 902.98,208.28 911.6,180.32 920.23,189.37 928.86,227.24 937.48,282.21 946.11,339.22 954.74,303.52 963.36,312.9 971.99,307.49 980.62,320.76 989.24,325.68 997.87,309.49 1006.5,306.01 1015.12,275.31 1023.75,312.19 1032.38,345.11 1041,428.25 1049.63,438.64 1058.26,443.86 1066.88,456.87 1075.51,443.06 1084.14,425.72 1092.76,428.45 1101.39,454.07 1110.02,450.44 1118.64,413.4 1127.27,388 1135.9,385.98 1144.52,381.55 1153.15,369.25 1161.78,376.12 1170.4,398.03 1179.03,410.99 1187.66,487.25 1196.29,471.19 1204.91,471.21 1213.54,492.8 1222.17,477.31 1230.79,467.62 1239.42,469.01 1248.05,467.79 1256.67,475.66 1265.3,463.01 1273.93,474.67 1282.55,380.59 1291.18,383.69 1299.81,372.41 1308.43,387.71 1317.06,364.88 1325.69,345.68" fill="none" stroke="#55aaff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
 <line x1="105" y1="358.5" x2="1330" y2="358.5" stroke="#d8e1ec" stroke-width="1.25"/>
-<text x="109.34" y="673" transform="rotate(35 109.34 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-01</text>
-<text x="230.98" y="673" transform="rotate(35 230.98 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-04</text>
-<text x="352.61" y="673" transform="rotate(35 352.61 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-07</text>
-<text x="474.24" y="673" transform="rotate(35 474.24 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-11</text>
-<text x="595.87" y="673" transform="rotate(35 595.87 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-02</text>
-<text x="717.5" y="673" transform="rotate(35 717.5 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-05</text>
-<text x="839.13" y="673" transform="rotate(35 839.13 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-08</text>
-<text x="960.76" y="673" transform="rotate(35 960.76 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-11</text>
-<text x="1082.39" y="673" transform="rotate(35 1082.39 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2026-03</text>
-<text x="1204.02" y="673" transform="rotate(35 1204.02 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2026-06</text>
-<text x="1325.66" y="673" transform="rotate(35 1325.66 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2026-09</text>
-<text x="105" y="736" fill="#70849b" font-family="Arial, sans-serif" font-size="11">Sources: The Block (IBIT daily net flows); Yahoo Finance (BTC-USD). Generated 2026-09-27 UTC.</text>
+<text x="109.31" y="673" transform="rotate(35 109.31 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-01</text>
+<text x="230.09" y="673" transform="rotate(35 230.09 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-04</text>
+<text x="350.86" y="673" transform="rotate(35 350.86 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-07</text>
+<text x="471.64" y="673" transform="rotate(35 471.64 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2024-11</text>
+<text x="592.41" y="673" transform="rotate(35 592.41 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-02</text>
+<text x="713.19" y="673" transform="rotate(35 713.19 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-05</text>
+<text x="833.96" y="673" transform="rotate(35 833.96 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-08</text>
+<text x="954.74" y="673" transform="rotate(35 954.74 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2025-11</text>
+<text x="1075.51" y="673" transform="rotate(35 1075.51 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2026-03</text>
+<text x="1196.29" y="673" transform="rotate(35 1196.29 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2026-06</text>
+<text x="1317.06" y="673" transform="rotate(35 1317.06 673)" fill="#91a3b8" font-family="Arial, sans-serif" font-size="11">2026-09</text>
+<text x="105" y="736" fill="#70849b" font-family="Arial, sans-serif" font-size="11">Sources: The Block (IBIT daily net flows); Yahoo Finance (BTC-USD). Generated 2026-09-29 UTC.</text>
 <text x="1330" y="35" text-anchor="end" fill="#28c98b" font-family="Arial, sans-serif" font-size="12">━ IBIT net flow <tspan fill="#ff6474">● outflow</tspan></text>
 <text x="1330" y="53" text-anchor="end" fill="#55aaff" font-family="Arial, sans-serif" font-size="12">━ BTC price</text>
 </svg>

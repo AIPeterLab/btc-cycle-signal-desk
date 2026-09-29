@@ -23,6 +23,9 @@ from urllib.error import URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+from backtest_pure_gate import backtest_asset as pure_gate_backtest_asset
+from backtest_pure_gate import yahoo_daily as pure_gate_yahoo_daily
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -148,6 +151,66 @@ def the_block_ibit_daily() -> tuple[list[dict[str, Any]], int | None]:
 
     runtime = payload.get("Runtime")
     return rows, int(runtime) if runtime is not None else None
+
+
+def experimental_pure_gate_context(
+    daily_flows: list[dict[str, Any]],
+    source_runtime: int | None,
+    yahoo_rows: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Build paper-only pure-gate context without changing live strategy fields."""
+    monthly_flows: dict[str, float] = defaultdict(float)
+    for row in daily_flows:
+        monthly_flows[row["date"].strftime("%Y-%m")] += float(row["flow_usd"])
+
+    btc_prices = [
+        {"date": date.fromisoformat(row["date"]), "close": float(row["close"])}
+        for row in yahoo_rows
+    ]
+    btc = pure_gate_backtest_asset("BTC-USD", monthly_flows, btc_prices, source_runtime)
+    bitx = pure_gate_backtest_asset(
+        "BITX", monthly_flows, pure_gate_yahoo_daily("BITX"), source_runtime
+    )
+    signal = btc["current_paper_snapshot"]
+
+    def asset_summary(result: dict[str, Any]) -> dict[str, Any]:
+        snapshot = result["current_paper_snapshot"]
+        ytd = result["ytd_2026_current_snapshot"]
+        completed = result["completed_month_backtest"]
+        return {
+            "price_date": snapshot["price_date"],
+            "paper_value_from_1000": snapshot["strategy_value"],
+            "paper_return_pct": snapshot["strategy_return_pct"],
+            "ytd_2026_value_from_1000": ytd["strategy_value"],
+            "ytd_2026_return_pct": ytd["strategy_return_pct"],
+            "last_completed_month": completed["end_month"],
+            "last_completed_month_value_from_1000": completed["strategy_ending_value"],
+        }
+
+    return {
+        "available": True,
+        "experimental": True,
+        "paper_only": True,
+        "affects_live_strategy": False,
+        "strategy_name": "IBIT Flow Pure Gate",
+        "rule": (
+            "Prior completed UTC calendar-month IBIT net flow below $0: cash; "
+            "$0 or above: 100% exposure for the current month."
+        ),
+        "signal": signal["signal"],
+        "allocation_pct": signal["allocation_pct"],
+        "current_month": signal["month"],
+        "signal_flow_month": signal["signal_flow_month"],
+        "prior_month_flow_usd": signal["prior_month_ibit_flow_usd"],
+        "btc": asset_summary(btc),
+        "bitx": asset_summary(bitx),
+        "source": THE_BLOCK_IBIT_FLOW_URL,
+        "source_updated_at": (
+            datetime.fromtimestamp(source_runtime, tz=timezone.utc).isoformat()
+            if source_runtime is not None
+            else None
+        ),
+    }
 
 
 def ibit_weekly_chart_data(
@@ -916,7 +979,6 @@ def write_ibit_monthly_outputs(
 def main() -> int:
     yahoo_rows = yahoo_btc_daily()
     payload = build_payload(yahoo_rows)
-    write_outputs(payload)
     ibit_message = "IBIT chart unchanged"
     try:
         ibit_daily, source_runtime = the_block_ibit_daily()
@@ -924,16 +986,27 @@ def main() -> int:
         ibit_months = ibit_monthly_chart_data(ibit_daily, yahoo_rows)
         write_ibit_outputs(ibit_weeks, source_runtime)
         write_ibit_monthly_outputs(ibit_months, source_runtime)
+        payload["experimental_ibit_flow_gate"] = experimental_pure_gate_context(
+            ibit_daily, source_runtime, yahoo_rows
+        )
         ibit_message = (
             f"IBIT chart weeks={len(ibit_weeks)} "
             f"latest={ibit_weeks[-1]['week_end']} months={len(ibit_months)} "
             f"latest_month={ibit_months[-1]['month']}"
         )
     except (RuntimeError, URLError, TimeoutError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        payload["experimental_ibit_flow_gate"] = {
+            "available": False,
+            "experimental": True,
+            "paper_only": True,
+            "affects_live_strategy": False,
+            "error": str(exc),
+        }
         print(
             f"Warning: IBIT chart refresh failed; existing chart artifacts were preserved: {exc}",
             file=sys.stderr,
         )
+    write_outputs(payload)
     print(
         f"{payload['market_date']} {payload['status']} "
         f"cycle_day={payload['cycle_day']} btc_close={payload['btc_close']} {ibit_message}"
