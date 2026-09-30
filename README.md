@@ -27,8 +27,11 @@ This dashboard does not use QQQ, QLD, SPY, SSO, TQQQ, MACD, EMA crossover, or 5-
 - `data/ibit_monthly_flows.svg` - backend-generated monthly IBIT flow chart.
 - `data/pure_gate_btc.json` and `.csv` - reproducible BTC-USD pure-gate paper backtest.
 - `data/pure_gate_bitx.json` and `.csv` - reproducible BITX pure-gate paper backtest.
+- `data/pure_gate_weekly_btc.json` and `.csv` - reproducible BTC-USD weekly pure-gate paper backtest.
+- `data/pure_gate_weekly_bitx.json` and `.csv` - reproducible BITX weekly pure-gate paper backtest.
 - `scripts/update_signals.py` - no-key updater using public BTC-USD and CoinMetrics data.
 - `scripts/backtest_pure_gate.py` - stdlib-only IBIT pure-gate paper backtest.
+- `scripts/backtest_weekly_pure_gate.py` - stdlib-only prior-week IBIT pure-gate paper backtest.
 - `scripts/backtest_ibit_flow_allocation.py` - reproducible lagged-IBIT-flow research backtest.
 - `skills/etf-flow-lag/` - reusable agent instructions for reviewing and repeating that backtest.
 - `.github/workflows/daily-update.yml` - dispatch-only GitHub Actions refresh.
@@ -68,6 +71,18 @@ python scripts/backtest_pure_gate.py
 
 Backtest totals exclude the incomplete current month. The generated JSON also
 records a clearly labeled current-month paper snapshot for dashboard context.
+
+The companion weekly sleeve applies the identical binary gate at a weekly cadence.
+Each Monday-starting UTC week uses the prior completed Monday-Friday week's IBIT
+net flow: negative holds cash, while zero or positive holds 100% of BTC-USD or
+BITX. Run it with:
+
+```powershell
+python scripts/backtest_weekly_pure_gate.py
+```
+
+Weekly totals exclude the incomplete current week. Like the monthly experiment,
+this is paper-only context and does not affect the live strategy.
 
 The daily schedule is centralized in the AIPeterLab Cloudflare Worker. The Worker dispatches this repo's GitHub Actions workflow at the New York refresh window, and the workflow can also be run manually with `workflow_dispatch`. Keep this repository workflow dispatch-only; do not add a GitHub `schedule:` block.
 

@@ -25,6 +25,7 @@ from urllib.request import Request, urlopen
 
 from backtest_pure_gate import backtest_asset as pure_gate_backtest_asset
 from backtest_pure_gate import yahoo_daily as pure_gate_yahoo_daily
+from backtest_weekly_pure_gate import backtest_weekly_asset
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -157,6 +158,7 @@ def experimental_pure_gate_context(
     daily_flows: list[dict[str, Any]],
     source_runtime: int | None,
     yahoo_rows: list[dict[str, Any]],
+    bitx_prices: list[dict[str, Any]],
 ) -> dict[str, Any]:
     """Build paper-only pure-gate context without changing live strategy fields."""
     monthly_flows: dict[str, float] = defaultdict(float)
@@ -168,9 +170,7 @@ def experimental_pure_gate_context(
         for row in yahoo_rows
     ]
     btc = pure_gate_backtest_asset("BTC-USD", monthly_flows, btc_prices, source_runtime)
-    bitx = pure_gate_backtest_asset(
-        "BITX", monthly_flows, pure_gate_yahoo_daily("BITX"), source_runtime
-    )
+    bitx = pure_gate_backtest_asset("BITX", monthly_flows, bitx_prices, source_runtime)
     signal = btc["current_paper_snapshot"]
 
     def asset_summary(result: dict[str, Any]) -> dict[str, Any]:
@@ -202,6 +202,68 @@ def experimental_pure_gate_context(
         "current_month": signal["month"],
         "signal_flow_month": signal["signal_flow_month"],
         "prior_month_flow_usd": signal["prior_month_ibit_flow_usd"],
+        "btc": asset_summary(btc),
+        "bitx": asset_summary(bitx),
+        "source": THE_BLOCK_IBIT_FLOW_URL,
+        "source_updated_at": (
+            datetime.fromtimestamp(source_runtime, tz=timezone.utc).isoformat()
+            if source_runtime is not None
+            else None
+        ),
+    }
+
+
+def experimental_weekly_pure_gate_context(
+    daily_flows: list[dict[str, Any]],
+    source_runtime: int | None,
+    yahoo_rows: list[dict[str, Any]],
+    bitx_prices: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Build the prior-week paper gate alongside the monthly experiment."""
+    weekly_flows: dict[date, float] = defaultdict(float)
+    for row in daily_flows:
+        flow_date = row["date"]
+        monday = flow_date - timedelta(days=flow_date.weekday())
+        weekly_flows[monday] += float(row["flow_usd"])
+
+    btc_prices = [
+        {"date": date.fromisoformat(row["date"]), "close": float(row["close"])}
+        for row in yahoo_rows
+    ]
+    btc = backtest_weekly_asset("BTC-USD", weekly_flows, btc_prices, source_runtime)
+    bitx = backtest_weekly_asset("BITX", weekly_flows, bitx_prices, source_runtime)
+    signal = btc["current_paper_snapshot"]
+
+    def asset_summary(result: dict[str, Any]) -> dict[str, Any]:
+        snapshot = result["current_paper_snapshot"]
+        ytd = result["ytd_2026_current_snapshot"]
+        completed = result["completed_week_backtest"]
+        return {
+            "price_date": snapshot["price_date"],
+            "paper_value_from_1000": snapshot["strategy_value"],
+            "paper_return_pct": snapshot["strategy_return_pct"],
+            "ytd_2026_value_from_1000": ytd["strategy_value"],
+            "ytd_2026_return_pct": ytd["strategy_return_pct"],
+            "last_completed_week": completed["end_week"],
+            "last_completed_week_value_from_1000": completed["strategy_ending_value"],
+        }
+
+    return {
+        "available": True,
+        "experimental": True,
+        "paper_only": True,
+        "affects_live_strategy": False,
+        "strategy_name": "IBIT Weekly Flow Pure Gate",
+        "rule": (
+            "Prior completed Monday-Friday UTC week's IBIT net flow below $0: "
+            "cash; $0 or above: 100% exposure for the current week."
+        ),
+        "signal": signal["signal"],
+        "allocation_pct": signal["allocation_pct"],
+        "current_week_start": signal["week_start"],
+        "signal_flow_week_start": signal["signal_flow_week_start"],
+        "signal_flow_week_end": signal["signal_flow_week_end"],
+        "prior_week_flow_usd": signal["prior_week_ibit_flow_usd"],
         "btc": asset_summary(btc),
         "bitx": asset_summary(bitx),
         "source": THE_BLOCK_IBIT_FLOW_URL,
@@ -986,8 +1048,12 @@ def main() -> int:
         ibit_months = ibit_monthly_chart_data(ibit_daily, yahoo_rows)
         write_ibit_outputs(ibit_weeks, source_runtime)
         write_ibit_monthly_outputs(ibit_months, source_runtime)
+        bitx_prices = pure_gate_yahoo_daily("BITX")
         payload["experimental_ibit_flow_gate"] = experimental_pure_gate_context(
-            ibit_daily, source_runtime, yahoo_rows
+            ibit_daily, source_runtime, yahoo_rows, bitx_prices
+        )
+        payload["experimental_ibit_weekly_flow_gate"] = experimental_weekly_pure_gate_context(
+            ibit_daily, source_runtime, yahoo_rows, bitx_prices
         )
         ibit_message = (
             f"IBIT chart weeks={len(ibit_weeks)} "
@@ -996,6 +1062,13 @@ def main() -> int:
         )
     except (RuntimeError, URLError, TimeoutError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
         payload["experimental_ibit_flow_gate"] = {
+            "available": False,
+            "experimental": True,
+            "paper_only": True,
+            "affects_live_strategy": False,
+            "error": str(exc),
+        }
+        payload["experimental_ibit_weekly_flow_gate"] = {
             "available": False,
             "experimental": True,
             "paper_only": True,

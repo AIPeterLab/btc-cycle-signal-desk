@@ -686,7 +686,7 @@
     <section class="panel section experimental-paper" aria-label="Experimental IBIT Flow Gate paper strategy">
       <div class="section-head" style="padding: 0;">
         <div>
-          <h2 class="panel-title">Experimental: IBIT Flow Gate <span class="tag">paper only</span></h2>
+          <h2 class="panel-title">Experimental: Monthly IBIT Flow Gate <span class="tag">paper only</span></h2>
           <p class="experimental-note">Separate research sleeve. It does not change the live halving-cycle signal or allocation above.</p>
         </div>
         <span class="status-chip" id="ibitGateSignal">--</span>
@@ -711,6 +711,38 @@
           <span>BITX YTD 2026</span>
           <strong id="ibitGateBitxYtd">--</strong>
           <small id="ibitGateAsOf">Paper performance: --</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section experimental-paper" aria-label="Experimental weekly IBIT Flow Gate paper strategy">
+      <div class="section-head" style="padding: 0;">
+        <div>
+          <h2 class="panel-title">Experimental: Weekly IBIT Flow Gate <span class="tag">paper only</span></h2>
+          <p class="experimental-note">Uses the prior completed Monday-Friday UTC flow. It does not change the live strategy.</p>
+        </div>
+        <span class="status-chip" id="ibitWeeklyGateSignal">--</span>
+      </div>
+      <div class="metrics">
+        <div class="metric">
+          <span>Prior-week IBIT flow</span>
+          <strong id="ibitWeeklyGatePriorFlow">--</strong>
+          <small id="ibitWeeklyGateFlowWeek">Signal week: --</small>
+        </div>
+        <div class="metric">
+          <span>Paper allocation</span>
+          <strong id="ibitWeeklyGateAllocation">--</strong>
+          <small>Negative flow = cash; otherwise exposure asset</small>
+        </div>
+        <div class="metric">
+          <span>BTC-USD YTD 2026</span>
+          <strong id="ibitWeeklyGateBtcYtd">--</strong>
+          <small>$1,000 at Dec. 2025 year-end</small>
+        </div>
+        <div class="metric">
+          <span>BITX YTD 2026</span>
+          <strong id="ibitWeeklyGateBitxYtd">--</strong>
+          <small id="ibitWeeklyGateAsOf">Paper performance: --</small>
         </div>
       </div>
     </section>
@@ -984,6 +1016,17 @@
       setText("ibitGateBtcYtd", gate.available ? `${money(gate.btc?.ytd_2026_value_from_1000, true)} (${signedPercent(gate.btc?.ytd_2026_return_pct)})` : "--");
       setText("ibitGateBitxYtd", gate.available ? `${money(gate.bitx?.ytd_2026_value_from_1000, true)} (${signedPercent(gate.bitx?.ytd_2026_return_pct)})` : "--");
       setText("ibitGateAsOf", gate.available ? `Paper performance through ${formatDate(gate.bitx?.price_date)}` : "Paper performance unavailable");
+
+      const weeklyGate = data.experimental_ibit_weekly_flow_gate || {};
+      const weeklyGateSignal = document.getElementById("ibitWeeklyGateSignal");
+      weeklyGateSignal.textContent = weeklyGate.available ? weeklyGate.signal : "Unavailable";
+      weeklyGateSignal.className = `status-chip ${weeklyGate.signal === "OUT" ? "cash" : ""}`;
+      setText("ibitWeeklyGatePriorFlow", weeklyGate.available ? flowMoney(weeklyGate.prior_week_flow_usd) : "--");
+      setText("ibitWeeklyGateFlowWeek", weeklyGate.available ? `Signal week ending: ${weeklyGate.signal_flow_week_end}` : "Signal unavailable");
+      setText("ibitWeeklyGateAllocation", weeklyGate.available ? `${weeklyGate.allocation_pct}% ${weeklyGate.signal === "IN" ? "asset" : "cash"}` : "--");
+      setText("ibitWeeklyGateBtcYtd", weeklyGate.available ? `${money(weeklyGate.btc?.ytd_2026_value_from_1000, true)} (${signedPercent(weeklyGate.btc?.ytd_2026_return_pct)})` : "--");
+      setText("ibitWeeklyGateBitxYtd", weeklyGate.available ? `${money(weeklyGate.bitx?.ytd_2026_value_from_1000, true)} (${signedPercent(weeklyGate.bitx?.ytd_2026_return_pct)})` : "--");
+      setText("ibitWeeklyGateAsOf", weeklyGate.available ? `Paper performance through ${formatDate(weeklyGate.bitx?.price_date)}` : "Paper performance unavailable");
 
       const history = Array.isArray(data.recent_history) ? data.recent_history : [];
       document.getElementById("historyRows").innerHTML = history.map((row) => `
