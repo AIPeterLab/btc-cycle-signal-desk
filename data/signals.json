@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-19T22:16:08.866692+00:00",
-  "market_date": "2026-10-19",
-  "btc_close": 82081.28,
+  "generated_at": "2026-10-20T22:16:06.998532+00:00",
+  "market_date": "2026-10-20",
+  "btc_close": 82920.0,
   "status": "Hold Cash",
   "final_strategy_status": "Hold 50% BTC",
   "active_halving_date": "2024-04-20",
@@ -11,11 +11,11 @@
   "next_buy_date": "2026-12-07",
   "buy_date": "2022-12-07",
   "sell_date": "2025-10-12",
-  "cycle_day": 912,
+  "cycle_day": 913,
   "day_540_date": "2025-10-12",
-  "days_from_buy_date": 1412,
-  "days_from_day_540": 372,
-  "days_until_next_buy_date": 49,
+  "days_from_buy_date": 1413,
+  "days_from_day_540": 373,
+  "days_until_next_buy_date": 48,
   "latest_completed_week_end": "2026-10-18",
   "latest_weekly_close": 82017.6,
   "sma_50_week": 76541.5,
@@ -25,15 +25,15 @@
   "required_weekly_closes_above_50w_sma": 1,
   "sma_50_week_signal": "Bull Market Confirmed",
   "sma_50_week_distance_pct": 7.15,
-  "sma_200_week": 66793.84,
-  "daily_sma_50": 81486.61,
-  "daily_sma_120": 72293.89,
+  "sma_200_week": 66840.83,
+  "daily_sma_50": 81569.48,
+  "daily_sma_120": 72450.06,
   "close_above_sma_120": true,
-  "consecutive_closes_above_sma_120": 62,
+  "consecutive_closes_above_sma_120": 63,
   "consecutive_closes_below_sma_120": 0,
   "ma120_gate_confirmed": true,
   "ma120_gate_rule": "2 up / 2 down",
-  "daily_sma_200": 72571.35,
+  "daily_sma_200": 72650.16,
   "golden_cross_confirmed": true,
   "calendar_entry_date": "2026-12-07",
   "cycle_window_active": false,
@@ -41,28 +41,15 @@
   "current_btc_allocation_pct": 50,
   "final_strategy_allocation_pct": 50,
   "ma120_gate_explanation": "BTC is above the confirmed MA120 defensive gate, but the calendar cycle window is not active, so MA120 does not create a full cycle allocation.",
-  "signal_explanation": "Current live BTC price: $82,081.28 as of 2026-10-19 UTC. Latest completed weekly close: $82,017.60 for week ending 2026-10-18 UTC. Confirmed weekly signal: Bull Market Confirmed; 5 completed weekly close(s) above the 50-week SMA with 1 required. Final strategy allocation: 50%.",
-  "ema_50": 80543.15,
-  "ema_200": 75931.27,
-  "realized_price": 53438.22,
-  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-10-18.",
+  "signal_explanation": "Current live BTC price: $82,920.00 as of 2026-10-20 UTC. Latest completed weekly close: $82,017.60 for week ending 2026-10-18 UTC. Confirmed weekly signal: Bull Market Confirmed; 5 completed weekly close(s) above the 50-week SMA with 1 required. Final strategy allocation: 50%.",
+  "ema_50": 80627.78,
+  "ema_200": 75998.56,
+  "realized_price": 53902.11,
+  "realized_price_source": "On-chain cost basis, context only. CoinMetrics row date: 2026-10-19.",
   "electrical_cost_per_btc": 80503.54,
-  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-10-18; assumes 30 J/TH and $0.05/kWh.",
+  "electrical_cost_assumptions": "Estimated mining electrical cost, context only. CoinMetrics row date: 2026-10-19; assumes 30 J/TH and $0.05/kWh.",
   "rule_summary": "Buy / hold BTC from 500 days before the Bitcoin halving date through day 540 after the halving date, inclusive. Hold Cash outside that window.",
   "recent_history": [
-    {
-      "date": "2026-10-06",
-      "btc_close": 85557.56,
-      "cycle_day": 899,
-      "buy_date": "2022-12-07",
-      "sell_date": "2025-10-12",
-      "status": "Hold Cash",
-      "final_strategy_status": "Hold 50% BTC",
-      "final_strategy_allocation_pct": 50,
-      "cycle_window_active": false,
-      "ma120_gate_confirmed": true,
-      "notes": "359 days after day 540. Final allocation: 50% BTC."
-    },
     {
       "date": "2026-10-07",
       "btc_close": 83275.93,
@@ -221,7 +208,7 @@
     },
     {
       "date": "2026-10-19",
-      "btc_close": 82081.28,
+      "btc_close": 81853.54,
       "cycle_day": 912,
       "buy_date": "2022-12-07",
       "sell_date": "2025-10-12",
@@ -231,6 +218,19 @@
       "cycle_window_active": false,
       "ma120_gate_confirmed": true,
       "notes": "372 days after day 540. Final allocation: 50% BTC."
+    },
+    {
+      "date": "2026-10-20",
+      "btc_close": 82920.0,
+      "cycle_day": 913,
+      "buy_date": "2022-12-07",
+      "sell_date": "2025-10-12",
+      "status": "Hold Cash",
+      "final_strategy_status": "Hold 50% BTC",
+      "final_strategy_allocation_pct": 50,
+      "cycle_window_active": false,
+      "ma120_gate_confirmed": true,
+      "notes": "373 days after day 540. Final allocation: 50% BTC."
     }
   ],
   "experimental_ibit_flow_gate": {
@@ -246,25 +246,25 @@
     "signal_flow_month": "2026-09",
     "prior_month_flow_usd": 1807700000.0,
     "btc": {
-      "price_date": "2026-10-19",
-      "paper_value_from_1000": 3057.4,
-      "paper_return_pct": 205.74,
-      "ytd_2026_value_from_1000": 1409.13,
-      "ytd_2026_return_pct": 40.91,
+      "price_date": "2026-10-20",
+      "paper_value_from_1000": 3088.64,
+      "paper_return_pct": 208.86,
+      "ytd_2026_value_from_1000": 1423.53,
+      "ytd_2026_return_pct": 42.35,
       "last_completed_month": "2026-09",
       "last_completed_month_value_from_1000": 3112.25
     },
     "bitx": {
-      "price_date": "2026-10-19",
-      "paper_value_from_1000": 3670.93,
-      "paper_return_pct": 267.09,
-      "ytd_2026_value_from_1000": 1815.73,
-      "ytd_2026_return_pct": 81.57,
+      "price_date": "2026-10-20",
+      "paper_value_from_1000": 3736.07,
+      "paper_return_pct": 273.61,
+      "ytd_2026_value_from_1000": 1847.95,
+      "ytd_2026_return_pct": 84.8,
       "last_completed_month": "2026-09",
       "last_completed_month_value_from_1000": 3866.32
     },
     "source": "https://data.tbstat.com/dashboard/markets_structuredproducts_btcspotetfflows_daily_other.json",
-    "source_updated_at": "2026-10-19T22:14:47+00:00"
+    "source_updated_at": "2026-10-20T20:16:01+00:00"
   },
   "experimental_ibit_weekly_flow_gate": {
     "available": true,
@@ -280,7 +280,7 @@
     "signal_flow_week_end": "2026-10-16",
     "prior_week_flow_usd": -165400000.0,
     "btc": {
-      "price_date": "2026-10-19",
+      "price_date": "2026-10-20",
       "paper_value_from_1000": 3399.69,
       "paper_return_pct": 239.97,
       "ytd_2026_value_from_1000": 1177.25,
@@ -289,7 +289,7 @@
       "last_completed_week_value_from_1000": 3399.69
     },
     "bitx": {
-      "price_date": "2026-10-19",
+      "price_date": "2026-10-20",
       "paper_value_from_1000": 4434.42,
       "paper_return_pct": 343.44,
       "ytd_2026_value_from_1000": 1264.37,
@@ -298,6 +298,6 @@
       "last_completed_week_value_from_1000": 4434.42
     },
     "source": "https://data.tbstat.com/dashboard/markets_structuredproducts_btcspotetfflows_daily_other.json",
-    "source_updated_at": "2026-10-19T22:14:47+00:00"
+    "source_updated_at": "2026-10-20T20:16:01+00:00"
   }
 }
