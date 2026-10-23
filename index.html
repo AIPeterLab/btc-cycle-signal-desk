@@ -1012,7 +1012,7 @@
       gateSignal.className = `status-chip ${gate.signal === "OUT" ? "cash" : ""}`;
       setText("ibitGatePriorFlow", gate.available ? flowMoney(gate.prior_month_flow_usd) : "--");
       setText("ibitGateFlowMonth", gate.available ? `Signal month: ${gate.signal_flow_month}` : "Signal unavailable");
-      setText("ibitGateAllocation", gate.available ? `${gate.allocation_pct}% ${gate.signal === "IN" ? "asset" : "cash"}` : "--");
+      setText("ibitGateAllocation", gate.available ? (gate.signal === "IN" ? `${gate.allocation_pct}% asset` : `${100 - gate.allocation_pct}% cash`) : "--");
       setText("ibitGateBtcYtd", gate.available ? `${money(gate.btc?.ytd_2026_value_from_1000, true)} (${signedPercent(gate.btc?.ytd_2026_return_pct)})` : "--");
       setText("ibitGateBitxYtd", gate.available ? `${money(gate.bitx?.ytd_2026_value_from_1000, true)} (${signedPercent(gate.bitx?.ytd_2026_return_pct)})` : "--");
       setText("ibitGateAsOf", gate.available ? `Paper performance through ${formatDate(gate.bitx?.price_date)}` : "Paper performance unavailable");
@@ -1023,7 +1023,7 @@
       weeklyGateSignal.className = `status-chip ${weeklyGate.signal === "OUT" ? "cash" : ""}`;
       setText("ibitWeeklyGatePriorFlow", weeklyGate.available ? flowMoney(weeklyGate.prior_week_flow_usd) : "--");
       setText("ibitWeeklyGateFlowWeek", weeklyGate.available ? `Signal week ending: ${weeklyGate.signal_flow_week_end}` : "Signal unavailable");
-      setText("ibitWeeklyGateAllocation", weeklyGate.available ? `${weeklyGate.allocation_pct}% ${weeklyGate.signal === "IN" ? "asset" : "cash"}` : "--");
+      setText("ibitWeeklyGateAllocation", weeklyGate.available ? (weeklyGate.signal === "IN" ? `${weeklyGate.allocation_pct}% asset` : `${100 - weeklyGate.allocation_pct}% cash`) : "--");
       setText("ibitWeeklyGateBtcYtd", weeklyGate.available ? `${money(weeklyGate.btc?.ytd_2026_value_from_1000, true)} (${signedPercent(weeklyGate.btc?.ytd_2026_return_pct)})` : "--");
       setText("ibitWeeklyGateBitxYtd", weeklyGate.available ? `${money(weeklyGate.bitx?.ytd_2026_value_from_1000, true)} (${signedPercent(weeklyGate.bitx?.ytd_2026_return_pct)})` : "--");
       setText("ibitWeeklyGateAsOf", weeklyGate.available ? `Paper performance through ${formatDate(weeklyGate.bitx?.price_date)}` : "Paper performance unavailable");
